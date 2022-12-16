@@ -1,6 +1,7 @@
 ## POS Project
-Tristan Losada Benini
-Ruben Osmanovic
+##### Made by:
+- Tristan Losada Benini
+- Ruben Osmanovic
 
-Domain Model:
+- Domain Model:
 ![](DomainModel.png)
