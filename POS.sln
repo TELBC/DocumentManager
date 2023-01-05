@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentManager.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentManager.Test", "DocumentManager.Test\DocumentManager.Test.csproj", "{A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentManager.Context", "DocumentManager.Context\DocumentManager.Context.csproj", "{34887FBA-F3D6-4CFF-A935-6474C9DAB089}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34887FBA-F3D6-4CFF-A935-6474C9DAB089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34887FBA-F3D6-4CFF-A935-6474C9DAB089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34887FBA-F3D6-4CFF-A935-6474C9DAB089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34887FBA-F3D6-4CFF-A935-6474C9DAB089}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
