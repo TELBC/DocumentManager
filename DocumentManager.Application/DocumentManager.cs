@@ -10,11 +10,15 @@ public class DocumentManager
     public List<GuestUser> GuestUsers { get; set; }
     public List<Folder> Folders { get; set; }
 
-    public DocumentManager(List<User> users = default, List<GuestUser> guestUsers = default, List<Folder> folders = default)
+    public DocumentManager()
     {
-        Users = users ?? new List<User>();
-        GuestUsers = guestUsers ?? new List<GuestUser>();
-        Folders = folders ?? new List<Folder>();
+    }
+
+    public DocumentManager(List<User> users, List<GuestUser> guestUsers, List<Folder> folders)
+    {
+        Users = users;
+        GuestUsers = guestUsers;
+        Folders = folders;
     }
 
     public Document CreateDocument(string title, string content, List<Tag> tags, string type, Folder folder)

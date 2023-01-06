@@ -15,6 +15,7 @@ public class DocumentManagerContext : DbContext
     public DbSet<GuestUser> GuestUsers { get; set; }
     public DbSet<Folder> Folders { get; set; }
     public DbSet<DocumentManager> DocumentManagers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DocumentManager>().HasData(new
