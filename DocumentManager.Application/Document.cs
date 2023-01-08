@@ -3,30 +3,38 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentManager;
+
 public class Document
 {
-    [Key]
     public int Id { get; set; }
+
+    [Required]
     public string Title { get; set; }
+
     public string Content { get; set; }
-    public List<Tag> Tags { get; set; }
+
+    public List<DocumentTag> DocumentTags { get; set; }
+
     public string Type { get; set; }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public int Version { get; set; }
+
+    public int FolderId { get; set; }
+
+    [ForeignKey("FolderId")]
     public Folder Folder { get; set; }
-    public List<User> Users { get; set; }
+
+    protected Document() { }
 
     public Document(string title, string content, List<Tag> tags, string type, Folder folder)
     {
         Title = title;
         Content = content;
-        Tags = tags;
+        DocumentTags = tags.Select(t => new DocumentTag { Tag = t }).ToList();
         Type = type;
-        Version = 1;
         Folder = folder;
-        Users = new List<User>();
     }
-    
-    protected Document(){}
 
     public void UpdateTitle(string newTitle)
     {
@@ -42,13 +50,15 @@ public class Document
 
     public void AddTags(List<Tag> newTags)
     {
-        Tags.AddRange(newTags);
+        DocumentTags.AddRange(newTags.Select(t => new DocumentTag { Tag = t }));
         Version++;
     }
 
     public void RemoveTags(List<Tag> tagsToRemove)
     {
-        Tags.RemoveAll(tagsToRemove.Contains);
+        DocumentTags = DocumentTags
+            .Where(dt => !tagsToRemove.Contains(dt.Tag))
+            .ToList();
         Version++;
     }
 

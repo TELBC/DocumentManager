@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DocumentManager;
+﻿namespace DocumentManager;
 
 public class GuestUser : UserBase
 {
