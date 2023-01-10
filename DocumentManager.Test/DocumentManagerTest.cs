@@ -1,6 +1,6 @@
 ﻿namespace DocumentManager.Test;
 
-public class DBTest
+public class DocumentManagerTest
 {
     
 }
