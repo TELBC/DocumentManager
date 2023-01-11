@@ -16,7 +16,5 @@ public class User : UserBase
     
     [Required]
     [MaxLength(255)]
-    private string Password { get; set; }
+    public string Password { get; set; }
 }
-
-//updated to what is required in the project

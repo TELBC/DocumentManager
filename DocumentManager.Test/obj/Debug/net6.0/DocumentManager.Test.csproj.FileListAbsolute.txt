@@ -119,3 +119,4 @@ C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\xunit.exe
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Npgsql.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Bogus.dll

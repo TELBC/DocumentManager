@@ -2,7 +2,7 @@
 
 namespace DocumentManager.Model;
 
-public class Tag
+public class Tag : IEntity<int>
 {
     [Key]
     public int Id { get; protected set; }
@@ -16,6 +16,10 @@ public class Tag
     #pragma warning disable CS8618
     protected Tag() { }
     #pragma warning restore CS8618
-}
 
-//updated to what is required in the project
+    public Tag(string name, Category category)
+    {
+        Name = name;
+        Category = category;
+    }
+}

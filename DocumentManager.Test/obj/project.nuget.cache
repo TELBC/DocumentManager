@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "d99eoQ176M7xgGk6i30Yj9cQ/AU2uOpBOpfHICv01QSIaIXj7jJOEsLqiadGXu95yBMFaYjQgjnkaaw0XAnrag==",
+  "dgSpecHash": "J0+G/KSV6sYnnMraoPaLhPrtnwe1p12V/xpPKP/zJA+zG51WelcUFyEQOsi4MZewQVRpQCgpBnd23dluylBhyQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Trist\\RiderProjects\\POS\\DocumentManager.Test\\DocumentManager.Test.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Trist\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",

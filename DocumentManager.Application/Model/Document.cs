@@ -3,13 +3,12 @@ namespace DocumentManager.Model;
 
 public class Document : IEntity<int>
 {
-    public Document(string title, string content, List<Tag> tags, string type, Folder folder)
+    public Document(string title, string content, List<Tag> tags, string type)
     {
         Title = title;
         Content = content;
         Tags = tags;
         Type = type;
-        Folder = folder;
     }
 
     #pragma warning disable CS8618
@@ -48,7 +47,4 @@ public class Document : IEntity<int>
     }
     private int _version;
     public int Version { get => _version; }
-    public Folder Folder { get; set; }
 }
-
-//updated to what is required in the project

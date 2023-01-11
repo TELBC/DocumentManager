@@ -1,6 +1,15 @@
-﻿namespace DocumentManager.Test;
+﻿using DocumentManager.Infrastructure;
+using Xunit;
 
-public class DBTest
+namespace DocumentManager.Test;
+
+public class DBTest : DocumentManagerDB
 {
+    [Fact]
+    public void CreateDatabaseTest()
+    {
+        _db.Database.EnsureDeleted();
+        _db.Database.EnsureCreated();
+    }
     
 }

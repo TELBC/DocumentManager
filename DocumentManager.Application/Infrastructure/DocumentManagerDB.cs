@@ -4,16 +4,20 @@ namespace DocumentManager.Infrastructure;
 
 public class DocumentManagerDB
 {
-    private readonly DocumentManagerContext _db;
+    protected readonly DocumentManagerContext _db;
 
     public DocumentManagerDB()
     {
              var opt = new DbContextOptionsBuilder<DocumentManagerContext>()
-            .UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=pwd;IncludeErrorDetail=true;")
+            .UseNpgsql("Host=localhost;Port=5432;Database=DocumentManager;Username=postgres;Password=pwd;IncludeErrorDetail=true;")
             .Options;
 
         _db = new DocumentManagerContext(opt);
        
+    }
+    public void Dispose()
+    {
+        _db.Dispose();
     }
 
 

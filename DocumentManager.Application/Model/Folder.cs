@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentManager.Model;
 
@@ -18,6 +19,6 @@ public class Folder : IEntity<int>
     [Required]
     [MaxLength(255)]
     public string Name { get; set; }
+    [Required]
     public List<Document> Documents { get; set; }
 }
-//updated to what is required in the project

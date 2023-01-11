@@ -1,72 +1,39 @@
-﻿namespace DocumentManager.Model;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class DocumentManager : AggregateRoot
+namespace DocumentManager.Model;
+
+[Table("DocumentManager")]
+public class DocumentManager : IEntity<int>
 {
-    private readonly ICollection<User> _users;
-    private readonly ICollection<GuestUser> _guestUsers;
-    private readonly ICollection<Folder> _folders;
-    public ICollection<object> ManagedItems { get; set; }
-
-    public DocumentManager()
+    public DocumentManager(User user)
     {
-        _users = new List<User>();
-        _guestUsers = new List<GuestUser>();
-        _folders = new List<Folder>();
-        ManagedItems = new List<object>();
+        User = user;
     }
+    #pragma warning disable CS8618 
+    protected DocumentManager() { }
+    #pragma warning restore CS8618
 
-    public IReadOnlyList<User> Users => _users.ToList();
-    public IReadOnlyList<GuestUser> GuestUsers => _guestUsers.ToList();
-    public IReadOnlyList<Folder> Folders => _folders.ToList();
+    [Key]
+    public int Id { get; set; }
+    
+    [Required]
+    public User User { get; set; }
 
-    // public Document CreateDocument(
-    //     string title,
-    //     string content,
-    //     List<Tag> tags,
-    //     string type,
-    //     Folder folder)
-    // {
-    //     var document = new Document(title, content, tags, type, folder);
-    //     _users.First(u => u.Id == folder.Id).Folder.AddDoc(document);
-    //     return document;
-    // }
+    // private List<UserBase> _friends = new();
+    // private List<Folder> _folders = new();
+    // public virtual IReadOnlyCollection<UserBase> Users => _friends;
     //
-    // public void DeleteDoc(Document document)
-    // {
-    //     var folder = _folders.First(f => f.Id == document.FolderId);
-    //     folder.RemoveDoc(document);
-    // }
+    // public virtual IReadOnlyCollection<Folder> Folders => _folders;
     //
-    // public List<Document> SearchDocs(string docName)
-    // {
-    //     return _folders
-    //         .SelectMany(f => f.Documents)
-    //         .Where(d => d.Title.Contains(docName))
-    //         .ToList();
-    // }
-    //
-    // public void GrantAcc(Document document, List<User> users)
-    // {
-    //     users.ForEach(u => u.Folder.AddDoc(document));
-    // }
-    //
-    // public void RevokeAcc(Document document, List<User> users)
-    // {
-    //     users.ForEach(u => u.Folder.RemoveDoc(document));
-    // }
-    //
-    // public void Add(User user)
-    // {
-    //     _users.Add(user);
-    // }
-    //
-    // public void Add(GuestUser guestUser)
-    // {
-    //     _guestUsers.Add(guestUser);
-    // }
-    //
-    // public void Add(Folder folder)
+    // public void AddFolder(Folder folder)
     // {
     //     _folders.Add(folder);
+    // }
+    //
+    //
+    // public void AddUser(UserBase newUser)
+    // {
+    //     _friends.Add(newUser);
     // }
 }
