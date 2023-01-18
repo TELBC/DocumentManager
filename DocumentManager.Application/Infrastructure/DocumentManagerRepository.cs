@@ -10,7 +10,7 @@ public class DocumentManagerRepository : Repository<Model.DocumentManager, int>
 
     public void AddFolder(int id, Folder folder)
     {
-        var entity = _db.Find(id);
+        var entity = Db.Find(id);
         if (entity is not null)
         {
             entity.AddFolder(folder);
@@ -20,7 +20,7 @@ public class DocumentManagerRepository : Repository<Model.DocumentManager, int>
 
     public void AddFriend(int id, UserBase friend)
     {
-        var entity = _db.Find(id);
+        var entity = Db.Find(id);
         if (entity is not null)
         {
             entity.AddFriend(friend);
