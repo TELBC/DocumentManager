@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "J0+G/KSV6sYnnMraoPaLhPrtnwe1p12V/xpPKP/zJA+zG51WelcUFyEQOsi4MZewQVRpQCgpBnd23dluylBhyQ==",
+  "dgSpecHash": "IE6aUlADj3WdZw8tJ23mnPnZ1e743jmP7bGPG1Iur/eTU6jhpEYJzBapLuXUr3YetEXEuy8eOOcESI7tYdLPdA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Trist\\RiderProjects\\POS\\DocumentManager.Test\\DocumentManager.Test.csproj",
   "expectedPackageFiles": [
@@ -75,7 +75,8 @@
     "C:\\Users\\Trist\\.nuget\\packages\\xunit.assert\\2.4.2\\xunit.assert.2.4.2.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\xunit.core\\2.4.2\\xunit.core.2.4.2.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\xunit.extensibility.core\\2.4.2\\xunit.extensibility.core.2.4.2.nupkg.sha512",
-    "C:\\Users\\Trist\\.nuget\\packages\\xunit.extensibility.execution\\2.4.2\\xunit.extensibility.execution.2.4.2.nupkg.sha512"
+    "C:\\Users\\Trist\\.nuget\\packages\\xunit.extensibility.execution\\2.4.2\\xunit.extensibility.execution.2.4.2.nupkg.sha512",
+    "C:\\Users\\Trist\\.nuget\\packages\\xunit.priority\\1.1.6\\xunit.priority.1.1.6.nupkg.sha512"
   ],
   "logs": []
 }

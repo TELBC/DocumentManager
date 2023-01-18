@@ -5,5 +5,10 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=08f073e0_002Dbe7c_002D48d6_002Da64f_002D5d409819a8a4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestModelFunctionality" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25::net6.0::DocumentManager.Test.DBTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25::net6.0::DocumentManagerTest.DocumentManagerTest.AddFolderTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25::net6.0::DocumentManagerTest.Test.DocumentManagerTest.AddFolderTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25::net6.0::DocumentManagerTest.Test.DocumentManagerTest.AddFriendsTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25::net6.0::DocumentManager.Test.CategoryTest.ValueConverterTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25::net6.0::DocumentManager.Test.DocumentManagerTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -5,7 +5,8 @@ namespace DocumentManager.Infrastructure;
 
 public class Repository<TEntity, TKey> where TEntity : class, IEntity<TKey>
 {
-    private readonly DbSet<TEntity> _db;
+    protected readonly DbSet<TEntity> _db;
+    public IQueryable<TEntity> queryable => _db.AsQueryable();
     private DbContext _context;
 
     public Repository(DbContext documentManagerContext)

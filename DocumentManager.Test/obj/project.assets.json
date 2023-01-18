@@ -1379,6 +1379,22 @@
           }
         }
       },
+      "Xunit.Priority/1.1.6": {
+        "type": "package",
+        "dependencies": {
+          "xunit.extensibility.core": "2.3.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Xunit.Priority.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Xunit.Priority.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "DocumentManager.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -4939,6 +4955,23 @@
         "xunit.extensibility.execution.nuspec"
       ]
     },
+    "Xunit.Priority/1.1.6": {
+      "sha512": "VF8yb6PHWb7ABkbEoWbesg0DsN3Pt7HQ2CGaIjyUh23jo3aCRm1zOAP/zQQh3B3Gi3K+5Xds8qs+SRUB2Hyr6Q==",
+      "type": "package",
+      "path": "xunit.priority/1.1.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net452/Xunit.Priority.dll",
+        "lib/net452/Xunit.Priority.xml",
+        "lib/netstandard1.1/Xunit.Priority.dll",
+        "lib/netstandard1.1/Xunit.Priority.xml",
+        "lib/netstandard2.0/Xunit.Priority.dll",
+        "lib/netstandard2.0/Xunit.Priority.xml",
+        "xunit.priority.1.1.6.nupkg.sha512",
+        "xunit.priority.nuspec"
+      ]
+    },
     "DocumentManager.Application/1.0.0": {
       "type": "project",
       "path": "../DocumentManager.Application/DocumentManager.Application.csproj",
@@ -4955,6 +4988,7 @@
       "NUnit.Analyzers >= 3.3.0",
       "NUnit3TestAdapter >= 4.2.1",
       "Npgsql >= 7.0.1",
+      "Xunit.Priority >= 1.1.6",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.2"
     ]
@@ -5027,6 +5061,10 @@
           "Npgsql": {
             "target": "Package",
             "version": "[7.0.1, )"
+          },
+          "Xunit.Priority": {
+            "target": "Package",
+            "version": "[1.1.6, )"
           },
           "coverlet.collector": {
             "target": "Package",

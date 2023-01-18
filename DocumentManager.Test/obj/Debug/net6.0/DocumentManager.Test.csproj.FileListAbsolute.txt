@@ -120,3 +120,4 @@ C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Microsoft
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Npgsql.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Bogus.dll
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Xunit.Priority.dll

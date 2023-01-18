@@ -16,6 +16,7 @@
           "NUnit.Analyzers": "3.3.0",
           "NUnit3TestAdapter": "4.2.1",
           "Npgsql": "7.0.1",
+          "Xunit.Priority": "1.1.6",
           "coverlet.collector": "3.1.2",
           "xunit": "2.4.2"
         },
@@ -897,6 +898,17 @@
           }
         }
       },
+      "Xunit.Priority/1.1.6": {
+        "dependencies": {
+          "xunit.extensibility.core": "2.4.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Xunit.Priority.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.6.43363"
+          }
+        }
+      },
       "DocumentManager.Application/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.1",
@@ -1418,6 +1430,13 @@
       "sha512": "sha512-CZmgcKkwpyo8FlupZdWpJCryrAOWLh1FBPG6gmVZuPQkGQsim/oL4PcP4nfrC2hHgXUFtluvaJ0Sp9PQKUMNpg==",
       "path": "xunit.extensibility.execution/2.4.2",
       "hashPath": "xunit.extensibility.execution.2.4.2.nupkg.sha512"
+    },
+    "Xunit.Priority/1.1.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VF8yb6PHWb7ABkbEoWbesg0DsN3Pt7HQ2CGaIjyUh23jo3aCRm1zOAP/zQQh3B3Gi3K+5Xds8qs+SRUB2Hyr6Q==",
+      "path": "xunit.priority/1.1.6",
+      "hashPath": "xunit.priority.1.1.6.nupkg.sha512"
     },
     "DocumentManager.Application/1.0.0": {
       "type": "project",
