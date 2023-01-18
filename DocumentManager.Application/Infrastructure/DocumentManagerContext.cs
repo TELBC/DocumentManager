@@ -5,8 +5,10 @@ namespace DocumentManager.Infrastructure;
 
 public class DocumentManagerContext : DbContext
 {
-    
-    public DocumentManagerContext(DbContextOptions opt) :base(opt){}
+    public DocumentManagerContext(DbContextOptions opt) : base(opt)
+    {
+    }
+
     public DbSet<User> User => Set<User>();
     public DbSet<UserBase> UserBase => Set<UserBase>();
     public DbSet<Tag> Tag => Set<Tag>();
@@ -22,9 +24,9 @@ public class DocumentManagerContext : DbContext
             .Entity<Tag>()
             .Property(c => c.Category)
             .HasConversion(
-            c => c.ToString(),
-            c => (Category) Enum.Parse(typeof(Category), c)
-        );
+                c => c.ToString(),
+                c => (Category)Enum.Parse(typeof(Category), c)
+            );
         modelBuilder.Entity<User>().ToTable("User");
     }
 }

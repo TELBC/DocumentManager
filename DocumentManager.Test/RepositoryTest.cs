@@ -14,17 +14,17 @@ public class RepositoryTest : DocumentManagerDB
         _db.Database.EnsureDeleted();
         _db.Database.EnsureCreated();
         var db = new DocumentManagerDB();
-        var user = new Faker<User>().CustomInstantiator(faker => 
+        var user = new Faker<User>().CustomInstantiator(faker =>
                 new User(
-                    name: faker.Internet.UserName(),
-                    email:faker.Internet.Email(),
-                    password:faker.Internet.Password()))
+                    faker.Internet.Email().Split('@')[0],
+                    faker.Internet.Email(),
+                    faker.Internet.Password()))
             .Generate();
-        var documentManager = new DocumentManager.Model.DocumentManager(user);
-        DocumentManagerRepository repository = db.documentManagerRepository;
+        var documentManager = new Model.DocumentManager(user);
+        var repository = db.documentManagerRepository;
         repository.InsertOne(documentManager);
         _db.ChangeTracker.Clear();
-        Assert.True(repository.Queryable.Any(d => d.Id ==documentManager.Id));
+        Assert.True(repository.Queryable.Any(d => d.Id == documentManager.Id));
     }
 
     [Fact]
@@ -33,21 +33,24 @@ public class RepositoryTest : DocumentManagerDB
         _db.Database.EnsureDeleted();
         _db.Database.EnsureCreated();
         var db = new DocumentManagerDB();
-        var user = new Faker<User>().CustomInstantiator(faker => 
+        var user = new Faker<User>().CustomInstantiator(faker =>
                 new User(
-                    name: faker.Internet.UserName(),
-                    email:faker.Internet.Email(),
-                    password:faker.Internet.Password()))
+                    faker.Internet.Email().Split('@')[0],
+                    faker.Internet.Email(),
+                    faker.Internet.Password()))
             .Generate();
-        var documentManager = new DocumentManager.Model.DocumentManager(user);
-        var folder = new Faker<Folder>().CustomInstantiator(faker => 
-            new Folder(name:faker.System.FileName(), documents:new List<Document>{new Document(title:faker.System.FileName(),
-                content:faker.Lorem.Text(),
-                tags:new List<Tag>{new Tag(name: faker.System.CommonFileName(), faker.PickRandom<Category>())},
-                type:faker.System.FileType())})).Generate();
-        DocumentManagerRepository repository = db.documentManagerRepository;
+        var documentManager = new Model.DocumentManager(user);
+        var folder = new Faker<Folder>().CustomInstantiator(faker =>
+            new Folder(faker.System.FileName(), new List<Document>
+            {
+                new(faker.System.FileName(),
+                    faker.Lorem.Text(),
+                    new List<Tag> { new(faker.System.CommonFileName(), faker.PickRandom<Category>()) },
+                    faker.System.FileType())
+            })).Generate();
+        var repository = db.documentManagerRepository;
         repository.InsertOne(documentManager);
-        repository.AddFolder(1,folder);//updateOne in DocumentManagerRepository
+        repository.AddFolder(1, folder); //updateOne in DocumentManagerRepository
         repository.UpdateOne(documentManager);
         _db.ChangeTracker.Clear();
         Assert.True(repository.Queryable.FirstOrDefault(d => d.Id == folder.Id)!.Folders.Count == 1);
@@ -59,18 +62,17 @@ public class RepositoryTest : DocumentManagerDB
         _db.Database.EnsureDeleted();
         _db.Database.EnsureCreated();
         var db = new DocumentManagerDB();
-        var user = new Faker<User>().CustomInstantiator(faker => 
+        var user = new Faker<User>().CustomInstantiator(faker =>
                 new User(
-                    name: faker.Internet.UserName(),
-                    email:faker.Internet.Email(),
-                    password:faker.Internet.Password()))
+                    faker.Internet.Email().Split('@')[0],
+                    faker.Internet.Email(),
+                    faker.Internet.Password()))
             .Generate();
-        var documentManager = new DocumentManager.Model.DocumentManager(user);
-        DocumentManagerRepository repository = db.documentManagerRepository;
+        var documentManager = new Model.DocumentManager(user);
+        var repository = db.documentManagerRepository;
         repository.InsertOne(documentManager);
         repository.DeleteOne(documentManager.Id);
         _db.ChangeTracker.Clear();
         Assert.False(repository.Queryable.Any(d => d.Id == documentManager.Id));
-
     }
 }

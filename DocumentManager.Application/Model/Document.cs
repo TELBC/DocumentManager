@@ -1,8 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 namespace DocumentManager.Model;
 
 public class Document : IEntity<int>
 {
+    private string _content;
+    private List<Tag> _tags;
+
+    private string _title;
+    private string _type;
+
     public Document(string title, string content, List<Tag> tags, string type)
     {
         Title = title;
@@ -11,40 +18,55 @@ public class Document : IEntity<int>
         Type = type;
     }
 
-    #pragma warning disable CS8618
-    protected Document() { }
-    #pragma warning restore CS8618
-
-    [Key]
-    public int Id { get; private set; }
-
-    private string _title;
+#pragma warning disable CS8618
+    protected Document()
+    {
+    }
+#pragma warning restore CS8618
     [Required]
     public string Title
     {
         get => _title;
-        set { _title = value; _version++; }
+        set
+        {
+            _title = value;
+            Version++;
+        }
     }
-    private string _content;
+
     [ConcurrencyCheck]
     public string Content
     {
         get => _content;
-        set { _content = value; _version++; }
+        set
+        {
+            _content = value;
+            Version++;
+        }
     }
-    private List<Tag> _tags;
+
     public List<Tag> Tags
     {
         get => _tags;
-        set { _tags = value; _version++; }
+        set
+        {
+            _tags = value;
+            Version++;
+        }
     }
-    private string _type;
+
     [Required]
     public string Type
     {
         get => _type;
-        set { _type = value; _version++; }
+        set
+        {
+            _type = value;
+            Version++;
+        }
     }
-    private int _version;
-    public int Version { get => _version; }
+
+    public int Version { get; private set; }
+
+    [Key] public int Id { get; private set; }
 }

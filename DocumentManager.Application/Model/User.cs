@@ -10,11 +10,11 @@ public class User : UserBase
         Email = email;
         Password = password;
     }
-    #pragma warning disable CS8618
-    protected User() { }
-    #pragma warning restore CS8618
-    
-    [Required]
-    [MaxLength(255)]
-    public string Password { get; set; }
+#pragma warning disable CS8618
+    protected User()
+    {
+    }
+#pragma warning restore CS8618
+
+    [Required] [MaxLength(255)] public string Password { get; set; }
 }

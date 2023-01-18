@@ -19,6 +19,6 @@
 
 
 ### To setup:
-netstat -ao (check if port 5432 is used somehwere else)
-taskkill /PID PID /T /F (purge all exisiting tasks to then run container)
-docker run --name postgres_test -e POSTGRES_PASSWORD=pwd -p 5432:5432 postgres:latest
+- netstat -ao (check if port 5432 is used somehwere else)
+- taskkill /PID PID /T /F (purge all exisiting tasks to then run container)
+- docker run --name postgres -e POSTGRES_PASSWORD=pwd -p 5432:5432 postgres:latest

@@ -15,24 +15,24 @@ public class DocumentManagerTest : DocumentManagerDB
         _db.Database.EnsureCreated();
         var user = new Faker<User>().CustomInstantiator(faker =>
                 new User(
-                    faker.Internet.UserName(),
+                    faker.Internet.Email().Split('@')[0],
                     faker.Internet.Email(),
                     faker.Internet.Password()))
             .Generate();
-        var documentmanager = new DocumentManager.Model.DocumentManager(user);
+        var documentmanager = new Model.DocumentManager(user);
         var folder = new Faker<Folder>().CustomInstantiator(faker =>
             new Folder(faker.System.FileName(), new List<Document>
                 {
-                    new(faker.System.FileName(),
+                    new(faker.Lorem.Word(),
                         faker.Lorem.Text(),
-                        new List<Tag> { new(faker.System.CommonFileName(), faker.PickRandom<Category>()) },
+                        new List<Tag> { new(faker.Lorem.Word(), faker.PickRandom<Category>()) },
                         faker.System.FileType())
                 }
             )).Generate();
         documentmanager.AddFolder(folder);
         _db.Add(documentmanager);
         _db.SaveChanges();
-        Assert.True(_db.Folder.Count()==1);
+        Assert.True(_db.Folder.Count() == 1);
     }
 
     [Fact]
@@ -42,23 +42,20 @@ public class DocumentManagerTest : DocumentManagerDB
         _db.Database.EnsureCreated();
         var user = new Faker<User>().CustomInstantiator(faker =>
                 new User(
-                    faker.Internet.UserName(),
+                    faker.Internet.Email().Split('@')[0],
                     faker.Internet.Email(),
                     faker.Internet.Password()))
             .Generate();
-        var documentManager = new DocumentManager.Model.DocumentManager(user);
-        var users = new Faker<User>().CustomInstantiator(faker => 
+        var documentManager = new Model.DocumentManager(user);
+        var users = new Faker<User>().CustomInstantiator(faker =>
                 new User(
-                    name: faker.Internet.UserName(),
-                    email:faker.Internet.Email(),
-                    password:faker.Internet.Password()))
+                    faker.Internet.Email().Split('@')[0],
+                    faker.Internet.Email(),
+                    faker.Internet.Password()))
             .Generate(5);
-        foreach (var u in users)
-        {
-            documentManager.AddFriend(u);
-        }
+        foreach (var u in users) documentManager.AddFriend(u);
         _db.Add(documentManager);
         _db.SaveChanges();
-        Assert.True(_db.UserBase.Count()==6);
+        Assert.True(_db.UserBase.Count() == 6);
     }
 }

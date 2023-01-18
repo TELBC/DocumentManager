@@ -4,6 +4,5 @@ namespace DocumentManager.Model;
 
 public interface IEntity<T>
 {
-    [Key]
-    T Id { get; }
+    [Key] T Id { get; }
 }

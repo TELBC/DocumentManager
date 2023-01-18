@@ -13,11 +13,11 @@ public class CategoryTest : DocumentManagerDB
     {
         _db.Database.EnsureDeleted();
         _db.Database.EnsureCreated();
-        var tagPersonal = new Faker<Tag>().CustomInstantiator(faker => 
-        new Tag(name:faker.System.CommonFileName(),category: Category.Personal)).Generate();
+        var tagPersonal = new Faker<Tag>().CustomInstantiator(faker =>
+            new Tag(faker.Lorem.Word(), Category.Personal)).Generate();
         _db.Add(tagPersonal);
         _db.SaveChanges();
-        
-        Assert.True(_db.Tag.First().Category==Category.Personal);
+
+        Assert.True(_db.Tag.First().Category == Category.Personal);
     }
 }

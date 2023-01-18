@@ -1,5 +1,4 @@
-﻿using DocumentManager.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DocumentManager.Infrastructure;
 
@@ -10,14 +9,15 @@ public class DocumentManagerDB
 
     public DocumentManagerDB()
     {
-             var opt = new DbContextOptionsBuilder<DocumentManagerContext>()
-            .UseNpgsql("Host=localhost;Port=5432;Database=DocumentManager;Username=postgres;Password=pwd;IncludeErrorDetail=true;")
+        var opt = new DbContextOptionsBuilder<DocumentManagerContext>()
+            .UseNpgsql(
+                "Host=localhost;Port=5432;Database=DocumentManager;Username=postgres;Password=pwd;IncludeErrorDetail=true;")
             .Options;
 
         _db = new DocumentManagerContext(opt);
         documentManagerRepository = new DocumentManagerRepository(_db);
     }
-    
+
     public void Dispose()
     {
         _db.Dispose();
