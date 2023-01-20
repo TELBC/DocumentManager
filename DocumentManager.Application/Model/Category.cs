@@ -1,4 +1,4 @@
-﻿namespace DocumentManager;
+﻿namespace DocumentManager.Model;
 
 public enum Category
 {

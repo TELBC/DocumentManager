@@ -4,7 +4,7 @@ namespace DocumentManager.Model;
 
 public class User : UserBase
 {
-    public User(string name, string email, string password)
+    public User(string name, string email, string password) : base(name,email)
     {
         Name = name;
         Email = email;

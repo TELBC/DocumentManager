@@ -23,10 +23,7 @@ public class DocumentManagerContext : DbContext
         modelBuilder
             .Entity<Tag>()
             .Property(c => c.Category)
-            .HasConversion(
-                c => c.ToString(),
-                c => (Category)Enum.Parse(typeof(Category), c)
-            );
+            .HasConversion<String>();
         modelBuilder.Entity<User>().ToTable("User");
     }
 }

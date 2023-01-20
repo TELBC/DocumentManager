@@ -4,15 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DocumentManager.Model;
 
 [Table("DocumentManager")]
-public class DocumentManager : IEntity<int>
+public sealed class DocumentManager : IEntity<int>
 {
     private readonly List<Folder> _folders = new();
 
     private readonly List<UserBase> _friends = new();
 #pragma warning disable CS8618
-    protected DocumentManager()
-    {
-    }
+    private DocumentManager() { }
 #pragma warning restore CS8618
     public DocumentManager(User user)
     {
@@ -21,9 +19,9 @@ public class DocumentManager : IEntity<int>
 
     [Required] public User User { get; set; }
 
-    public virtual IReadOnlyCollection<UserBase> Users => _friends;
+    public IReadOnlyCollection<UserBase> Users => _friends;
 
-    public virtual IReadOnlyCollection<Folder> Folders => _folders;
+    public IReadOnlyCollection<Folder> Folders => _folders;
 
     [Key] public int Id { get; set; }
 

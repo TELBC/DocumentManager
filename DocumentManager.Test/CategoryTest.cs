@@ -1,23 +1,21 @@
 ﻿using Bogus;
-using DocumentManager.Infrastructure;
 using DocumentManager.Model;
 using Xunit;
-using Assert = NUnit.Framework.Assert;
 
 namespace DocumentManager.Test;
-
-public class CategoryTest : DocumentManagerDB
+[Collection("Sequential")]
+public class CategoryTest : DocumentManagerDb
 {
     [Fact]
     public void ValueConverterTest()
     {
-        _db.Database.EnsureDeleted();
-        _db.Database.EnsureCreated();
+        Db.Database.EnsureDeleted();
+        Db.Database.EnsureCreated();
         var tagPersonal = new Faker<Tag>().CustomInstantiator(faker =>
             new Tag(faker.Lorem.Word(), Category.Personal)).Generate();
-        _db.Add(tagPersonal);
-        _db.SaveChanges();
+        Db.Add(tagPersonal);
+        Db.SaveChanges();
 
-        Assert.True(_db.Tag.First().Category == Category.Personal);
+        Assert.True(Db.Tag.First().Category == Category.Personal);
     }
 }

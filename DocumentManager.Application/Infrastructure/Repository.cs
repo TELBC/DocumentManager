@@ -13,6 +13,10 @@ public class Repository<TEntity, TKey> where TEntity : class, IEntity<TKey>
         _context = dbContext;
         Db = dbContext.Set<TEntity>();
     }
+    
+#pragma warning disable CS8618
+    protected Repository(){}
+#pragma warning restore CS8618
 
     public IQueryable<TEntity> Queryable => Db.AsQueryable();
 

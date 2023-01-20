@@ -2,7 +2,7 @@
 
 namespace DocumentManager.Model;
 
-public interface IEntity<T>
+public interface IEntity<out T>
 {
     [Key] T Id { get; }
 }

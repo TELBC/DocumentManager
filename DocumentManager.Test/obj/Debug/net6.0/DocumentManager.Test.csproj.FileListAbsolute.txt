@@ -2,12 +2,6 @@ C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\CoverletS
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\testhost.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\testhost.exe
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Microsoft.TestPlatform.PlatformAbstractions.dll
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\NUnit3.TestAdapter.dll
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\NUnit3.TestAdapter.pdb
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\nunit.engine.dll
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\nunit.engine.api.dll
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\nunit.engine.core.dll
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\testcentric.engine.metadata.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\DocumentManager.Test.deps.json
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\DocumentManager.Test.runtimeconfig.json
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\DocumentManager.Test.dll
@@ -33,7 +27,6 @@ C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Microsoft
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Microsoft.VisualStudio.TestPlatform.Common.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\NuGet.Frameworks.dll
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\nunit.framework.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\cs\Microsoft.TestPlatform.CoreUtilities.resources.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\cs\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\de\Microsoft.TestPlatform.CoreUtilities.resources.dll
@@ -116,8 +109,9 @@ C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\xunit.abs
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\xunit.assert.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\xunit.core.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\xunit.execution.dotnet.dll
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Npgsql.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Bogus.dll
-C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\Xunit.Priority.dll
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Test\bin\Debug\net6.0\xunit.runner.utility.netcoreapp10.dll

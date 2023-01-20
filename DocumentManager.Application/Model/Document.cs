@@ -4,67 +4,24 @@ namespace DocumentManager.Model;
 
 public class Document : IEntity<int>
 {
-    private string _content;
-    private List<Tag> _tags;
-
-    private string _title;
-    private string _type;
-
-    public Document(string title, string content, List<Tag> tags, string type)
+    public Document(string title, string content, string type)
     {
         Title = title;
         Content = content;
-        Tags = tags;
+        Tags = new List<Tag>();
         Type = type;
     }
 
-#pragma warning disable CS8618
-    protected Document()
-    {
-    }
-#pragma warning restore CS8618
-    [Required]
-    public string Title
-    {
-        get => _title;
-        set
-        {
-            _title = value;
-            Version++;
-        }
-    }
+    #pragma warning disable CS8618
+    protected Document() { }
+    #pragma warning restore CS8618
+    
+    public string Title { get; set; }
 
     [ConcurrencyCheck]
-    public string Content
-    {
-        get => _content;
-        set
-        {
-            _content = value;
-            Version++;
-        }
-    }
-
-    public List<Tag> Tags
-    {
-        get => _tags;
-        set
-        {
-            _tags = value;
-            Version++;
-        }
-    }
-
-    [Required]
-    public string Type
-    {
-        get => _type;
-        set
-        {
-            _type = value;
-            Version++;
-        }
-    }
+    public string Content { get; set; }
+    public List<Tag> Tags{ get; set; }
+    public string Type{ get; set; }
 
     public int Version { get; private set; }
 
