@@ -1,0 +1,14 @@
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\bin\Debug\net6.0\DocumentManager.Application.deps.json
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\bin\Debug\net6.0\DocumentManager.Application.runtimeconfig.json
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\bin\Debug\net6.0\DocumentManager.Application.dll
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\bin\Debug\net6.0\DocumentManager.Application.pdb
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\DocumentManager.Application.csproj.AssemblyReference.cache
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\DocumentManager.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\DocumentManager.Application.AssemblyInfoInputs.cache
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\DocumentManager.Application.AssemblyInfo.cs
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\DocumentManager.Application.csproj.CoreCompileInputs.cache
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\DocumentManager.Application.dll
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\refint\DocumentManager.Application.dll
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\DocumentManager.Application.pdb
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\DocumentManager.Application.genruntimeconfig.cache
+C:\Users\Trist\RiderProjects\POS\DocumentManager.Application\obj\Debug\net6.0\ref\DocumentManager.Application.dll
