@@ -1,4 +1,5 @@
-﻿using Bogus;
+﻿using System.Linq;
+using Bogus;
 using DocumentManager.Model;
 using Xunit;
 

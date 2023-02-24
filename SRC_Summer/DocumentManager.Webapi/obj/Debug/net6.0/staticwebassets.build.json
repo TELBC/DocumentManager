@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "wkIVj4Sfp/QaQ6hS6pXKxCdvmma+h3quFGNu6LICb6c=",
+  "Source": "DocumentManager.Webapi",
+  "BasePath": "_content/DocumentManager.Webapi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,4 +1,6 @@
-﻿using Bogus;
+﻿using System;
+using System.Linq;
+using Bogus;
 using DocumentManager.Model;
 using Xunit;
 using Assert = Xunit.Assert;

@@ -1,8 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentManager.Application", "DocumentManager.Application\DocumentManager.Application.csproj", "{4E953EE2-21C8-47E0-999C-FE1B5FFC7950}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentManager.Test", "DocumentManager.Test\DocumentManager.Test.csproj", "{A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentManager.Webapi", "DocumentManager.Webapi\DocumentManager.Webapi.csproj", "{025531FB-3367-45B8-9DC4-511E84AB3379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +21,9 @@ Global
 		{A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A954B58F-B9A8-42FA-8A2E-9C6A2EE51C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{025531FB-3367-45B8-9DC4-511E84AB3379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{025531FB-3367-45B8-9DC4-511E84AB3379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{025531FB-3367-45B8-9DC4-511E84AB3379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{025531FB-3367-45B8-9DC4-511E84AB3379}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
