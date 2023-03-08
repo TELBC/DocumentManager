@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Bogus;
 using DocumentManager.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,65 +39,55 @@ public class DocumentManagerContext : DbContext
     
     private void Initialize()
     {
-        // var author = new Author(
-        //     firstname: "Max",
-        //     lastname: "Mustermann",
-        //     email: "mustermann@spengergasse.at",
-        //     username: "admin",
-        //     initialPassword: "1111",
-        //     phone: "+4369912345678");
-        // Authors.Add(author);
-        // SaveChanges();
-        //
-        // var categories = new Category[]{
-        //     new Category("Wissenschaft"),
-        //     new Category("Kultur"),
-        //     new Category("Sport")
-        // };
-        // Categories.AddRange(categories);
-        // SaveChanges();
+        var user = new User("Admin", "admin@example.com", "verySecure");
+        User.Add(user);
+        var documentManager = new Model.DocumentManager(user);
+        DocumentManager.Add(documentManager);
+        SaveChanges();
     }
     
     private void Seed()
     {
-        // Randomizer.Seed = new Random(1039);
-        // var faker = new Faker("de");
-        //
-        // var authors = new Faker<Author>("de").CustomInstantiator(f =>
-        //     {
-        //         var lastname = f.Name.LastName();
-        //         return new Author(
-        //                 firstname: f.Name.FirstName(),
-        //                 lastname: lastname,
-        //                 email: $"{lastname.ToLower()}@spengergasse.at",
-        //                 username: lastname.ToLower(),
-        //                 initialPassword: "1111",
-        //                 phone: $"{+43}{f.Random.Int(1, 9)}{f.Random.String2(9, "0123456789")}".OrNull(f, 0.25f))
-        //             { Guid = f.Random.Guid() };
-        //     })
-        //     .Generate(10)
-        //     .GroupBy(a => a.Email).Select(g => g.First())
-        //     .ToList();
-        // Authors.AddRange(authors);
-        // SaveChanges();
-        //
-        // // Use OrderBy with PK to read in a deterministic sort order!
-        // var categories = Categories.OrderBy(c => c.Id).ToList();
-        //
-        // var articles = new Faker<Article>("de").CustomInstantiator(f =>
-        //     {
-        //         return new Article(
-        //                 headline: f.Lorem.Sentence(f.Random.Int(2, 4)),
-        //                 content: f.Lorem.Paragraphs(10, 20),
-        //                 created: f.Date.Between(new DateTime(2021, 1, 1), new DateTime(2022, 1, 1)),
-        //                 imageUrl: f.Image.PicsumUrl(),
-        //                 author: f.Random.ListItem(authors),
-        //                 category: f.Random.ListItem(categories))
-        //             { Guid = f.Random.Guid() };
-        //     })
-        //     .Generate(6)
-        //     .ToList();
-        // Articles.AddRange(articles);
-        // SaveChanges();
+        //tag
+        var tags = new Faker<Tag>().CustomInstantiator(faker =>
+            new Tag(faker.Lorem.Word(), faker.PickRandom<Category>())
+        ).Generate(10);
+        Tag.AddRange(tags);
+        //document
+        var documents = new Faker<Document>().CustomInstantiator(faker =>
+            {
+                var document = new Document(faker.Lorem.Word(),
+                    faker.Lorem.Text(),
+                    faker.System.FileExt())
+                {
+                    Tags = tags.OrderBy(_ => new Random().Next()).Take(3).ToList()
+                };
+                return document;
+            }
+        ).Generate(20);
+
+        Document.AddRange(documents);
+        //folder
+        var folders = new Faker<Folder>().CustomInstantiator(faker =>
+        {
+            var folder = new Folder(faker.Lorem.Word())
+            {
+                Documents = documents.OrderBy(_ => new Random().Next()).Take(18).ToList()
+            };
+            return folder;
+        }).Generate(2);
+        Folder.AddRange(folders);
+        //users
+        var users = new Faker<User>().CustomInstantiator(faker =>
+                new User(
+                    faker.Internet.Email().Split('@')[0],
+                    faker.Internet.Email(),
+                    faker.Internet.Password()))
+            .Generate(10);
+        User.AddRange(users);
+        var docMan = DocumentManager.First();
+        foreach (var u in users) docMan.AddFriend(u);
+        foreach (var f in folders) docMan.AddFolder(f);
+        SaveChanges();
     }
 }

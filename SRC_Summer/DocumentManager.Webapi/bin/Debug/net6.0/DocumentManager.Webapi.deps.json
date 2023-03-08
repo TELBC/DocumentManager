@@ -15,6 +15,14 @@
           "DocumentManager.Webapi.dll": {}
         }
       },
+      "Bogus/34.0.2": {
+        "runtime": {
+          "lib/net6.0/Bogus.dll": {
+            "assemblyVersion": "34.0.2.0",
+            "fileVersion": "34.0.2.0"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore/7.0.1": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "7.0.1",
@@ -228,6 +236,7 @@
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
       "DocumentManager.Application/1.0.0": {
         "dependencies": {
+          "Bogus": "34.0.2",
           "Microsoft.EntityFrameworkCore": "7.0.1",
           "Npgsql": "7.0.1",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.1"
@@ -243,6 +252,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Bogus/34.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2KQAuMn3fLAQ2r6jeiffZnpv0bi3GCW3iRB2v1KeHIEBu8MNTh9dBlLTZwGvM0pr+9doKkU8L5JgCURmTmT88A==",
+      "path": "bogus/34.0.2",
+      "hashPath": "bogus.34.0.2.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/7.0.1": {
       "type": "package",

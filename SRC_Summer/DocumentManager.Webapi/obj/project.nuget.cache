@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Nh4WwFAWXH9lIzijHuyYFD9URPE37kgkeqmOIttAGSKgoQKnqDlzSkD5Br9wUamSU0B2oXgzrHLjEf+M8tEjSg==",
+  "dgSpecHash": "0BVEADn98ASaD43lnYQ7l3zxVevC1R5rWQJPmwehlOyqzpd+WMxeWN9BPBThh+pAV+E8czuASvpccGo5TLKvyA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\DocumentManager.Webapi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Trist\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.1\\microsoft.entityframeworkcore.7.0.1.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.1\\microsoft.entityframeworkcore.abstractions.7.0.1.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.1\\microsoft.entityframeworkcore.analyzers.7.0.1.nupkg.sha512",

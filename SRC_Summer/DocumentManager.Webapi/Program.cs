@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DocumentManagerContext>(opt =>
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("Host=localhost;Port=5432;Database=DocumentManager;Username=postgres;Password=pwd;IncludeErrorDetail=true;")));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddControllers();
 if (builder.Environment.IsDevelopment())
@@ -30,7 +30,6 @@ using (var scope = app.Services.CreateScope())
     using (var db = scope.ServiceProvider.GetRequiredService<DocumentManagerContext>())
     {
         db.CreateDatabase(isDevelopment: app.Environment.IsDevelopment());
-        // db.Database.EnsureCreated();
     }
 }
 

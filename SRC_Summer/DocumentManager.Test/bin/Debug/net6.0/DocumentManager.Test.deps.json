@@ -1266,6 +1266,7 @@
       "xunit.runner.visualstudio/2.4.5": {},
       "DocumentManager.Application/1.0.0": {
         "dependencies": {
+          "Bogus": "34.0.2",
           "Microsoft.EntityFrameworkCore": "7.0.1",
           "Npgsql": "7.0.1",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.1"

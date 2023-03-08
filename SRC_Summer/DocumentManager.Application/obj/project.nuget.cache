@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "MjFATEVy++cOB64mHWyB9oznA51+gGu/4wxyuAd6K+KNBh/0N3qul/I8EqcIwe55FT+gKpTNv5UwTB3zUKs7pQ==",
+  "dgSpecHash": "cNpdEgcFKlnyS40kfZ+a9VuTGSF9FOp7CPX/+wxzlEhZCvDNsejcV9AbnMsTccrp3lgROcws7v7iKifTsm8lJQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Application\\DocumentManager.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Trist\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.1\\microsoft.entityframeworkcore.7.0.1.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.1\\microsoft.entityframeworkcore.abstractions.7.0.1.nupkg.sha512",
