@@ -28,6 +28,24 @@ public class DocumentManagerContext : DbContext
             .Property(c => c.Category)
             .HasConversion<String>();
         modelBuilder.Entity<User>().ToTable("User");
+        
+        // additional config
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            foreach (var key in entityType.GetForeignKeys())
+                key.DeleteBehavior = DeleteBehavior.Restrict;
+            foreach (var prop in entityType.GetDeclaredProperties())
+            {
+                if (prop.Name == "Guid")
+                {
+                    modelBuilder.Entity(entityType.ClrType).HasAlternateKey("SuperSecretAlternateKeyNobodyWillFindOut");
+                    prop.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
+                }
+                if (prop.ClrType == typeof(string) && prop.GetMaxLength() is null) prop.SetMaxLength(null);//by giving it a 255 char limit i get an error, i will troubleshoot this later
+                if (prop.ClrType == typeof(DateTime)) prop.SetPrecision(3);
+                if (prop.ClrType == typeof(DateTime?)) prop.SetPrecision(3);
+            }
+        }
     }
     
     public void CreateDatabase(bool isDevelopment)
@@ -56,7 +74,7 @@ public class DocumentManagerContext : DbContext
         //document
         var documents = new Faker<Document>().CustomInstantiator(faker =>
             {
-                var document = new Document(faker.Lorem.Word(),
+                var document = new Document("Document "+faker.UniqueIndex,
                     faker.Lorem.Text(),
                     faker.System.FileExt())
                 {

@@ -42,3 +42,5 @@ C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net6.0\DocumentManager.Webapi.genruntimeconfig.cache
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net6.0\ref\DocumentManager.Webapi.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Bogus.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Docker.DotNet.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Newtonsoft.Json.dll

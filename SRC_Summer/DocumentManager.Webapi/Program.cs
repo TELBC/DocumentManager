@@ -1,14 +1,18 @@
+using System;
 using DocumentManager.Infrastructure;
+using DocumentManager.Webapi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DocumentManagerContext>(opt =>
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
-
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("Default"),
+        o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)));
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddControllers();
 if (builder.Environment.IsDevelopment())
 {
@@ -17,11 +21,25 @@ if (builder.Environment.IsDevelopment())
 }
 
 
+
 // ***************************************** APPLICATION ******************************************
 var app = builder.Build();
 app.UseHttpsRedirection();
 if (app.Environment.IsDevelopment())
 {
+    try
+    {
+        await app.UsePostgresContainer(
+            containerName: "documentmanager_postgres", version: "latest",
+            connectionString: app.Configuration.GetConnectionString("Default") ??
+                              "Host=127.0.0.1;Port=15432;Database=DocumentManager;Username=postgres;Password=pwd;TrustServerCertificate=true;",
+            deleteAfterShutdown: true);
+    }
+    catch (Exception e)
+    {
+        app.Logger.LogError(e.Message);
+        return;
+    }
     app.UseCors();
 }
 
