@@ -5,6 +5,8 @@ C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\DocumentManager.Webapi.runtimeconfig.json
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\DocumentManager.Webapi.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\DocumentManager.Webapi.pdb
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Bogus.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Docker.DotNet.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
@@ -18,6 +20,7 @@ C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Npgsql.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -41,6 +44,3 @@ C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net6.0\DocumentManager.Webapi.pdb
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net6.0\DocumentManager.Webapi.genruntimeconfig.cache
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net6.0\ref\DocumentManager.Webapi.dll
-C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Bogus.dll
-C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Docker.DotNet.dll
-C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Newtonsoft.Json.dll

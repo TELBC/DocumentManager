@@ -13,6 +13,7 @@ builder.Services.AddDbContext<DocumentManagerContext>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("Default"),
         o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)));
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 builder.Services.AddControllers();
 if (builder.Environment.IsDevelopment())
 {
@@ -27,20 +28,19 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 if (app.Environment.IsDevelopment())
 {
-    try
-    {
-        await app.UsePostgresContainer(
-            containerName: "documentmanager_postgres", version: "latest",
-            connectionString: app.Configuration.GetConnectionString("Default") ??
-                              "Host=127.0.0.1;Port=15432;Database=DocumentManager;Username=postgres;Password=pwd;TrustServerCertificate=true;",
-            deleteAfterShutdown: true);
-    }
-    catch (Exception e)
-    {
-        app.Logger.LogError(e.Message);
-        return;
-    }
-    app.UseCors();
+     try
+     {
+         await app.UsePostgresContainer(
+             containerName: "documentmanager_postgres", version: "latest",
+             connectionString: app.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException(),
+             deleteAfterShutdown: true);
+     }
+     catch (Exception e)
+     {
+         app.Logger.LogError(e.Message);
+         return;
+     }
+     app.UseCors();
 }
 
 using (var scope = app.Services.CreateScope())
@@ -50,6 +50,9 @@ using (var scope = app.Services.CreateScope())
         db.CreateDatabase(isDevelopment: app.Environment.IsDevelopment());
     }
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseStaticFiles();
 app.MapControllers();

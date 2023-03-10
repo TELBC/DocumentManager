@@ -38,7 +38,7 @@ public class DocumentManagerContext : DbContext
             {
                 if (prop.Name == "Guid")
                 {
-                    modelBuilder.Entity(entityType.ClrType).HasAlternateKey("SuperSecretAlternateKeyNobodyWillFindOut");
+                    modelBuilder.Entity(entityType.ClrType).HasAlternateKey("AdminKey");
                     prop.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
                 }
                 if (prop.ClrType == typeof(string) && prop.GetMaxLength() is null) prop.SetMaxLength(null);//by giving it a 255 char limit i get an error, i will troubleshoot this later
