@@ -1,4 +1,5 @@
-﻿using DocumentManager.Infrastructure;
+﻿using System.Linq;
+using DocumentManager.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentManager.Webapi.Controllers;
@@ -13,17 +14,20 @@ public class DocumentController : ControllerBase
     {
         _db = db;
     }
-    // Reagiert auf GET /api/document
+    // Reacts tpoGET /api/document
     [HttpGet]
     public IActionResult GetAllDocuments()
     {
-        return Ok(new string[]{"Document 10", "Document 11"});
+        var documents = _db.Document.ToList();
+        return Ok(documents);
     }
-    // Reagiert z. B. auf /api/document/10
+    // Reacts to /api/document/10
     [HttpGet("{id:int}")]
     public IActionResult GetDocumentDetail(int id)
     {
-        // if (id < 1000) { return NotFound(); }
-        return Ok($"Document {id}");
+        var document = _db.Document.Find(id);
+
+        if (document is null) return NotFound();
+        return Ok(document);
     }
 }
