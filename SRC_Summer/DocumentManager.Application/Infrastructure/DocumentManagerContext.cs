@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Bogus;
 using DocumentManager.Model;
@@ -17,6 +18,7 @@ public class DocumentManagerContext : DbContext
     public DbSet<Tag> Tag => Set<Tag>();
     public DbSet<Document> Document => Set<Document>();
     public DbSet<Folder> Folder => Set<Folder>();
+    public DbSet<DocumentTag> DocumentTag => Set<DocumentTag>();
 
     public DbSet<Model.DocumentManager> DocumentManager => Set<Model.DocumentManager>();
 
@@ -28,6 +30,18 @@ public class DocumentManagerContext : DbContext
             .Property(c => c.Category)
             .HasConversion<String>();
         modelBuilder.Entity<User>().ToTable("User");
+        
+        modelBuilder.Entity<DocumentTag>()
+            .HasKey(ba => new { ba.DocumentId, ba.TagId });
+        modelBuilder.Entity<DocumentTag>()
+            .HasOne(ba => ba.Document)
+            .WithMany(b => b.Tags)
+            .HasForeignKey(ba => ba.DocumentId);
+        modelBuilder.Entity<DocumentTag>()
+            .HasOne(ba => ba.Tag)
+            .WithMany(a => a.Documents)
+            .HasForeignKey(ba => ba.TagId);
+        
         
         // additional config
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
@@ -55,7 +69,7 @@ public class DocumentManagerContext : DbContext
         if (isDevelopment) Seed();
     }
     
-    private void Initialize()
+    public void Initialize()
     {
         var user = new User("Admin", "admin@example.com", "verySecure");
         User.Add(user);
@@ -64,27 +78,37 @@ public class DocumentManagerContext : DbContext
         SaveChanges();
     }
     
-    private void Seed()
+    public void Seed()
     {
         //tag
         var tags = new Faker<Tag>().CustomInstantiator(faker =>
             new Tag(faker.Lorem.Word(), faker.PickRandom<Category>())
         ).Generate(10);
         Tag.AddRange(tags);
+        
         //document
         var documents = new Faker<Document>().CustomInstantiator(faker =>
             {
-                var document = new Document("Document "+faker.UniqueIndex,
+                var document = new Document("Document " + faker.UniqueIndex,
                     faker.Lorem.Text(),
-                    faker.System.FileExt())
-                {
-                    Tags = tags.OrderBy(_ => new Random().Next()).Take(3).ToList()
-                };
+                    faker.System.FileExt());
                 return document;
             }
         ).Generate(20);
-
         Document.AddRange(documents);
+        
+        SaveChanges();
+        
+        //documentTag
+        var documentTags = new Faker<DocumentTag>()
+            .CustomInstantiator(f => new DocumentTag {
+                DocumentId = f.PickRandom(documents).Id,
+                TagId = f.PickRandom(tags).Id
+            })
+            .Generate(19);
+        DocumentTag.AddRange(documentTags);
+        SaveChanges();
+        
         //folder
         var folders = new Faker<Folder>().CustomInstantiator(faker =>
         {

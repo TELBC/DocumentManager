@@ -47,10 +47,7 @@ public class RepositoryTest : DocumentManagerDb
             {
                 Documents = new List<Document>()
             };
-            var document = new Document(faker.System.FileName(), faker.Lorem.Text(), faker.System.FileType())
-            {
-                Tags = new List<Tag> { new(faker.System.CommonFileName(), faker.PickRandom<Category>()) }
-            };
+            var document = new Document(faker.System.FileName(), faker.Lorem.Text(), faker.System.FileType());
             folder.Documents.Add(document);
             return folder;
         }).Generate();

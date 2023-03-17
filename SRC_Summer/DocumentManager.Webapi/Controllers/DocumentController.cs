@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using DocumentManager.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DocumentManager.Webapi.Controllers;
 
@@ -14,20 +15,61 @@ public class DocumentController : ControllerBase
     {
         _db = db;
     }
-    // Reacts tpoGET /api/document
+    // Reacts to GET /api/documents
     [HttpGet]
     public IActionResult GetAllDocuments()
     {
-        var documents = _db.Document.ToList();
+        var documents = _db.Document
+            .Include(x => x.Tags).ThenInclude(x => x.Tag)
+            .Select(x => new
+            {
+                id = x.Id,
+                title = x.Title,
+                content = x.Content,
+                type = x.Type,
+                #pragma warning disable CS8602
+                tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
+                #pragma warning restore CS8602
+                version = x.Version
+            });
         return Ok(documents);
     }
-    // Reacts to /api/document/10
+    // Reacts to /api/documents/10
     [HttpGet("{id:int}")]
     public IActionResult GetDocumentDetail(int id)
     {
-        var document = _db.Document.Find(id);
-
+        var document = _db.Document
+            .Include(x => x.Tags).ThenInclude(x => x.Tag)
+            .Select(x => new
+            {
+                id = x.Id,
+                title = x.Title,
+                content = x.Content,
+                type = x.Type,
+                #pragma warning disable CS8602
+                tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
+                #pragma warning restore CS8602
+                version = x.Version
+            })
+            .FirstOrDefault(x=>x.id==id);
         if (document is null) return NotFound();
         return Ok(document);
+    }
+    //Reacts to /api/documents/1/tags/
+    [HttpGet("{id:int}/tags")]
+    public IActionResult GetDocumentTags(int id)
+    {
+        var tags = _db.Document
+            .Include(x => x.Tags).ThenInclude(x => x.Tag)
+            .FirstOrDefault(x => x.Id ==id)?.Tags
+            .Select(x=>new
+            {
+                id=x.TagId,
+                name=x.Tag?.Name,
+                category=x.Tag?.Category
+            });
+        
+        if (tags == null) return NotFound();
+        return Ok(tags);
     }
 }

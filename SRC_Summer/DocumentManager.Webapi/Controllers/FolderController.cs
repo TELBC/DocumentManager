@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -21,21 +23,47 @@ public class FolderController : ControllerBase
     public IActionResult GetAllFolders()
     {
         var folders = _db.Folder
-            .Include(f => f.Documents)
-            .Select(f => new Folder
+            .Include(x => x.Documents).ThenInclude(x => x.Tags).ThenInclude(x=>x.Tag)
+            .Select(x => new
             {
-                Id = f.Id,
-                Name = f.Name,
-                Documents = f.Documents
-            }).ToList();
+                id = x.Id,
+                name = x.Name,
+                documents = x.Documents.Select(x =>new
+                {
+                    id = x.Id,
+                    title = x.Title,
+                    content = x.Content,
+                    type = x.Type,
+                    #pragma warning disable CS8602
+                    tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
+                    #pragma warning restore CS8602
+                    version = x.Version
+                })
+            });
         return Ok(folders);
     }
     // Reacts to /api/folder/10
     [HttpGet("{id:int}")]
     public IActionResult GetFolderDetail(int id)
     {
-        var folder = _db.Folder.Include(f => f.Documents).FirstOrDefault(f => f.Id == id);
-
+        var folder = _db.Folder
+            .Include(x => x.Documents).ThenInclude(x => x.Tags).ThenInclude(x=>x.Tag)
+            .Select(x => new
+            {
+                id = x.Id,
+                name = x.Name,
+                documents = x.Documents.Select(x =>new
+                {
+                    id = x.Id,
+                    title = x.Title,
+                    content = x.Content,
+                    type = x.Type,
+                    #pragma warning disable CS8602
+                    tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
+                    #pragma warning restore CS8602
+                    version = x.Version
+                })
+            }).FirstOrDefault(x=>x.id==id);
         if (folder is null) return NotFound();
         return Ok(folder);
     }
@@ -44,10 +72,22 @@ public class FolderController : ControllerBase
     [HttpGet("{folderId:int}/{documentId:int}")]
     public IActionResult GetDocumentInFolderDetail(int folderId, int documentId)
     {
-        var folder = _db.Folder.Include(f => f.Documents).FirstOrDefault(f => f.Id == folderId);
+        var document = _db.Document
+            .Include(x => x.Tags).ThenInclude(x => x.Tag)
+            .Where(x => x.Id == folderId && x.Id == documentId)
+            .Select(x => new
+            {
+                id = x.Id,
+                title = x.Title,
+                content = x.Content,
+                type = x.Type,
+                #pragma warning disable CS8602
+                tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
+                #pragma warning restore CS8602
+                version = x.Version
+            })
+            .FirstOrDefault();
 
-        if (folder is null) return NotFound();
-        var document = folder.Documents.FirstOrDefault(d => d.Id == documentId);
         if (document is null) return NotFound();
         return Ok(document);
     }

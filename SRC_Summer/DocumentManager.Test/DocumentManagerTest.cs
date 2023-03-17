@@ -29,10 +29,7 @@ public class DocumentManagerTest : DocumentManagerDb
             };
             var document = new Document(faker.Lorem.Word(),
                 faker.Lorem.Text(),
-                faker.System.FileType())
-            {
-                Tags = new List<Tag> { new(faker.Lorem.Word(), faker.PickRandom<Category>()) }
-            };
+                faker.System.FileType());
             folder.Documents.Add(document);
             return folder;
         }).Generate();

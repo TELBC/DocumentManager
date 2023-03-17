@@ -12,7 +12,7 @@ public class DocumentManagerDb
     {
         var opt = new DbContextOptionsBuilder<DocumentManagerContext>()
             .UseNpgsql(
-                "Host=localhost;Port=5432;Database=DocumentManager;Username=postgres;Password=pwd;IncludeErrorDetail=true;")
+                "Host=localhost;Port=15432;Database=documentmanager_postgres;Username=postgres;Password=pwd;IncludeErrorDetail=true;")
             .Options;
 
         Db = new DocumentManagerContext(opt);

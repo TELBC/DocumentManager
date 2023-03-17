@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentManager.Model;
 
@@ -14,6 +15,7 @@ public class Tag : IEntity<int>
     {
         Name = name;
         Category = category;
+        Documents = new List<DocumentTag>();
     }
 
     [Required] [MaxLength(255)] public string Name { get; protected set; }
@@ -21,4 +23,6 @@ public class Tag : IEntity<int>
     public Category Category { get; protected set; }
 
     [Key] public int Id { get; protected set; }
+    
+    public List<DocumentTag> Documents { get; set; }
 }

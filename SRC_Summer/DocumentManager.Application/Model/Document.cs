@@ -9,7 +9,7 @@ public class Document : IEntity<int>
     {
         Title = title;
         Content = content;
-        Tags = new List<Tag>();
+        Tags = new List<DocumentTag>();
         Type = type;
     }
 
@@ -21,7 +21,7 @@ public class Document : IEntity<int>
 
     [ConcurrencyCheck]
     public string Content { get; set; }
-    public List<Tag> Tags{ get; set; }
+    public List<DocumentTag> Tags { get; set; }
     public string Type{ get; set; }
 
     public int Version { get; private set; }
