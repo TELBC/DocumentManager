@@ -1,4 +1,6 @@
-﻿namespace DocumentManager.Webapi.Controllers;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DocumentManager.Webapi.Controllers;
 
 using System.Linq;
 using DocumentManager.Infrastructure;
@@ -18,12 +20,13 @@ public class TagController : ControllerBase
     [HttpGet]
     public IActionResult GetAllTags()
     {
-        var tags = _db.DocumentTag.ToList();
+        var tags = _db.Tag
+            .ToList();//fix 
         return Ok(tags);
     }
-    // Reacts to /api/tags/10
+    // Reacts to /api/tags/1
     [HttpGet("{id:int}")]
-    public IActionResult GetTagDetail(int id)
+    public IActionResult GetTagDetail(int id)//fix 
     {
         var tag = _db.Tag.Find(id);
 

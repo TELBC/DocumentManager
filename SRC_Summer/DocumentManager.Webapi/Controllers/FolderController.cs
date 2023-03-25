@@ -70,7 +70,7 @@ public class FolderController : ControllerBase
     
     // Reacts to /api/folder/10/1
     [HttpGet("{folderId:int}/{documentId:int}")]
-    public IActionResult GetDocumentInFolderDetail(int folderId, int documentId)
+    public IActionResult GetDocumentInFolderDetail(int folderId, int documentId)//fix 
     {
         var document = _db.Document
             .Include(x => x.Tags).ThenInclude(x => x.Tag)

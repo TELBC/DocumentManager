@@ -105,7 +105,7 @@ public class DocumentManagerContext : DbContext
                 DocumentId = f.PickRandom(documents).Id,
                 TagId = f.PickRandom(tags).Id
             })
-            .Generate(19);
+            .Generate(10);
         DocumentTag.AddRange(documentTags);
         SaveChanges();
         
