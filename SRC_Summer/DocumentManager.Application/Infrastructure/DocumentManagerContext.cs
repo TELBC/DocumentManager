@@ -96,16 +96,27 @@ public class DocumentManagerContext : DbContext
             }
         ).Generate(20);
         Document.AddRange(documents);
-        
         SaveChanges();
         
         //documentTag
-        var documentTags = new Faker<DocumentTag>()
-            .CustomInstantiator(f => new DocumentTag {
-                DocumentId = f.PickRandom(documents).Id,
-                TagId = f.PickRandom(tags).Id
-            })
-            .Generate(10);
+        var documentTags = new List<DocumentTag>();
+        foreach (var document in documents)
+        {
+            var tagIds = new HashSet<int>();
+            while (tagIds.Count < new Random().Next(0,3)) // add three tags to each document
+            {
+                var tagId = tags[new Random().Next(tags.Count)].Id;
+                if (!tagIds.Contains(tagId))
+                {
+                    tagIds.Add(tagId);
+                    documentTags.Add(new DocumentTag
+                    {
+                        DocumentId = document.Id,
+                        TagId = tagId
+                    });
+                }
+            }
+        }
         DocumentTag.AddRange(documentTags);
         SaveChanges();
         
