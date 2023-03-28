@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using DocumentManager.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace DocumentManager.Webapi.Controllers;
 
@@ -6,8 +8,8 @@ using System.Linq;
 using DocumentManager.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
 [Route("/api/tags")]
+[ApiController]
 public class TagController : ControllerBase
 {
     private readonly DocumentManagerContext _db;
@@ -21,15 +23,28 @@ public class TagController : ControllerBase
     public IActionResult GetAllTags()
     {
         var tags = _db.Tag
-            .ToList();//fix 
+            .Select(x => new
+            {
+                id = x.Id,
+                name = x.Name,
+                category = x.Category
+            })
+            .ToList();
         return Ok(tags);
     }
     // Reacts to /api/tags/1
     [HttpGet("{id:int}")]
-    public IActionResult GetTagDetail(int id)//fix 
+    public IActionResult GetTagDetail(int id) 
     {
-        var tag = _db.Tag.Find(id);
-
+        var tag = _db.Tag
+            .Select(x => new
+            {
+                id = x.Id,
+                name = x.Name,
+                category = x.Category
+            })
+            .OrderBy(x => x.id)
+            .FirstOrDefault(x => x.id==id);
         if (tag is null) return NotFound();
         return Ok(tag);
     }
