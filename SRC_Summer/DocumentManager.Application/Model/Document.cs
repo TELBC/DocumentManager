@@ -19,12 +19,10 @@ public class Document : IEntity<int>
     
     [Key] public int Id { get; private set; }
     public string Title { get; set; }
-
+    public List<DocumentTag> Tags { get; set; }
+    public string Type{ get; set; }
     [ConcurrencyCheck]
     [MaxLength(65535)]
     public string Content { get; set; }
-    public List<DocumentTag> Tags { get; set; }
-    public string Type{ get; set; }
-
     public int Version { get; private set; }
 }

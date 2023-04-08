@@ -28,11 +28,11 @@ public class DocumentController : ControllerBase
             {
                 id = x.Id,
                 title = x.Title,
-                content = x.Content,
-                type = x.Type,
 #pragma warning disable CS8602
                 tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
 #pragma warning restore CS8602
+                type = x.Type,
+                content = x.Content,
                 version = x.Version
             });
         return Ok(documents);
@@ -71,7 +71,7 @@ public class DocumentController : ControllerBase
             {
                 id = x.TagId,
                 name = x.Tag?.Name,
-                category = x.Tag?.Category //fix this from int to enum
+                category = x.Tag?.Category
             });
 
         if (tags == null) return NotFound();

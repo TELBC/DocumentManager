@@ -32,15 +32,17 @@ public class DocumentManagerContext : DbContext
         modelBuilder.Entity<User>().ToTable("User");
         
         modelBuilder.Entity<DocumentTag>()
-            .HasKey(ba => new { ba.DocumentId, ba.TagId });
+            .HasKey(dt => new { dt.DocumentId, dt.TagId });
+
         modelBuilder.Entity<DocumentTag>()
-            .HasOne(ba => ba.Document)
-            .WithMany(b => b.Tags)
-            .HasForeignKey(ba => ba.DocumentId);
+            .HasOne(dt => dt.Document)
+            .WithMany(d => d.Tags)
+            .HasForeignKey(dt => dt.DocumentId);
+        
         modelBuilder.Entity<DocumentTag>()
-            .HasOne(ba => ba.Tag)
-            .WithMany(a => a.Documents)
-            .HasForeignKey(ba => ba.TagId);
+            .HasOne(dt => dt.Tag)
+            .WithMany(t => t.Documents)
+            .HasForeignKey(dt => dt.TagId);
         
         
         // additional config
@@ -113,7 +115,8 @@ public class DocumentManagerContext : DbContext
                     {
                         DocumentId = document.Id,
                         TagId = tagId
-                    });
+                    }
+                    );
                 }
             }
         }

@@ -83,10 +83,12 @@ public class DbTest : DocumentManagerDb
         
         //documentTag
         var documentTags = new Faker<DocumentTag>()
-            .CustomInstantiator(f => new DocumentTag {
+            .CustomInstantiator(f => new DocumentTag
+            {
                 DocumentId = f.PickRandom(documents).Id,
                 TagId = f.PickRandom(tags).Id
-            })
+            }
+            )
             .Generate(10);
         Db.AddRange(documentTags);
         

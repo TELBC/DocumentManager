@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using DocumentManager.Infrastructure;
+using DocumentManager.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,15 +22,21 @@ public class UserController : ControllerBase
     [HttpGet]
     public IActionResult GetAllUsers()
     {
-        var users = _db.User.ToList();
-        return Ok(users); // need to change Userbase to User relationship to make it get a key that maps to the password instead of plaintext
+        var users = _db.UserBase.ToList();
+        return Ok(users);
     }
+    
     
     // Reacts to /api/users/1
     [HttpGet("{id:int}")]
     public IActionResult GetUserDetail(int id)
     {
-        var user = _db.User.FirstOrDefault(u => u.Id == id);
+        var user = _db.UserBase.Select(x =>new 
+        {
+            id = x.Id,
+            name = x.Name,
+            email = x.Email
+        }).FirstOrDefault(u => u.id == id);
 
         if (user is null) return NotFound();
         return Ok(user);

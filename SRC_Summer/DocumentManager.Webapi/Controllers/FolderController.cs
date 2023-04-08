@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using DocumentManager.Infrastructure;
@@ -69,26 +70,34 @@ public class FolderController : ControllerBase
     }
     
     // Reacts to /api/folder/10/1
+    //doesnt work
     [HttpGet("{folderId:int}/{documentId:int}")]
-    public IActionResult GetDocumentInFolderDetail(int folderId, int documentId)//fix 
+    public IActionResult GetDocumentInFolderDetail(int folderId, int documentId)
     {
-        var document = _db.Document
-            .Include(x => x.Tags).ThenInclude(x => x.Tag)
-            .Where(x => x.Id == folderId && x.Id == documentId)
-            .Select(x => new
-            {
-                id = x.Id,
-                title = x.Title,
-                content = x.Content,
-                type = x.Type,
-                #pragma warning disable CS8602
-                tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
-                #pragma warning restore CS8602
-                version = x.Version
-            })
-            .FirstOrDefault();
+        var folder = _db.Folder.Include(x =>x.Documents).ThenInclude(x => x.Tags.Select(t =>new
+        {
+            id = t.TagId,
+#pragma warning disable CS8602
+            tag = t.Tag.Name,
+#pragma warning restore CS8602
+            // tagCategory = t.Tag.Category
+        })).FirstOrDefault(x => x.Id == folderId);
+//         if (folder is null) return NotFound();
+//         var document = folder.Documents
+//             .Select(x => new
+//             {
+//                 id = x.Id,
+//                 title = x.Title,
+//                 content = x.Content,
+//                 type = x.Type,
+// #pragma warning disable CS8602
+//                 tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
+// #pragma warning restore CS8602
+//                 version = x.Version
+//             })
+//             .FirstOrDefault(x => x.id == documentId);
+//         if (document is null) return NotFound();
 
-        if (document is null) return NotFound();
-        return Ok(document);
+        return Ok(folder);
     }
 }
