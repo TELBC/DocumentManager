@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -35,9 +36,7 @@ public class FolderController : ControllerBase
                     title = x.Title,
                     content = x.Content,
                     type = x.Type,
-                    #pragma warning disable CS8602
-                    tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
-                    #pragma warning restore CS8602
+                    tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                     version = x.Version
                 })
             });
@@ -59,45 +58,54 @@ public class FolderController : ControllerBase
                     title = x.Title,
                     content = x.Content,
                     type = x.Type,
-                    #pragma warning disable CS8602
-                    tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
-                    #pragma warning restore CS8602
+                    tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                     version = x.Version
                 })
-            }).FirstOrDefault(x=>x.id==id);
+            })
+    .FirstOrDefault(x=>x.id==id);
         if (folder is null) return NotFound();
         return Ok(folder);
     }
     
     // Reacts to /api/folder/10/1
-    //doesnt work
     [HttpGet("{folderId:int}/{documentId:int}")]
     public IActionResult GetDocumentInFolderDetail(int folderId, int documentId)
     {
-        var folder = _db.Folder.Include(x =>x.Documents).ThenInclude(x => x.Tags.Select(t =>new
+        var folder = _db.Folder
+            .Include(x => x.Documents).ThenInclude(x => x.Tags).ThenInclude(x => x.Tag)
+            .FirstOrDefault(x => x.Id == folderId)?.Documents;
+        if (folder == null) return NotFound();
+        var document = folder.Select(x => new
         {
-            id = t.TagId,
-#pragma warning disable CS8602
-            tag = t.Tag.Name,
-#pragma warning restore CS8602
-            // tagCategory = t.Tag.Category
-        })).FirstOrDefault(x => x.Id == folderId);
-//         if (folder is null) return NotFound();
-//         var document = folder.Documents
-//             .Select(x => new
-//             {
-//                 id = x.Id,
-//                 title = x.Title,
-//                 content = x.Content,
-//                 type = x.Type,
-// #pragma warning disable CS8602
-//                 tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
-// #pragma warning restore CS8602
-//                 version = x.Version
-//             })
-//             .FirstOrDefault(x => x.id == documentId);
-//         if (document is null) return NotFound();
+            id = x.Id,
+            title = x.Title,
+            content = x.Content,
+            type = x.Type,
+            tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
+            version = x.Version
+        }).FirstOrDefault(x => x.id == documentId);
 
-        return Ok(folder);
+        if (document == null) return NotFound();
+        return Ok(document);
+    }
+    
+    // Reacts to /api/folder/10/1/tags
+    [HttpGet("{folderId:int}/{documentId:int}/tags")]
+    public IActionResult GetDocumentInFolderTags(int folderId, int documentId)
+    {
+        var folder = _db.Folder
+            .Include(x => x.Documents).ThenInclude(x => x.Tags).ThenInclude(x => x.Tag)
+            .FirstOrDefault(x => x.Id == folderId)?.Documents;
+        if (folder == null) return NotFound();
+        var document = folder.FirstOrDefault(x => x.Id == documentId);
+
+        var tags = document?.Tags.Select(x => new
+        {
+            id = x.TagId,
+            name = x.Tag?.Name,
+            category = x.Tag?.Category
+        });
+        if (tags == null) return NotFound();
+        return Ok(tags);
     }
 }

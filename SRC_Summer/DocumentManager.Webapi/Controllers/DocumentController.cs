@@ -28,9 +28,7 @@ public class DocumentController : ControllerBase
             {
                 id = x.Id,
                 title = x.Title,
-#pragma warning disable CS8602
-                tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
-#pragma warning restore CS8602
+                tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                 type = x.Type,
                 content = x.Content,
                 version = x.Version
@@ -50,9 +48,7 @@ public class DocumentController : ControllerBase
                 title = x.Title,
                 content = x.Content,
                 type = x.Type,
-#pragma warning disable CS8602
-                tags = x.Tags.Select(dt => dt.Tag.Name).ToList(),
-#pragma warning restore CS8602
+                tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                 version = x.Version
             })
             .FirstOrDefault(x => x.id == id);
