@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
+using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +14,17 @@ namespace DocumentManager.Webapi.Controllers;
 public class DocumentController : ControllerBase
 {
     private readonly DocumentManagerContext _db;
+    private readonly IMapper _mapper;
 
-    public DocumentController(DocumentManagerContext db)
+    public DocumentController(DocumentManagerContext db, IMapper mapper)
     {
         _db = db;
+        _mapper = mapper;
     }
+    
+    // -------------------------------------------------------
+    // HTTP GET
+    // -------------------------------------------------------
 
     // Reacts to GET /api/documents
     [HttpGet]
@@ -72,5 +80,19 @@ public class DocumentController : ControllerBase
 
         if (tags == null) return NotFound();
         return Ok(tags);
+    }
+    
+    // -------------------------------------------------------
+    // HTTP POST
+    // -------------------------------------------------------
+    
+    [HttpPost]
+    public IActionResult AddDocument(DocumentDto documentDto)//works but DocumentManager.Dto.DocumentDto needs to have a constructor with 0 args or only optional args. Validate your configuration for details. (Parameter 'type')
+    {
+        var document = _mapper.Map<Document>(documentDto);
+        _db.Document.Add(document);
+        try { _db.SaveChanges(); }
+        catch (DbUpdateException) { return BadRequest(); }
+        return Ok(_mapper.Map<Document, DocumentDto>(document));
     }
 }

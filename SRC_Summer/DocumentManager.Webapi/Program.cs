@@ -1,4 +1,6 @@
 using System;
+using System.Text.Json.Serialization;
+using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Webapi;
 using Microsoft.AspNetCore.Builder;
@@ -20,8 +22,11 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddCors(options =>
         options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 }
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-
+//this fixed the cycles of documentTag (quick fix but if it works, it works)
+builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // ***************************************** APPLICATION ******************************************
 var app = builder.Build();
