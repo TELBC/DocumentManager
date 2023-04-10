@@ -87,12 +87,44 @@ public class DocumentController : ControllerBase
     // -------------------------------------------------------
     
     [HttpPost]
-    public IActionResult AddDocument(DocumentDto documentDto)//works but DocumentManager.Dto.DocumentDto needs to have a constructor with 0 args or only optional args. Validate your configuration for details. (Parameter 'type')
+    public IActionResult AddDocument(DocumentDto documentDto)
     {
         var document = _mapper.Map<Document>(documentDto);
         _db.Document.Add(document);
         try { _db.SaveChanges(); }
         catch (DbUpdateException) { return BadRequest(); }
         return Ok(_mapper.Map<Document, DocumentDto>(document));
+    }
+    
+    // -------------------------------------------------------
+    // HTTP PUT
+    // -------------------------------------------------------
+    
+    [HttpPut("{title}")]
+    public IActionResult EditDocument(string title, DocumentDto documentDto)
+    {
+        // if (title != documentDto.Title) { return BadRequest(); }
+        var document = _db.Document.FirstOrDefault(a => a.Title == title);
+        _mapper.Map(documentDto, document);
+        try { _db.SaveChanges(); }
+        catch (DbUpdateException) { return BadRequest(); }
+        return NoContent();
+    }
+    
+    
+    // -------------------------------------------------------
+    // HTTP DELETE
+    // -------------------------------------------------------
+    
+    [HttpDelete("{id:int}")]
+    public IActionResult DeleteDocument(int id)
+    {
+        var document = _db.Document.FirstOrDefault(a => a.Id == id);
+        if (document is null) { return NotFound(); }
+        // TODO: Remove referenced data (if needed)
+        _db.Document.Remove(document);
+        try { _db.SaveChanges(); }
+        catch (DbUpdateException) { return BadRequest(); }
+        return NoContent();
     }
 }
