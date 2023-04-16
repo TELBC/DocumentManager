@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DocumentManagerContext>(opt =>
@@ -24,10 +26,25 @@ if (builder.Environment.IsDevelopment())
 }
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+builder.Services.AddHttpContextAccessor();
+
 //this fixed the cycles of documentTag (quick fix but if it works, it works)
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+// byte[] secret = Convert.FromBase64String(builder.Configuration["Secret"]);
+// builder.Services
+//     .AddAuthentication(options => options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme)
+//     .AddJwtBearer(options =>
+//     {
+//         options.TokenValidationParameters = new TokenValidationParameters
+//         {
+//             ValidateIssuerSigningKey = true,
+//             IssuerSigningKey = new SymmetricSecurityKey(secret),
+//             ValidateAudience = false,
+//             ValidateIssuer = false
+//         };
+//     });
 // ***************************************** APPLICATION ******************************************
 var app = builder.Build();
 app.UseHttpsRedirection();

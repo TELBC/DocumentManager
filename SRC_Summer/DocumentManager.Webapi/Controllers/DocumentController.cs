@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,38 +41,39 @@ public class DocumentController : ControllerBase
                 tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                 type = x.Type,
                 content = x.Content,
-                version = x.Version
+                version = x.Version,
+                guid = x.Guid
             });
         return Ok(documents);
     }
 
     // Reacts to /api/documents/10
-    [HttpGet("{id:int}")]
-    public IActionResult GetDocumentDetail(int id)
+    [HttpGet("{guid:Guid}")]
+    public IActionResult GetDocumentDetail(Guid guid)
     {
         var document = _db.Document
             .Include(x => x.Tags).ThenInclude(x => x.Tag)
             .Select(x => new
             {
-                id = x.Id,
+                guid = x.Guid,
                 title = x.Title,
                 content = x.Content,
                 type = x.Type,
                 tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                 version = x.Version
             })
-            .FirstOrDefault(x => x.id == id);
+            .FirstOrDefault(x => x.guid == guid);
         if (document is null) return NotFound();
         return Ok(document);
     }
 
     //Reacts to /api/documents/1/tags/
-    [HttpGet("{id:int}/tags")]
-    public IActionResult GetDocumentTags(int id)
+    [HttpGet("{guid:Guid}/tags")]
+    public IActionResult GetDocumentTags(Guid guid)
     {
         var tags = _db.Document
             .Include(x => x.Tags).ThenInclude(x => x.Tag)
-            .FirstOrDefault(x => x.Id == id)?.Tags
+            .FirstOrDefault(x => x.Guid == guid)?.Tags
             .Select(x => new
             {
                 id = x.TagId,
@@ -85,7 +88,7 @@ public class DocumentController : ControllerBase
     // -------------------------------------------------------
     // HTTP POST
     // -------------------------------------------------------
-    
+    // [Authorize]
     [HttpPost]
     public IActionResult AddDocument(DocumentDto documentDto)
     {
@@ -100,12 +103,24 @@ public class DocumentController : ControllerBase
     // HTTP PUT
     // -------------------------------------------------------
     
-    [HttpPut("{title}")]
-    public IActionResult EditDocument(string title, DocumentDto documentDto)
+    // [Authorize]
+    [HttpPut("{guid:Guid}")]//fix
+    public IActionResult EditDocument(Guid guid, DocumentDto documentDto)//documentTag problems
     {
-        // if (title != documentDto.Title) { return BadRequest(); }
-        var document = _db.Document.FirstOrDefault(a => a.Title == title);
+        if (guid != documentDto.Guid) { return BadRequest(); }
+        var document = _db.Document.FirstOrDefault(a => a.Guid == guid);
+        if (document is null) { return NotFound();}
+
+        var tags = _db.DocumentTag.Where(dt => dt.Document!.Guid == guid).ToList();
+        foreach (var tag in tags)
+        {
+            _db.DocumentTag.Remove(tag);
+        }
         _mapper.Map(documentDto, document);
+        foreach (var tag in tags)
+        {
+            _db.DocumentTag.Add(tag);
+        }
         try { _db.SaveChanges(); }
         catch (DbUpdateException) { return BadRequest(); }
         return NoContent();
@@ -116,15 +131,21 @@ public class DocumentController : ControllerBase
     // HTTP DELETE
     // -------------------------------------------------------
     
-    [HttpDelete("{id:int}")]
-    public IActionResult DeleteDocument(int id)
+    // [Authorize]
+    [HttpDelete("{guid:Guid}")]
+    public IActionResult DeleteDocument(Guid guid)
     {
-        var document = _db.Document.FirstOrDefault(a => a.Id == id);
+        var document = _db.Document.FirstOrDefault(a => a.Guid == guid);
         if (document is null) { return NotFound(); }
-        // TODO: Remove referenced data (if needed)
+        var tags = _db.DocumentTag.Where(dt => dt.Document!.Guid == guid).ToList();
+        foreach (var tag in tags)
+        {
+            _db.DocumentTag.Remove(tag);   
+        }
         _db.Document.Remove(document);
         try { _db.SaveChanges(); }
         catch (DbUpdateException) { return BadRequest(); }
         return NoContent();
     }
+    
 }

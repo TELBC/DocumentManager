@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -22,21 +23,25 @@ public class UserController : ControllerBase
     [HttpGet]
     public IActionResult GetAllUsers()
     {
-        var users = _db.UserBase.ToList();
+        var users = _db.UserBase.Select(x =>new 
+            {
+                guid = x.Guid,
+                name = x.Name,
+                email = x.Email}).ToList();
         return Ok(users);
     }
     
     
     // Reacts to /api/users/1
-    [HttpGet("{id:int}")]
-    public IActionResult GetUserDetail(int id)
+    [HttpGet("{guid:Guid}")]
+    public IActionResult GetUserDetail(Guid guid)
     {
         var user = _db.UserBase.Select(x =>new 
         {
-            id = x.Id,
+            guid = x.Guid,
             name = x.Name,
             email = x.Email
-        }).FirstOrDefault(u => u.id == id);
+        }).FirstOrDefault(u => u.guid == guid);
 
         if (user is null) return NotFound();
         return Ok(user);

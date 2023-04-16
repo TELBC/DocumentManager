@@ -46,3 +46,10 @@ C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\obj\Debug\net6.0\ref\DocumentManager.Webapi.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
