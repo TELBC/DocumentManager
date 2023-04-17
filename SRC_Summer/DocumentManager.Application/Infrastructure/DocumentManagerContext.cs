@@ -4,6 +4,7 @@ using System.Linq;
 using Bogus;
 using DocumentManager.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DocumentManager.Infrastructure;
 
@@ -28,9 +29,9 @@ public class DocumentManagerContext : DbContext
         modelBuilder
             .Entity<Tag>()
             .Property(c => c.Category)
-            .HasConversion<String>();
+            .HasConversion<string>();
         modelBuilder.Entity<User>().ToTable("User");
-        
+
         modelBuilder.Entity<DocumentTag>()
             .HasKey(dt => new { dt.DocumentId, dt.TagId });
 
@@ -38,13 +39,13 @@ public class DocumentManagerContext : DbContext
             .HasOne(dt => dt.Document)
             .WithMany(d => d.Tags)
             .HasForeignKey(dt => dt.DocumentId);
-        
+
         modelBuilder.Entity<DocumentTag>()
             .HasOne(dt => dt.Tag)
             .WithMany(t => t.Documents)
             .HasForeignKey(dt => dt.TagId);
-        
-        
+
+
         // additional config
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
@@ -55,22 +56,25 @@ public class DocumentManagerContext : DbContext
                 if (prop.Name == "Guid")
                 {
                     modelBuilder.Entity(entityType.ClrType).HasAlternateKey("Guid");
-                    prop.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
+                    prop.ValueGenerated = ValueGenerated.OnAdd;
                 }
-                if (prop.ClrType == typeof(string) && prop.GetMaxLength() is null) prop.SetMaxLength(null);//by giving it a 255 char limit i get an error, i will troubleshoot this later
+
+                if (prop.ClrType == typeof(string) && prop.GetMaxLength() is null)
+                    prop.SetMaxLength(
+                        null); //by giving it a 255 char limit i get an error, i will troubleshoot this later
                 if (prop.ClrType == typeof(DateTime)) prop.SetPrecision(3);
                 if (prop.ClrType == typeof(DateTime?)) prop.SetPrecision(3);
             }
         }
     }
-    
+
     public void CreateDatabase(bool isDevelopment)
     {
-        if (isDevelopment) { Database.EnsureDeleted(); }
-        if (Database.EnsureCreated()) { Initialize(); }
+        if (isDevelopment) Database.EnsureDeleted();
+        if (Database.EnsureCreated()) Initialize();
         if (isDevelopment) Seed();
     }
-    
+
     public void Initialize()
     {
         var user = new User("Admin", "admin@example.com", "verySecure");
@@ -79,7 +83,7 @@ public class DocumentManagerContext : DbContext
         DocumentManager.Add(documentManager);
         SaveChanges();
     }
-    
+
     public void Seed()
     {
         //tag
@@ -87,42 +91,43 @@ public class DocumentManagerContext : DbContext
             new Tag(faker.Lorem.Word(), faker.PickRandom<Category>())
         ).Generate(10);
         Tag.AddRange(tags);
-        
+
         //document
         var documents = new Faker<Document>().CustomInstantiator(faker =>
             {
                 var document = new Document("Document " + faker.UniqueIndex,
                     faker.Lorem.Text(),
-                    faker.System.FileExt()){Guid = faker.Random.Guid()};
+                    faker.System.FileExt()) { Guid = faker.Random.Guid() };
                 return document;
             }
         ).Generate(20);
         Document.AddRange(documents);
         SaveChanges();
-        
+
         //documentTag
         var documentTags = new List<DocumentTag>();
         foreach (var document in documents)
         {
             var tagIds = new HashSet<int>();
-            while (tagIds.Count < new Random().Next(0,3)) // add three tags to each document
+            while (tagIds.Count < new Random().Next(0, 3)) // add three tags to each document
             {
                 var tagId = tags[new Random().Next(tags.Count)].Id;
                 if (!tagIds.Contains(tagId))
                 {
                     tagIds.Add(tagId);
                     documentTags.Add(new DocumentTag
-                    {
-                        DocumentId = document.Id,
-                        TagId = tagId
-                    }
+                        {
+                            DocumentId = document.Id,
+                            TagId = tagId
+                        }
                     );
                 }
             }
         }
+
         DocumentTag.AddRange(documentTags);
         SaveChanges();
-        
+
         //folder
         var folders = new Faker<Folder>().CustomInstantiator(faker =>
         {

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Bogus;
-using DocumentManager.Infrastructure;
 using DocumentManager.Model;
-using Xunit;
-using Assert = Xunit.Assert;
 
 namespace DocumentManager.Test;
 
@@ -20,14 +16,14 @@ public class DbTest : DocumentManagerDb
     }
 
     [Fact]
-    public void ContextTest()//test to debug Tags in document
+    public void ContextTest() //test to debug Tags in document
     {
         Db.Database.EnsureDeleted();
         Db.Database.EnsureCreated();
         Db.Initialize();
         Db.Seed();
     }
-    
+
 
     [Fact]
     public void SeedDataTest()
@@ -37,13 +33,13 @@ public class DbTest : DocumentManagerDb
         // user
         var user = new User("Admin", "admin@example.com", "verySecure");
         Db.Add(user);
-        
+
         //tag
         var tags = new Faker<Tag>().CustomInstantiator(faker =>
             new Tag(faker.Lorem.Word(), faker.PickRandom<Category>())
         ).Generate(10);
         Db.AddRange(tags);
-        
+
         //document
         var documents = new Faker<Document>().CustomInstantiator(faker =>
             {
@@ -78,21 +74,21 @@ public class DbTest : DocumentManagerDb
         foreach (var u in users) documentManager.AddFriend(u);
         foreach (var f in folders) documentManager.AddFolder(f);
         Db.Add(documentManager);
-        
+
         Db.SaveChanges();
-        
+
         //documentTag
         var documentTags = new Faker<DocumentTag>()
             .CustomInstantiator(f => new DocumentTag
-            {
-                DocumentId = f.PickRandom(documents).Id,
-                TagId = f.PickRandom(tags).Id
-            }
+                {
+                    DocumentId = f.PickRandom(documents).Id,
+                    TagId = f.PickRandom(tags).Id
+                }
             )
             .Generate(10);
         Db.AddRange(documentTags);
-        
-        
+
+
         Db.SaveChanges();
         Assert.True(Db.Tag.Count() == 10);
         Assert.True(Db.Document.Count() == 20);

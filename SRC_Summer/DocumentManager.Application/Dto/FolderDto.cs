@@ -19,8 +19,6 @@ public record FolderDto(
     {
         var db = validationContext.GetRequiredService<DocumentManagerContext>();
         if (db.Folder.Any(a => a.Name == Name))
-        {
             yield return new ValidationResult("Folder already exists", new[] { nameof(Name) });
-        }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using AutoMapper;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +23,7 @@ public class DocumentController : ControllerBase
         _db = db;
         _mapper = mapper;
     }
-    
+
     // -------------------------------------------------------
     // HTTP GET
     // -------------------------------------------------------
@@ -45,7 +43,7 @@ public class DocumentController : ControllerBase
                 tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                 type = x.Type,
                 content = x.Content,
-                version = x.Version,
+                version = x.Version
             });
         return Ok(documents);
     }
@@ -91,7 +89,7 @@ public class DocumentController : ControllerBase
         if (tags == null) return NotFound();
         return Ok(tags);
     }
-    
+
     // -------------------------------------------------------
     // HTTP POST
     // -------------------------------------------------------
@@ -104,47 +102,55 @@ public class DocumentController : ControllerBase
     {
         var document = _mapper.Map<Document>(documentDto);
         _db.Document.Add(document);
-        try { _db.SaveChanges(); }
-        catch (DbUpdateException) { return BadRequest(); }
+        try
+        {
+            _db.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            return BadRequest();
+        }
+
         return Ok(_mapper.Map<Document, DocumentDto>(document));
     }
-    
+
     // -------------------------------------------------------
     // HTTP PUT
     // -------------------------------------------------------
-    
+
     // [Authorize]
-    [HttpPut("{guid:Guid}")]//fix
+    [HttpPut("{guid:Guid}")] //fix
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult EditDocument(Guid guid, DocumentDto documentDto)//documentTag problems
     {
-        if (guid != documentDto.Guid) { return BadRequest(); }
+        if (guid != documentDto.Guid) return BadRequest();
         var document = _db.Document.FirstOrDefault(a => a.Guid == guid);
-        if (document is null) { return NotFound();}
+        if (document is null) return NotFound();
 
         var tags = _db.DocumentTag.Where(dt => dt.Document!.Guid == guid).ToList();
-        foreach (var tag in tags)
-        {
-            _db.DocumentTag.Remove(tag);
-        }
+        foreach (var tag in tags) _db.DocumentTag.Remove(tag);
         _mapper.Map(documentDto, document);
-        foreach (var tag in tags)
+        foreach (var tag in tags) _db.DocumentTag.Add(tag);
+        try
         {
-            _db.DocumentTag.Add(tag);
+            _db.SaveChanges();
         }
-        try { _db.SaveChanges(); }
-        catch (DbUpdateException) { return BadRequest(); }
+        catch (DbUpdateException)
+        {
+            return BadRequest();
+        }
+
         return NoContent();
     }
-    
-    
+
+
     // -------------------------------------------------------
     // HTTP DELETE
     // -------------------------------------------------------
-    
+
     // [Authorize]
     [HttpDelete("{guid:Guid}")]
     [Consumes(MediaTypeNames.Application.Json)]
@@ -154,16 +160,19 @@ public class DocumentController : ControllerBase
     public IActionResult DeleteDocument(Guid guid)
     {
         var document = _db.Document.FirstOrDefault(a => a.Guid == guid);
-        if (document is null) { return NotFound(); }
+        if (document is null) return NotFound();
         var tags = _db.DocumentTag.Where(dt => dt.Document!.Guid == guid).ToList();
-        foreach (var tag in tags)
-        {
-            _db.DocumentTag.Remove(tag);   
-        }
+        foreach (var tag in tags) _db.DocumentTag.Remove(tag);
         _db.Document.Remove(document);
-        try { _db.SaveChanges(); }
-        catch (DbUpdateException) { return BadRequest(); }
+        try
+        {
+            _db.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            return BadRequest();
+        }
+
         return NoContent();
     }
-    
 }

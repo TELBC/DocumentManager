@@ -232,3 +232,5 @@ C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Test\obj\Debug\net6.
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Test\obj\Debug\net6.0\DocumentManager.Test.pdb
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Test\obj\Debug\net6.0\DocumentManager.Test.genruntimeconfig.cache
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Test\obj\Debug\net6.0\ref\DocumentManager.Test.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Test\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Test\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

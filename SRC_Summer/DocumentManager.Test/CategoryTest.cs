@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Bogus;
 using DocumentManager.Model;
-using Xunit;
 
 namespace DocumentManager.Test;
+
 [Collection("Sequential")]
 public class CategoryTest : DocumentManagerDb
 {

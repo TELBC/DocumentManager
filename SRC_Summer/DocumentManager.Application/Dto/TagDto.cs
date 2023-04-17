@@ -17,8 +17,6 @@ public record TagDto(
     {
         var db = validationContext.GetRequiredService<DocumentManagerContext>();
         if (db.Tag.Any(a => a.Name == Name))
-        {
             yield return new ValidationResult("Tag already exists", new[] { nameof(Name) });
-        }
     }
 }

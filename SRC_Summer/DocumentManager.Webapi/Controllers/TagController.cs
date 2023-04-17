@@ -1,16 +1,14 @@
-﻿using System;
+﻿using System.Linq;
 using System.Net.Mime;
 using AutoMapper;
 using DocumentManager.Dto;
+using DocumentManager.Infrastructure;
 using DocumentManager.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DocumentManager.Webapi.Controllers;
-
-using System.Linq;
-using DocumentManager.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
 
 [Route("/api/tags")]
 [ApiController]
@@ -24,11 +22,11 @@ public class TagController : ControllerBase
         _db = db;
         _mapper = mapper;
     }
-    
+
     // -------------------------------------------------------
     // HTTP GET
     // -------------------------------------------------------
-    
+
     // Reacts to GET /api/tags
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
@@ -45,11 +43,12 @@ public class TagController : ControllerBase
             .ToList();
         return Ok(tags);
     }
+
     // Reacts to /api/tags/1
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetTagDetail(int id) 
+    public IActionResult GetTagDetail(int id)
     {
         var tag = _db.Tag
             .Select(x => new
@@ -59,15 +58,15 @@ public class TagController : ControllerBase
                 category = x.Category
             })
             .OrderBy(x => x.id)
-            .FirstOrDefault(x => x.id==id);
+            .FirstOrDefault(x => x.id == id);
         if (tag is null) return NotFound();
         return Ok(tag);
     }
-    
+
     // -------------------------------------------------------
     // HTTP POST
     // -------------------------------------------------------
-    
+
     // [Authorize]
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
@@ -76,17 +75,24 @@ public class TagController : ControllerBase
     public IActionResult AddTag(TagDto tagDto)
     {
         var tag = _mapper.Map<Tag>(tagDto);
-        if (tag is null) { return NotFound(); }
+        if (tag is null) return NotFound();
         _db.Tag.Add(tag);
-        try { _db.SaveChanges(); }
-        catch (DbUpdateException) { return BadRequest(); }
+        try
+        {
+            _db.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            return BadRequest();
+        }
+
         return Ok(_mapper.Map<Tag, TagDto>(tag));
     }
 
     // -------------------------------------------------------
     // HTTP PUT
     // -------------------------------------------------------
-    
+
     // [Authorize]
     [HttpPut("{id:int}")]
     [Consumes(MediaTypeNames.Application.Json)]
@@ -96,18 +102,25 @@ public class TagController : ControllerBase
     public IActionResult EditDocument(int id, TagDto tagDto)
     {
         var tag = _db.Tag.FirstOrDefault(a => a.Id == id);
-        if (tag is null) { return NotFound(); }
+        if (tag is null) return NotFound();
         _mapper.Map(tagDto, tag);
-        try { _db.SaveChanges(); }
-        catch (DbUpdateException) { return BadRequest(); }
+        try
+        {
+            _db.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            return BadRequest();
+        }
+
         return NoContent();
     }
-    
-    
+
+
     // -------------------------------------------------------
     // HTTP DELETE
     // -------------------------------------------------------
-    
+
     // [Authorize]
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -116,10 +129,17 @@ public class TagController : ControllerBase
     public IActionResult DeleteDocument(int id)
     {
         var tag = _db.Tag.FirstOrDefault(a => a.Id == id);
-        if (tag is null) { return NotFound(); }
+        if (tag is null) return NotFound();
         _db.Tag.Remove(tag);
-        try { _db.SaveChanges(); }
-        catch (DbUpdateException) { return BadRequest(); }
+        try
+        {
+            _db.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            return BadRequest();
+        }
+
         return NoContent();
     }
 }

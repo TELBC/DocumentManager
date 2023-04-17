@@ -23,12 +23,8 @@ public record DocumentDto(
         var db = validationContext.GetRequiredService<DocumentManagerContext>();
         var document = validationContext.ObjectInstance as DocumentDto;
         if (document == null)
-        {
             yield return new ValidationResult("Invalid object type", new[] { nameof(DocumentDto) });
-        }
         else if (db.Document.Any(a => a.Title == document.Title && a.Guid != document.Guid))
-        {
             yield return new ValidationResult("Document already exists", new[] { nameof(Title) });
-        }
     }
 }
