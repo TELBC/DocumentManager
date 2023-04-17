@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentManager.Model;
 
@@ -9,6 +10,7 @@ public abstract class UserBase : IEntity<int>
     [Required] [EmailAddress] public string Email { get; protected set; }
 
     [Key] public int Id { get; protected set; }
+    public Guid Guid { get; set; }
 
     public UserBase(string name, string email)
     {

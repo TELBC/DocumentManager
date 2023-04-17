@@ -54,7 +54,7 @@ public class DocumentManagerContext : DbContext
             {
                 if (prop.Name == "Guid")
                 {
-                    modelBuilder.Entity(entityType.ClrType).HasAlternateKey("AdminKey");
+                    modelBuilder.Entity(entityType.ClrType).HasAlternateKey("Guid");
                     prop.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
                 }
                 if (prop.ClrType == typeof(string) && prop.GetMaxLength() is null) prop.SetMaxLength(null);//by giving it a 255 char limit i get an error, i will troubleshoot this later
@@ -93,7 +93,7 @@ public class DocumentManagerContext : DbContext
             {
                 var document = new Document("Document " + faker.UniqueIndex,
                     faker.Lorem.Text(),
-                    faker.System.FileExt());
+                    faker.System.FileExt()){Guid = faker.Random.Guid()};
                 return document;
             }
         ).Generate(20);

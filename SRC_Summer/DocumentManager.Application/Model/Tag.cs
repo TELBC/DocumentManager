@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,8 +19,7 @@ public class Tag : IEntity<int>
         Category = category;
         Documents = new List<DocumentTag>();
     }
-    [Key]
-    public int Id { get; protected set; }
+    [Key] public int Id { get; protected set; }
     [Required] [MaxLength(255)] public string Name { get; protected set; }
     [Required] public Category Category { get; protected set; }
     public List<DocumentTag> Documents { get; set; }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using AutoMapper;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,25 +32,28 @@ public class DocumentController : ControllerBase
 
     // Reacts to GET /api/documents
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetAllDocuments()
     {
         var documents = _db.Document
             .Include(x => x.Tags).ThenInclude(x => x.Tag)
             .Select(x => new
             {
-                id = x.Id,
+                guid = x.Guid,
                 title = x.Title,
                 tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                 type = x.Type,
                 content = x.Content,
                 version = x.Version,
-                guid = x.Guid
             });
         return Ok(documents);
     }
 
     // Reacts to /api/documents/10
     [HttpGet("{guid:Guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetDocumentDetail(Guid guid)
     {
         var document = _db.Document
@@ -69,6 +74,8 @@ public class DocumentController : ControllerBase
 
     //Reacts to /api/documents/1/tags/
     [HttpGet("{guid:Guid}/tags")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetDocumentTags(Guid guid)
     {
         var tags = _db.Document
@@ -90,6 +97,9 @@ public class DocumentController : ControllerBase
     // -------------------------------------------------------
     // [Authorize]
     [HttpPost]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult AddDocument(DocumentDto documentDto)
     {
         var document = _mapper.Map<Document>(documentDto);
@@ -105,6 +115,10 @@ public class DocumentController : ControllerBase
     
     // [Authorize]
     [HttpPut("{guid:Guid}")]//fix
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult EditDocument(Guid guid, DocumentDto documentDto)//documentTag problems
     {
         if (guid != documentDto.Guid) { return BadRequest(); }
@@ -133,6 +147,10 @@ public class DocumentController : ControllerBase
     
     // [Authorize]
     [HttpDelete("{guid:Guid}")]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult DeleteDocument(Guid guid)
     {
         var document = _db.Document.FirstOrDefault(a => a.Guid == guid);

@@ -9,5 +9,9 @@ public class MappingProfile : Profile
     {
         CreateMap<DocumentDto, Document>();
         CreateMap<Document, DocumentDto>();
+        CreateMap<FolderDto, Folder>();
+        CreateMap<Folder, FolderDto>();
+        CreateMap<TagDto, Tag>();
+        CreateMap<Tag, TagDto>();
     }
 }

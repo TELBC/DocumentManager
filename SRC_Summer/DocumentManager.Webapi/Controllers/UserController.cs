@@ -2,6 +2,7 @@
 using System.Linq;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,8 @@ public class UserController : ControllerBase
     
     // Reacts to GET /api/users
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetAllUsers()
     {
         var users = _db.UserBase.Select(x =>new 
@@ -34,6 +37,8 @@ public class UserController : ControllerBase
     
     // Reacts to /api/users/1
     [HttpGet("{guid:Guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetUserDetail(Guid guid)
     {
         var user = _db.UserBase.Select(x =>new 

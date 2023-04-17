@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DocumentManager.Model;
@@ -18,7 +19,9 @@ public class Document : IEntity<int>
     #pragma warning restore CS8618
     
     [Key] public int Id { get; private set; }
-    public string Title { get; set; }
+    
+    public Guid Guid { get; set; }
+    [Required] [MaxLength(255)] public string Title { get; set; }
     public List<DocumentTag> Tags { get; set; }
     public string Type{ get; set; }
     [ConcurrencyCheck]

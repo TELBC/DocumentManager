@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Net.Mime;
 using AutoMapper;
 using DocumentManager.Dto;
 using DocumentManager.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace DocumentManager.Webapi.Controllers;
@@ -29,6 +31,8 @@ public class TagController : ControllerBase
     
     // Reacts to GET /api/tags
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetAllTags()
     {
         var tags = _db.Tag
@@ -43,6 +47,8 @@ public class TagController : ControllerBase
     }
     // Reacts to /api/tags/1
     [HttpGet("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetTagDetail(int id) 
     {
         var tag = _db.Tag
@@ -64,6 +70,9 @@ public class TagController : ControllerBase
     
     // [Authorize]
     [HttpPost]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult AddTag(TagDto tagDto)
     {
         var tag = _mapper.Map<Tag>(tagDto);
@@ -73,13 +82,17 @@ public class TagController : ControllerBase
         catch (DbUpdateException) { return BadRequest(); }
         return Ok(_mapper.Map<Tag, TagDto>(tag));
     }
-    
+
     // -------------------------------------------------------
     // HTTP PUT
     // -------------------------------------------------------
     
     // [Authorize]
     [HttpPut("{id:int}")]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult EditDocument(int id, TagDto tagDto)
     {
         var tag = _db.Tag.FirstOrDefault(a => a.Id == id);
@@ -97,6 +110,9 @@ public class TagController : ControllerBase
     
     // [Authorize]
     [HttpDelete("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult DeleteDocument(int id)
     {
         var tag = _db.Tag.FirstOrDefault(a => a.Id == id);
