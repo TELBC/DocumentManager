@@ -17,13 +17,15 @@
 ![](DomainModel.png)
 
 
-
 ### To setup:
 - ``` docker run -d -p 15432:5432 --name documentmanager_postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=pwd postgres:latest```
 
-### To run Web App
+### To run Web App:
 - ```cd DocumentManager.Client```
 - ```npm run dev```
+
+### Web API Operation Documentation:
+- ```https://localhost:5001/swagger/index.html```
 
 ### To setup for DBTests:
 - ```netstat -ao``` (check if port 5432 is used somehwere else)

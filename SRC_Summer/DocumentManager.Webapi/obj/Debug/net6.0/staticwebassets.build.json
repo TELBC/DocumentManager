@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "xPT5kaZcn2yOXc1YYi7iOK3Lcxv0ognD0ZDO5Uc0o0k=",
+  "Hash": "2R0LGljaKo2TmtTckLf/hizAttNJ5Zq6/wirqsJ6HJU=",
   "Source": "DocumentManager.Webapi",
   "BasePath": "_content/DocumentManager.Webapi",
   "Mode": "Default",
@@ -15,5 +15,40 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\swagger\\v1\\swagger.json",
+      "SourceId": "DocumentManager.Webapi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\",
+      "BasePath": "_content/DocumentManager.Webapi",
+      "RelativePath": "swagger/v1/swagger.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\swagger\\v1\\swagger.json"
+    },
+    {
+      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\swagger\\v1\\swagger.yaml",
+      "SourceId": "DocumentManager.Webapi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\",
+      "BasePath": "_content/DocumentManager.Webapi",
+      "RelativePath": "swagger/v1/swagger.yaml",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\swagger\\v1\\swagger.yaml"
+    }
+  ]
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
@@ -33,10 +34,11 @@ builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 //Swashbuckle
-// builder.Services.AddSwaggerGen(c =>
-// {
-//     c.SwaggerDoc("v1", new OpenApiInfo {Title = "DocumentManager WebApp", Version = "v1"});
-// });
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo {Title = "DocumentManager WebApp", Version = "v1"});
+    c.SwaggerGeneratorOptions.Servers = new List<OpenApiServer> { new() {Url = "https://localhost:5001" } };
+});
 
 // byte[] secret = Convert.FromBase64String(builder.Configuration["Secret"]);
 // builder.Services
@@ -70,11 +72,8 @@ if (app.Environment.IsDevelopment())
     }
     
     // //Swaggermiddleware
-    // app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage();
     // app.UseSwagger();
-    // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DocumentManager WebApp v1"));
-
-
     app.UseCors();
 }
 
@@ -86,10 +85,16 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.UseRouting();
+
+app.UseStaticFiles();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DocumentManager WebApp v1"));
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseStaticFiles();
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 app.Run();

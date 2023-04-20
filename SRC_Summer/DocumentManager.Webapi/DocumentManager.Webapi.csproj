@@ -14,12 +14,15 @@
 
     <ItemGroup>
         <ProjectReference Include="..\DocumentManager.Application\DocumentManager.Application.csproj"/>
-<!--        <Folder Include="wwwroot\swagger\v1" />-->
+        <Folder Include="wwwroot\swagger\v1" />
     </ItemGroup>
 
-<!--    <Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">-->
-<!--        <Exec Command="dotnet swagger tofile &#45;&#45;output ./wwwroot/swagger/v1/swagger.yaml &#45;&#45;yaml $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />-->
-<!--        <Exec Command="dotnet swagger tofile &#45;&#45;output ./wwwroot/swagger/v1/swagger.json $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />-->
-<!--    </Target>-->
-
+<!--    first run the application with the below code commented out, then after the application has started, uncomment and hot reload-->
+<!--    problem seems to be the automatic docker container creation that is implemented in the project that isnt built in time before the swagger is run-->
+<!--    working on a fix but for now it works-->
+    
+    <Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">
+        <Exec Command="dotnet swagger tofile --output ./wwwroot/swagger/v1/swagger.yaml --yaml $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
+        <Exec Command="dotnet swagger tofile --output ./wwwroot/swagger/v1/swagger.json $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
+    </Target>
 </Project>
