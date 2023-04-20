@@ -3,12 +3,15 @@ using System.Text.Json.Serialization;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Webapi;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DocumentManagerContext>(opt =>
@@ -25,8 +28,15 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddHttpContextAccessor();
 
 //this fixed the cycles of documentTag (quick fix but if it works, it works)
+//fixes m:n cycles
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+//Swashbuckle
+// builder.Services.AddSwaggerGen(c =>
+// {
+//     c.SwaggerDoc("v1", new OpenApiInfo {Title = "DocumentManager WebApp", Version = "v1"});
+// });
 
 // byte[] secret = Convert.FromBase64String(builder.Configuration["Secret"]);
 // builder.Services
@@ -58,6 +68,12 @@ if (app.Environment.IsDevelopment())
         app.Logger.LogError(e.Message);
         return;
     }
+    
+    // //Swaggermiddleware
+    // app.UseDeveloperExceptionPage();
+    // app.UseSwagger();
+    // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DocumentManager WebApp v1"));
+
 
     app.UseCors();
 }

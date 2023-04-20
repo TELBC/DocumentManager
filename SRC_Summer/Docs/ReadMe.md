@@ -21,6 +21,9 @@
 ### To setup:
 - ``` docker run -d -p 15432:5432 --name documentmanager_postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=pwd postgres:latest```
 
+### To run Web App
+- ```cd DocumentManager.Client```
+- ```npm run dev```
 
 ### To setup for DBTests:
 - ```netstat -ao``` (check if port 5432 is used somehwere else)
@@ -30,3 +33,4 @@
 ### To test:
 - run in Project folder:
   - dotnet test --verbosity (q/m/n/d)
+

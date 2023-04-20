@@ -9,11 +9,17 @@
     <ItemGroup>
         <PackageReference Include="Docker.DotNet" Version="3.125.13"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\DocumentManager.Application\DocumentManager.Application.csproj"/>
+<!--        <Folder Include="wwwroot\swagger\v1" />-->
     </ItemGroup>
+
+<!--    <Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">-->
+<!--        <Exec Command="dotnet swagger tofile &#45;&#45;output ./wwwroot/swagger/v1/swagger.yaml &#45;&#45;yaml $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />-->
+<!--        <Exec Command="dotnet swagger tofile &#45;&#45;output ./wwwroot/swagger/v1/swagger.json $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />-->
+<!--    </Target>-->
 
 </Project>

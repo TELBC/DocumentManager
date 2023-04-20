@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "wkIVj4Sfp/QaQ6hS6pXKxCdvmma+h3quFGNu6LICb6c=",
+  "Hash": "xPT5kaZcn2yOXc1YYi7iOK3Lcxv0ognD0ZDO5Uc0o0k=",
   "Source": "DocumentManager.Webapi",
   "BasePath": "_content/DocumentManager.Webapi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "DocumentManager.Webapi\\wwwroot",
+      "Source": "DocumentManager.Webapi",
+      "ContentRoot": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\",
+      "BasePath": "_content/DocumentManager.Webapi",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

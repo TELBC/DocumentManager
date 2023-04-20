@@ -119,7 +119,7 @@ public class DocumentController : ControllerBase
     // -------------------------------------------------------
 
     // [Authorize]
-    [HttpPut("{guid:Guid}")] //fix
+    [HttpPut("{guid:Guid}")] //fix use patch instead of put, its better
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

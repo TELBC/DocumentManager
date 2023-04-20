@@ -53,3 +53,4 @@ C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\DocumentManager.Webapi.staticwebassets.runtime.json
