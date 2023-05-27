@@ -22,7 +22,8 @@
 
 ### To run Web App:
 - ```cd DocumentManager.Client```
-- ```npm run dev```
+- ```npm run dev``` to run for development
+- ```npm run build``` to build application
 
 ### Web API Operation Documentation:
 - ```https://localhost:5001/swagger/index.html```

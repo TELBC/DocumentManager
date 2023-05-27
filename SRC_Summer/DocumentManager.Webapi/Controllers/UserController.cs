@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DocumentManager.Webapi.Controllers;
 
@@ -22,14 +24,14 @@ public class UserController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetAllUsers()
+    public async Task<IActionResult> GetAllUsers()
     {
-        var users = _db.UserBase.Select(x => new
+        var users = await _db.UserBase.Select(x => new
         {
             guid = x.Guid,
             name = x.Name,
             email = x.Email
-        }).ToList();
+        }).ToListAsync();
         return Ok(users);
     }
 
@@ -38,14 +40,14 @@ public class UserController : ControllerBase
     [HttpGet("{guid:Guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetUserDetail(Guid guid)
+    public async Task<IActionResult> GetUserDetail(Guid guid)
     {
-        var user = _db.UserBase.Select(x => new
+        var user = await _db.UserBase.Select(x => new
         {
             guid = x.Guid,
             name = x.Name,
             email = x.Email
-        }).FirstOrDefault(u => u.guid == guid);
+        }).FirstOrDefaultAsync(u => u.guid == guid);
 
         if (user is null) return NotFound();
         return Ok(user);

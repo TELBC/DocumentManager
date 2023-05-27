@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using AutoMapper;
+using Bogus.DataSets;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,11 +33,12 @@ public class DocumentController : ControllerBase
 
     // Reacts to GET /api/documents
     [HttpGet]
+    [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetAllDocuments()
+    public async Task<IActionResult> GetAllDocuments()
     {
-        var documents = _db.Document
+        var documents = await _db.Document
             .Include(x => x.Tags).ThenInclude(x => x.Tag)
             .Select(x => new
             {
@@ -44,7 +48,7 @@ public class DocumentController : ControllerBase
                 type = x.Type,
                 content = x.Content,
                 version = x.Version
-            });
+            }).ToListAsync();
         return Ok(documents);
     }
 
@@ -52,9 +56,9 @@ public class DocumentController : ControllerBase
     [HttpGet("{guid:Guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetDocumentDetail(Guid guid)
+    public async Task<IActionResult> GetDocumentDetail(Guid guid)
     {
-        var document = _db.Document
+        var document = await _db.Document
             .Include(x => x.Tags).ThenInclude(x => x.Tag)
             .Select(x => new
             {
@@ -65,7 +69,7 @@ public class DocumentController : ControllerBase
                 tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                 version = x.Version
             })
-            .FirstOrDefault(x => x.guid == guid);
+            .FirstOrDefaultAsync(x => x.guid == guid);
         if (document is null) return NotFound();
         return Ok(document);
     }
@@ -74,11 +78,12 @@ public class DocumentController : ControllerBase
     [HttpGet("{guid:Guid}/tags")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetDocumentTags(Guid guid)
+    public async Task<IActionResult> GetDocumentTags(Guid guid)
     {
-        var tags = _db.Document
+        var document = await _db.Document
             .Include(x => x.Tags).ThenInclude(x => x.Tag)
-            .FirstOrDefault(x => x.Guid == guid)?.Tags
+            .FirstOrDefaultAsync(x => x.Guid == guid);
+        var tags = document?.Tags
             .Select(x => new
             {
                 id = x.TagId,
@@ -98,13 +103,13 @@ public class DocumentController : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult AddDocument(DocumentDto documentDto)
+    public async Task<IActionResult> AddDocument(DocumentDto documentDto)
     {
         var document = _mapper.Map<Document>(documentDto);
         _db.Document.Add(document);
         try
         {
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
         catch (DbUpdateException)
         {
@@ -124,7 +129,7 @@ public class DocumentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult EditDocument(Guid guid, DocumentDto documentDto)//documentTag problems
+    public async Task<IActionResult> EditDocument(Guid guid, DocumentDto documentDto)//documentTag problems
     {
         if (guid != documentDto.Guid) return BadRequest();
         var document = _db.Document.FirstOrDefault(a => a.Guid == guid);
@@ -136,7 +141,7 @@ public class DocumentController : ControllerBase
         foreach (var tag in tags) _db.DocumentTag.Add(tag);
         try
         {
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
         catch (DbUpdateException)
         {
@@ -157,16 +162,16 @@ public class DocumentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult DeleteDocument(Guid guid)
+    public async Task<IActionResult> DeleteDocument(Guid guid)
     {
-        var document = _db.Document.FirstOrDefault(a => a.Guid == guid);
+        var document = await _db.Document.FirstOrDefaultAsync(a => a.Guid == guid);
         if (document is null) return NotFound();
-        var tags = _db.DocumentTag.Where(dt => dt.Document!.Guid == guid).ToList();
+        var tags = await _db.DocumentTag.Where(dt => dt.Document!.Guid == guid).ToListAsync();
         foreach (var tag in tags) _db.DocumentTag.Remove(tag);
         _db.Document.Remove(document);
         try
         {
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
         catch (DbUpdateException)
         {

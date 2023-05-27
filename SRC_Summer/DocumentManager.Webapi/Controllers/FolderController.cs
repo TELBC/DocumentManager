@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using AutoMapper;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
@@ -32,9 +33,9 @@ public class FolderController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Folder))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetAllFolders()
+    public async Task<IActionResult> GetAllFolders()
     {
-        var folders = _db.Folder
+        var folders = await _db.Folder
             .Include(x => x.Documents)!.ThenInclude(x => x.Tags).ThenInclude(x => x.Tag)
             .Select(x => new
             {
@@ -49,7 +50,7 @@ public class FolderController : ControllerBase
                     tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
                     version = x.Version
                 })
-            });
+            }).ToListAsync();
         return Ok(folders);
     }
 
@@ -57,9 +58,9 @@ public class FolderController : ControllerBase
     [HttpGet("{guid:Guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Folder))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetFolderDetail(Guid guid)
+    public async Task<IActionResult> GetFolderDetail(Guid guid)
     {
-        var folder = _db.Folder
+        var folder = await _db.Folder
             .Include(x => x.Documents)!.ThenInclude(x => x.Tags).ThenInclude(x => x.Tag)
             .Select(x => new
             {
@@ -75,7 +76,7 @@ public class FolderController : ControllerBase
                     version = x.Version
                 })
             })
-            .FirstOrDefault(x => x.guid == guid);
+            .FirstOrDefaultAsync(x => x.guid == guid);
         if (folder is null) return NotFound();
         return Ok(folder);
     }
@@ -84,13 +85,13 @@ public class FolderController : ControllerBase
     [HttpGet("{folderGuid:Guid}/{docguid:Guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetDocumentInFolderDetail(Guid folderGuid, Guid docGuid)
+    public async Task<IActionResult> GetDocumentInFolderDetailAsync(Guid folderGuid, Guid docGuid)
     {
-        var folder = _db.Folder
+        var folder = await _db.Folder
             .Include(x => x.Documents)!.ThenInclude(x => x.Tags).ThenInclude(x => x.Tag)
-            .FirstOrDefault(x => x.Guid == folderGuid)?.Documents;
+            .FirstOrDefaultAsync(x => x.Guid == folderGuid);
         if (folder == null) return NotFound();
-        var document = folder.Select(x => new
+        var document = folder?.Documents?.Select(x => new
         {
             guid = x.Guid,
             title = x.Title,
@@ -99,22 +100,22 @@ public class FolderController : ControllerBase
             tags = x.Tags.Select(dt => dt.Tag!.Name).ToList(),
             version = x.Version
         }).FirstOrDefault(x => x.guid == docGuid);
-
         if (document == null) return NotFound();
         return Ok(document);
     }
+
 
     // Reacts to /api/folder/10/1/tags
     [HttpGet("{folderGuid:Guid}/{docguid:Guid}/tags")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetDocumentInFolderTags(Guid folderGuid, Guid docGuid)
+    public async Task<IActionResult> GetDocumentInFolderTags(Guid folderGuid, Guid docGuid)
     {
-        var folder = _db.Folder
+        var folder = await _db.Folder
             .Include(x => x.Documents)!.ThenInclude(x => x.Tags).ThenInclude(x => x.Tag)
-            .FirstOrDefault(x => x.Guid == folderGuid)?.Documents;
+            .FirstOrDefaultAsync(x => x.Guid == folderGuid);
         if (folder == null) return NotFound();
-        var document = folder.FirstOrDefault(x => x.Guid == docGuid);
+        var document = folder?.Documents?.FirstOrDefault(x => x.Guid == docGuid);
 
         var tags = document?.Tags.Select(x => new
         {
@@ -134,13 +135,13 @@ public class FolderController : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Folder))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult AddFolder(FolderDto folderDto)
+    public async Task<IActionResult> AddFolder(FolderDto folderDto)
     {
         var folder = _mapper.Map<Folder>(folderDto);
         _db.Folder.Add(folder);
         try
         {
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
         catch (DbUpdateException)
         {
@@ -149,6 +150,9 @@ public class FolderController : ControllerBase
 
         return Ok(_mapper.Map<Folder, FolderDto>(folder));
     }
+    
+    //create a folder add where it just creates an empty folder
+    //create a folder add that creates an empty folder and just appends a existing document
 
     // -------------------------------------------------------
     // HTTP PUT
@@ -159,15 +163,15 @@ public class FolderController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult EditFolder(Guid guid, FolderDto folderDto) //works but fix creation of document bug
+    public async Task<IActionResult> EditFolder(Guid guid, FolderDto folderDto) //works but fix creation of document bug
     {
         if (guid != folderDto.Guid) return BadRequest();
-        var folder = _db.Folder.FirstOrDefault(a => a.Guid == guid);
+        var folder = await _db.Folder.FirstOrDefaultAsync(a => a.Guid == guid);
         if (folder is null) return NotFound();
         _mapper.Map(folderDto, folder);
         try
         {
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
         catch (DbUpdateException)
         {
@@ -185,9 +189,9 @@ public class FolderController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult DeleteFolder(int id) //fix
+    public async Task<IActionResult> DeleteFolder(int id) //fix
     {
-        var folder = _db.Folder.FirstOrDefault(a => a.Id == id);
+        var folder = await _db.Folder.FirstOrDefaultAsync(a => a.Id == id);
         if (folder is null) return NotFound();
         var documents = folder.Documents;
         if (documents is null) return NotFound();
@@ -196,7 +200,7 @@ public class FolderController : ControllerBase
         foreach (var document in documents) _db.Document.Add(document);
         try
         {
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
         catch (DbUpdateException)
         {
