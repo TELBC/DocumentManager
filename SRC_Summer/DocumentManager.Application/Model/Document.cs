@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentManager.Model;
 
@@ -28,4 +29,6 @@ public class Document : IEntity<int>
     [MaxLength(65535)]
     public string Content { get; set; }
     public int Version { get; private set; }
+    [ForeignKey("Id")]//have to declare the foreign key since i need it for the controllers
+    public int? FolderId { get; set; }
 }

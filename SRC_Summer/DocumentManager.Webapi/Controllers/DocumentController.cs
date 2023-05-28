@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -116,29 +117,25 @@ public class DocumentController : ControllerBase
             return BadRequest();
         }
 
-        return Ok(_mapper.Map<Document, DocumentDto>(document));
+        return Ok(document);
     }
 
     // -------------------------------------------------------
     // HTTP PUT
     // -------------------------------------------------------
-
     // [Authorize]
-    [HttpPut("{guid:Guid}")] //fix use patch instead of put, its better
+    [HttpPut("{guid:Guid}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> EditDocument(Guid guid, DocumentDto documentDto)//documentTag problems
+    public async Task<IActionResult> EditDocument(Guid guid, DocumentDto documentDto)
     {
         if (guid != documentDto.Guid) return BadRequest();
-        var document = _db.Document.FirstOrDefault(a => a.Guid == guid);
+        var document = await _db.Document.Include(d => d.Tags).FirstOrDefaultAsync(a => a.Guid == guid);
         if (document is null) return NotFound();
 
-        var tags = _db.DocumentTag.Where(dt => dt.Document!.Guid == guid).ToList();
-        foreach (var tag in tags) _db.DocumentTag.Remove(tag);
         _mapper.Map(documentDto, document);
-        foreach (var tag in tags) _db.DocumentTag.Add(tag);
         try
         {
             await _db.SaveChangesAsync();
@@ -158,13 +155,12 @@ public class DocumentController : ControllerBase
 
     // [Authorize]
     [HttpDelete("{guid:Guid}")]
-    [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteDocument(Guid guid)
     {
-        var document = await _db.Document.FirstOrDefaultAsync(a => a.Guid == guid);
+        var document = await _db.Document.Include(d => d.Tags).FirstOrDefaultAsync(a => a.Guid == guid);
         if (document is null) return NotFound();
         var tags = await _db.DocumentTag.Where(dt => dt.Document!.Guid == guid).ToListAsync();
         foreach (var tag in tags) _db.DocumentTag.Remove(tag);

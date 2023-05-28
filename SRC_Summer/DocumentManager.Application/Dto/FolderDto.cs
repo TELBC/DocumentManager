@@ -12,7 +12,7 @@ public record FolderDto(
     Guid Guid,
     [StringLength(255, MinimumLength = 10, ErrorMessage = "The length of the name is invalid")]
     string Name,
-    List<Document> Documents
+    List<string> DocumentTitles
 ) : IValidatableObject
 {
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

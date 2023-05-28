@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Docker.DotNet" Version="3.125.13"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="Docker.DotNet" Version="3.125.13" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DocumentManager.Application\DocumentManager.Application.csproj"/>
+        <ProjectReference Include="..\DocumentManager.Application\DocumentManager.Application.csproj" />
         <Folder Include="wwwroot\swagger\v1" />
     </ItemGroup>
 

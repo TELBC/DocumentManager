@@ -40,6 +40,10 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerGeneratorOptions.Servers = new List<OpenApiServer> { new() {Url = "https://localhost:5001" } };
 });
 
+LogLevel documentManagerLevel = LogLevel.Critical;
+builder.Logging.AddFilter("DocumentManager", documentManagerLevel);
+builder.Logging.AddDebug();
+
 // byte[] secret = Convert.FromBase64String(builder.Configuration["Secret"]);
 // builder.Services
 //     .AddAuthentication(options => options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme)

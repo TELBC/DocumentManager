@@ -1,5 +1,8 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Linq;
+using AutoMapper;
 using DocumentManager.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace DocumentManager.Dto;
 
