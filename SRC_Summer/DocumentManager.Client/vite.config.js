@@ -11,4 +11,7 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  build: {
+    outDir: "../DocumentManager.Webapi/wwwroot", //Sie können mir immer noch helfen
+  },
 });

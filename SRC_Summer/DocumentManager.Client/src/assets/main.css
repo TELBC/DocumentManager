@@ -1,1 +1,6 @@
 @import './base.css';
+
+@font-face {
+    font-family: 'Inconsolata';
+    src: url('@/assets/Inconsolata-Regular.ttf');
+  }

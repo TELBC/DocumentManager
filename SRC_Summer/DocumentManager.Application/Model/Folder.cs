@@ -20,8 +20,7 @@ public class Folder : IEntity<int>
     
     public Guid Guid { get; set; }
     
-    [Required] [MaxLength(255)] public string Name { get; set; }
-
+    [Required] [MaxLength(25)] public string Name { get; set; }
     public List<Document>? Documents { get; set; }
     [ForeignKey("Id")]//have to declare the foreign key since i need it for the controllers
     public int? DocumentManagerId { get; set; }

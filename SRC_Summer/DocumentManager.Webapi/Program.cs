@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Webapi;
+using DocumentManager.Webapi.Controllers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -22,9 +23,16 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddControllers();
 if (builder.Environment.IsDevelopment())
+{
     builder.Services.AddCors(options =>
         options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+}
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddTransient<DocumentController>();
+builder.Services.AddTransient<TagController>();
+builder.Services.AddTransient<FolderController>();
+builder.Services.AddTransient<UserController>();
 
 builder.Services.AddHttpContextAccessor();
 
