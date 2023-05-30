@@ -25,11 +25,9 @@
 
 .count {
   position: absolute;
-  font-size: 80%;
   font-weight: 900;
-  top: 55px;
-  background-color: white;
-  border-radius: 50%;
+  top: 60px;
+  color: white;
   width: 20px;
   height: 20px;
   display: flex;

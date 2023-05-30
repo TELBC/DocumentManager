@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "oI1C5qe6qqaxwRUQdbI4duP2NIC4E4gctyjJCsntLtA=",
+  "Hash": "3oZZZqb6KrAQt8TNpDihtQg65owzB6+9WyWCQ9kEcdU=",
   "Source": "DocumentManager.Webapi",
   "BasePath": "_content/DocumentManager.Webapi",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\AboutView-c4545d03.js",
+      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\AboutView-7087d412.css",
       "SourceId": "DocumentManager.Webapi",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\",
       "BasePath": "_content/DocumentManager.Webapi",
-      "RelativePath": "assets/AboutView-c4545d03.js",
+      "RelativePath": "assets/AboutView-7087d412.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -31,7 +31,24 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\AboutView-c4545d03.js"
+      "OriginalItemSpec": "wwwroot\\assets\\AboutView-7087d412.css"
+    },
+    {
+      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\AboutView-eb67b09a.js",
+      "SourceId": "DocumentManager.Webapi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\",
+      "BasePath": "_content/DocumentManager.Webapi",
+      "RelativePath": "assets/AboutView-eb67b09a.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\AboutView-eb67b09a.js"
     },
     {
       "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\fa-brands-400-20c4a58b.ttf",
@@ -187,12 +204,12 @@
       "OriginalItemSpec": "wwwroot\\assets\\FolderView-13643942.css"
     },
     {
-      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\FolderView-e30535e2.js",
+      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\FolderView-8066df85.js",
       "SourceId": "DocumentManager.Webapi",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\",
       "BasePath": "_content/DocumentManager.Webapi",
-      "RelativePath": "assets/FolderView-e30535e2.js",
+      "RelativePath": "assets/FolderView-8066df85.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -201,7 +218,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\FolderView-e30535e2.js"
+      "OriginalItemSpec": "wwwroot\\assets\\FolderView-8066df85.js"
     },
     {
       "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\Inconsolata-Regular-ccd0bf16.ttf",
@@ -221,12 +238,12 @@
       "OriginalItemSpec": "wwwroot\\assets\\Inconsolata-Regular-ccd0bf16.ttf"
     },
     {
-      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\index-161f844a.css",
+      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\index-3b495e4c.js",
       "SourceId": "DocumentManager.Webapi",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\",
       "BasePath": "_content/DocumentManager.Webapi",
-      "RelativePath": "assets/index-161f844a.css",
+      "RelativePath": "assets/index-3b495e4c.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -235,15 +252,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\index-161f844a.css"
+      "OriginalItemSpec": "wwwroot\\assets\\index-3b495e4c.js"
     },
     {
-      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\index-dcec0635.js",
+      "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\index-e61c88db.css",
       "SourceId": "DocumentManager.Webapi",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\",
       "BasePath": "_content/DocumentManager.Webapi",
-      "RelativePath": "assets/index-dcec0635.js",
+      "RelativePath": "assets/index-e61c88db.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -252,7 +269,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\index-dcec0635.js"
+      "OriginalItemSpec": "wwwroot\\assets\\index-e61c88db.css"
     },
     {
       "Identity": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\wwwroot\\assets\\logo-30daaddf.png",

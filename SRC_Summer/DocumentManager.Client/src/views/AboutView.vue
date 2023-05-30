@@ -3,11 +3,12 @@
     <h1>About</h1>
     <p></p>
     <h4>Made By:</h4>
-    <div class="Collaborators">
-      <div class="name">Tristan Losada Benini</div>
-      <div v-on:click="copyEmail"><i class="fas fa-envelope"></i></div>
+    <div class="name">Tristan Losada Benini</div>
+    <div v-on:click="copyEmail('LOS20421@spengergasse.at')">
+      <i class="fas fa-envelope"></i>
     </div>
     <p>(in collaboration with Ruben Osmanovic)</p>
+    <img id="spengerlogo" src="@/assets/spengerlogo.svg" />
     <div v-if="showPopup" class="popup">
       Copied to clipboard: {{ copiedText }}
     </div>
@@ -19,12 +20,11 @@ export default {
   data() {
     return {
       showPopup: false,
-      copiedText: '',
+      copiedText: "",
     };
   },
   methods: {
-    copyEmail() {
-      const email = 'LOS20421@spengergasse.at';
+    copyEmail(email) {
       navigator.clipboard.writeText(email).then(() => {
         this.copiedText = email;
         this.showPopup = true;
@@ -46,5 +46,10 @@ export default {
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#spengerlogo {
+  margin-top: 2rem;  
+  height: 30px;
 }
 </style>

@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "ab821372-1f3b-4f4a-aefd-714b54fe739c",
+		"name": "DocumentManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24204828"
+	},
+	"item": [
+		{
+			"name": "Folder",
+			"item": [
+				{
+					"name": "POST_Folder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"loremipsum loremipsum\",\r\n    \"DocumentTitles\": [\"\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/folders/"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT_Folder",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"guid\":\"4a62ce23-da59-4cfb-8a9d-8039e09655ae\",\r\n    \"name\": \"hello this is ap\",\r\n    \"DocumentTitles\": [\"a meme are cool\",\"Document 15\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/folders/4a62ce23-da59-4cfb-8a9d-8039e09655ae"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_Folder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/folders/1437fa1d-4dbd-40cc-b732-67c5e839a975"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Document",
+			"item": [
+				{
+					"name": "POST_Document",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"a meme are cool\",\r\n    \"content\":\"here is a good meme i made lol\",\r\n    \"type\":\"md\",\r\n    \"tags\":[{\"tagId\":1},{\"tagId\":10}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/documents"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT_Document",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"guid\":\"24643f63-c2b1-41c0-b90e-24b3a644c8aa\",\r\n    \"title\": \"a meme are cool\",\r\n    \"content\": \"very bad meme\",\r\n    \"type\": \"md\",\r\n    \"tags\": [{\"tagId\": 1}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/documents/24643f63-c2b1-41c0-b90e-24b3a644c8aa"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_Document",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://localhost:5001/api/documents/f540c493-8a12-4e83-bf7b-cb3648efb145"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "POST_Tag",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"saber es arte\",\r\n    \"category\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/tags/"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT_Tag",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"saber no es arte\",\r\n    \"category\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:5001/api/tags/11"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_Tag",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://localhost:5001/api/tags/11"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
