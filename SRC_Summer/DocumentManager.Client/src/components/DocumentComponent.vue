@@ -1,43 +1,54 @@
 <script setup>
 import axios from "axios";
+import ConfirmDialog from "./ConfirmDialog.vue";
 </script>
 
 <template>
-  <div class="document">
-    <div
-      class="documentsHeader"
-      @click="loadContent(document.guid)"
-      v-trim-whitespace
-    >
-      <div class="title" :title="document.title">{{ document.title }}</div>
-      <div class="type" :title="document.type">{{ document.type }}</div>
+  <div class="document-container">
+    <div class="document">
       <div
-        class="tags"
-        v-if="document.tags.length > 0"
-        @mouseover="hover = true"
-        @mouseleave="hover = false"
+        class="documentsHeader"
+        @click="loadContent(document.guid)"
+        v-trim-whitespace
       >
-        <i class="fa-solid fa-tag tag-icon"></i>
-        <div class="tag-list" v-if="hover">
-          <ul>
-            <li v-for="t in document.tags" :key="t">{{ t }}</li>
-          </ul>
+        <div class="title" :title="document.title">{{ document.title }}</div>
+        <div class="version" :title="document.version" :style="versionStyle">
+          v.{{ document.version }}
+        </div>
+        <div
+          class="tags"
+          v-if="document.tags.length > 0"
+          @mouseover="hover = true"
+          @mouseleave="hover = false"
+        >
+          <i class="fa-solid fa-tag tag-icon"></i>
+          <div class="tag-list" v-if="hover">
+            <ul>
+              <li v-for="t in document.tags" :key="t">{{ t }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="type" :title="document.type">.{{ document.type }}</div>
+        <div class="actions">
+          <span class="loadContent">
+            <i class="fa-solid fa-file"></i>
+          </span>
         </div>
       </div>
-
-      <div class="version" :title="document.version">
-        {{ document.version }}
-      </div>
-      <div class="actions">
-        <span class="loadContent">
-          <i class="fa-solid fa-file"></i>
-        </span>
+      <div class="documentContent">
+        <div v-show="showContent">{{ getDocument(document.guid) }}</div>
       </div>
     </div>
-    <div class="documentContent">
-      <div v-show="showContent">{{ getDocument(document.guid) }}</div>
+    <div class="document-actions">
+      <button class="edit-button" @click="editDocument">Edit</button>
+      <button class="delete-button" @click="confirmDelete">Delete</button>
     </div>
   </div>
+  <confirm-dialog
+    ref="confirmDialog"
+    title="Delete Document"
+    message="Are you sure you want to delete this document?"
+  ></confirm-dialog>
 </template>
 
 <script>
@@ -79,6 +90,12 @@ export default {
       }
       return null;
     },
+    async confirmDelete() {
+      const confirmed = await this.$refs.confirmDialog.open();
+      if (confirmed) {
+        // Perform the delete operation here
+      }
+    },
   },
   directives: {
     "trim-whitespace": trimWhitespace,
@@ -86,6 +103,9 @@ export default {
   computed: {
     folderGuid() {
       return this.$route.params.id;
+    },
+    versionStyle() {
+      return this.document.tags.length > 0 ? {} : { flexGrow: 1 };
     },
   },
 };
@@ -103,8 +123,20 @@ var trimWhitespace = {
 };
 </script>
 
-
 <style scoped>
+.document-container {
+  display: flex;
+  gap: 0.1rem;
+  align-items: center;
+}
+
+.document-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0;
+}
+
 .document {
   background-color: #f5f5f5;
   border-radius: 10px;
@@ -112,18 +144,18 @@ var trimWhitespace = {
   padding: 10px;
   border: 1px solid #e0e0e0;
   width: 100%;
-  max-width: 500px;
+  max-width: 800px;
+  width: 800px;
 }
 
 .documentsHeader {
   display: flex;
-  flex-wrap: wrap;
   column-gap: 1.5em;
   margin-top: 0.1rem;
   padding-bottom: 5px;
 }
 
-.documentsHeader .version {
+.documentsHeader .tags {
   flex-grow: 1;
 }
 
@@ -164,6 +196,7 @@ var trimWhitespace = {
 .tags {
   position: relative;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
   cursor: pointer;
@@ -197,5 +230,33 @@ var trimWhitespace = {
 
 .tags:hover .tag-list {
   display: block;
+}
+
+.edit-button,
+.delete-button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 0.8em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  padding: 0.2em;
+}
+
+.edit-button {
+  background-color: blue;
+}
+
+.edit-button:hover {
+  background-color: darkblue;
+}
+
+.delete-button {
+  background-color: red;
+}
+
+.delete-button:hover {
+  background-color: darkred;
 }
 </style>
