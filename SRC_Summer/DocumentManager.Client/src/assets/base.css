@@ -1,5 +1,9 @@
 :root {
     --sidebar-background-color: #d9d7d7;
-    --icon-color: #848afd;
-    --icon-hover-color: #515af9;
+    --icon-color: #848aff;
+    --icon-hover-color: #515aff;
+    --delete-icon-color: #ff5a51;
+    --delete-icon-hover-color:#ff4238;
+    --cancel-color:#6c757d;
+    --cancel-hover-color:#5a6268;
 }

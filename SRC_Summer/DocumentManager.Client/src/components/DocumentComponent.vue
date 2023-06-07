@@ -1,23 +1,20 @@
 <script setup>
 import axios from "axios";
 import ConfirmDialog from "./ConfirmDialog.vue";
+import EditDocumentDialog from "./EditdocumentDialog.vue";
 </script>
 
 <template>
   <div class="document-container">
     <div class="document">
-      <div
-        class="documentsHeader"
-        @click="loadContent(document.guid)"
-        v-trim-whitespace
-      >
+      <div class="documentsHeader" @click="loadContent(document.guid)">
         <div class="title" :title="document.title">{{ document.title }}</div>
         <div class="version" :title="document.version" :style="versionStyle">
           v.{{ document.version }}
         </div>
         <div
           class="tags"
-          v-if="document.tags.length > 0"
+          v-if="document.tags.length > 0 && !show"
           @mouseover="hover = true"
           @mouseleave="hover = false"
         >
@@ -49,6 +46,11 @@ import ConfirmDialog from "./ConfirmDialog.vue";
     title="Delete Document"
     message="Are you sure you want to delete this document?"
   ></confirm-dialog>
+  <edit-document-dialog
+    ref="editDialog"
+    :document="document"
+    @document-edited="updateDocument"
+  ></edit-document-dialog>
 </template>
 
 <script>
@@ -66,6 +68,10 @@ export default {
       hover: false,
       showContent: false,
     };
+  },
+  components: {
+    ConfirmDialog,
+    EditDocumentDialog,
   },
   methods: {
     async loadContent(documentGuid) {
@@ -93,12 +99,17 @@ export default {
     async confirmDelete() {
       const confirmed = await this.$refs.confirmDialog.open();
       if (confirmed) {
-        // Perform the delete operation here
+        try {
+          await axios.delete(`documents/${this.document.guid}`);
+          this.$emit("document-deleted", this.document.guid);
+        } catch (error) {
+          alert("Error deleting the document");
+        }
       }
     },
+    async editDocument() {
+    this.$refs.editDialog.open();
   },
-  directives: {
-    "trim-whitespace": trimWhitespace,
   },
   computed: {
     folderGuid() {
@@ -108,18 +119,6 @@ export default {
       return this.document.tags.length > 0 ? {} : { flexGrow: 1 };
     },
   },
-};
-function trimEmptyTextNodes(el) {
-  for (let node of el.childNodes) {
-    if (node.nodeType === Node.TEXT_NODE && node.data.trim() === "") {
-      node.remove();
-    }
-  }
-}
-
-var trimWhitespace = {
-  inserted: trimEmptyTextNodes,
-  componentUpdated: trimEmptyTextNodes,
 };
 </script>
 
@@ -144,7 +143,6 @@ var trimWhitespace = {
   padding: 10px;
   border: 1px solid #e0e0e0;
   width: 100%;
-  max-width: 800px;
   width: 800px;
 }
 
@@ -215,7 +213,6 @@ var trimWhitespace = {
   display: none;
   position: initial;
   min-width: fit-content;
-  z-index: 1;
 }
 
 .tag-list ul {
@@ -234,29 +231,28 @@ var trimWhitespace = {
 
 .edit-button,
 .delete-button {
-  background-color: transparent;
   border: none;
   color: white;
   font-size: 0.8em;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s;
-  padding: 0.2em;
+  padding: 0.3em;
 }
 
 .edit-button {
-  background-color: blue;
+  background-color: var(--icon-color);
 }
 
 .edit-button:hover {
-  background-color: darkblue;
+  background-color: var(--icon-hover-color);
 }
 
 .delete-button {
-  background-color: red;
+  background-color: var(--delete-icon-color);
 }
 
 .delete-button:hover {
-  background-color: darkred;
+  background-color: var(--delete-icon-hover-color);
 }
 </style>

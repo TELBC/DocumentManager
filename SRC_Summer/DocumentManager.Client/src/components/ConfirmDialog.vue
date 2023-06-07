@@ -72,6 +72,7 @@ export default {
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 5px;
+  z-index: 100;
 }
 
 .confirm-dialog-actions {
@@ -81,7 +82,7 @@ export default {
 }
 
 button {
-  background-color: red;
+  background-color: var(--delete-icon-color);
   border: none;
   color: white;
   padding: 0.5em 1em;
@@ -92,14 +93,14 @@ button {
 }
 
 button:hover {
-  background-color: darkred;
+  background-color: var(--delete-icon-hover-color);
 }
 
 button:first-child {
-  background-color: #6c757d;
+  background-color: var(--cancel-color);
 }
 
 button:first-child:hover {
-  background-color: #5a6268;
+  background-color: var(--cancel-hover-color);
 }
 </style>

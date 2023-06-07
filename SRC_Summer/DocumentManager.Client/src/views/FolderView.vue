@@ -7,11 +7,16 @@ import DocumentComponent from "../components/DocumentComponent.vue";
 <template>
   <div class="folderView">
     <LoadingSpinner v-if="loading"></LoadingSpinner>
-    <h1>Folder {{ folderGuid }}</h1>
+    <h1>{{ folder.name }}</h1>
     <div class="folders">
-      <h3>Name: {{ folder.name }}</h3>
+      <h4>guid: {{ folderGuid }}</h4>
       <div class="documents" v-if="folder.documents">
-        <DocumentComponent v-for="d in folder.documents" :key="d.guid" :document="d"></DocumentComponent>
+        <DocumentComponent
+          v-for="d in folder.documents"
+          :key="d.guid"
+          :document="d"
+          @document-deleted="loadFolder"
+        ></DocumentComponent>
       </div>
     </div>
   </div>
@@ -28,7 +33,20 @@ export default {
       loading: false,
     };
   },
+  methods: {
+    async loadFolder() {
+      this.loading = true;
+      try {
+        this.folder = (await axios.get(`folders/${this.folderGuid}`)).data;
+      } catch (e) {
+        alert("Server was unable to load folder.");
+      } finally {
+        this.loading = false;
+      }
+    },
+  },
   async mounted() {
+    this.loadFolder();
     this.loading = true;
     try {
       this.folder = (await axios.get(`folders/${this.folderGuid}`)).data;
