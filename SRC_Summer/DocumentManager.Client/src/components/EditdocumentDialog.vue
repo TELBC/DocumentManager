@@ -1,4 +1,7 @@
-<!-- src/components/EditDocumentDialog.vue -->
+<!-- <script setup>
+import axios from 'axios';
+</script> -->
+
 <template>
   <div
     v-if="show"
@@ -9,7 +12,11 @@
       <h2>Edit Document</h2>
       <form @submit.prevent="submit">
         <label for="guid">GUID:</label>
-        <input type="text" id="guid" v-model="editedDocument.guid" />
+        <select id="guid" v-model="editedDocument.guid" class="custom-select" @change="updateContent">
+          <option v-for="guid in guids" :key="guid" :value="guid">
+            {{ guid }}
+          </option>
+        </select>
 
         <label for="title">Title:</label>
         <input type="text" id="title" v-model="editedDocument.title" />
@@ -39,6 +46,14 @@ export default {
       type: Object,
       required: true,
     },
+    guids: {
+      type: Array,
+      required: true,
+    },
+    documents: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -46,6 +61,22 @@ export default {
       editedDocument: {},
     };
   },
+
+  watch: {
+    'editedDocument.guid': {
+      immediate: true,
+      handler(newGuid) {
+        const documentWithGuid = this.documents.find(doc => doc.guid === newGuid);
+        if (documentWithGuid) {
+          this.editedDocument.title = documentWithGuid.title;
+          this.editedDocument.content = documentWithGuid.content;
+          this.editedDocument.tags = documentWithGuid.tags;
+          this.editedDocument.version = documentWithGuid.version;
+        }
+      },
+    },
+  },
+
   methods: {
     open() {
       this.editedDocument = { ...this.document };
@@ -65,6 +96,12 @@ export default {
     submit() {
       this.$emit("document-edited", this.editedDocument);
       this.close();
+    },
+    async updateContent() {
+      const documentWithGuid = this.documents.find(doc => doc.guid === this.editedDocument.guid);
+      if (documentWithGuid) {
+        this.editedDocument.content = documentWithGuid.content;
+      }
     },
   },
 };
@@ -88,8 +125,6 @@ export default {
   background-color: white;
   border-radius: 10px;
   padding: 30px;
-  width: 80%;
-  padding-right: 50px;
   max-width: 550px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;
@@ -108,13 +143,14 @@ label {
   margin-bottom: 5px;
 }
 
-input, textarea {
+input,
+textarea {
   font-size: 14px;
   padding: 5px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 15px;
-  width: 100%;
+  width: 96%;/* somehow this fixes the fields ¯\_(ツ)_/¯*/
 }
 
 textarea {
@@ -124,9 +160,24 @@ textarea {
 }
 
 .edit-dialog-actions {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
 }
+
+.custom-select {
+  font-size: 14px;
+  padding: 5px 30px 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  appearance: none;
+  background: url('../assets/caret-down-solid.svg') no-repeat;
+  background-position: right 10px center;
+  background-size: 0.65em auto;
+}
+
 
 button {
   background-color: var(--icon-color);

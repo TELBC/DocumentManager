@@ -49,6 +49,8 @@ import EditDocumentDialog from "./EditdocumentDialog.vue";
   <edit-document-dialog
     ref="editDialog"
     :document="document"
+    :documents="documents"
+    :guids="guids"
     @document-edited="updateDocument"
   ></edit-document-dialog>
 </template>
@@ -60,6 +62,10 @@ export default {
       type: Object,
       required: true,
     },
+    documents: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -67,6 +73,7 @@ export default {
       loadedDocument: null,
       hover: false,
       showContent: false,
+      guids: [],
     };
   },
   components: {
@@ -108,8 +115,21 @@ export default {
       }
     },
     async editDocument() {
-    this.$refs.editDialog.open();
-  },
+      this.$refs.editDialog.open();
+    },
+    async fetchGuids() {
+      if (this.loading) {
+        return;
+      }
+      try {
+        const response = await axios.get(`folders/${this.folderGuid}`);
+        this.guids = response.data.documents.map((document) => document.guid);
+      } catch (e) {
+        alert("ERROR fetching guids");
+      } finally {
+        this.loading = false;
+      }
+    },
   },
   computed: {
     folderGuid() {
@@ -118,6 +138,9 @@ export default {
     versionStyle() {
       return this.document.tags.length > 0 ? {} : { flexGrow: 1 };
     },
+  },
+  mounted() {
+    this.fetchGuids();
   },
 };
 </script>

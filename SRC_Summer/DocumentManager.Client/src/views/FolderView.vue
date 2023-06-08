@@ -15,6 +15,7 @@ import DocumentComponent from "../components/DocumentComponent.vue";
           v-for="d in folder.documents"
           :key="d.guid"
           :document="d"
+          :documents="folder.documents"
           @document-deleted="loadFolder"
         ></DocumentComponent>
       </div>
