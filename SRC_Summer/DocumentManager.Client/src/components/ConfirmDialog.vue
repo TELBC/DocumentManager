@@ -1,4 +1,3 @@
-<!-- src/components/ConfirmDialog.vue -->
 <template>
   <div
     v-if="show"

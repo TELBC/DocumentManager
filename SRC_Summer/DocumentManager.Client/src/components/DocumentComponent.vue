@@ -51,7 +51,7 @@ import EditDocumentDialog from "./EditdocumentDialog.vue";
     :document="document"
     :documents="documents"
     :guids="guids"
-    @document-edited="updateDocument"
+    @document-updated="updateDocument"
   ></edit-document-dialog>
 </template>
 
@@ -116,6 +116,44 @@ export default {
     },
     async editDocument() {
       this.$refs.editDialog.open();
+    },
+    async updateDocument(updatedDocument) {
+      try {
+        const tagIds = await this.fetchTags(updatedDocument.tags);
+        console.log(tagIds);
+        const payload = {
+          guid: updatedDocument.guid,
+          title: updatedDocument.title,
+          content: updatedDocument.content,
+          type: updatedDocument.type,
+          tags: tagIds,
+          version: updatedDocument.version + 1,
+        };
+        console.log(payload);
+        await axios.put(`documents/${updatedDocument.guid}`, payload);
+        this.$emit("document-updated", payload);
+      } catch (error) {
+        alert("Error updating the document");
+      }
+    },
+    async fetchTags(tags) {
+      try {
+        let tagArray = [];
+
+        if (typeof tags === "string" && tags.includes(",")) {
+          tagArray = tags.split(",").map((tagName) => tagName.trim());
+        } else {
+          tagArray = Array.isArray(tags) ? tags : [tags];
+        }
+        const response = await axios.get("tags");
+        const tagMap = new Map(response.data.map((tag) => [tag.name, tag.id]));
+        const tagIds = tagArray.map((tagName) => ({
+          tagId: tagMap.get(tagName),
+        }));
+        return tagIds;
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
     },
     async fetchGuids() {
       if (this.loading) {

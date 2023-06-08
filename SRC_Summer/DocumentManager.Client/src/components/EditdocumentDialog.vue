@@ -1,7 +1,3 @@
-<!-- <script setup>
-import axios from 'axios';
-</script> -->
-
 <template>
   <div
     v-if="show"
@@ -12,7 +8,12 @@ import axios from 'axios';
       <h2>Edit Document</h2>
       <form @submit.prevent="submit">
         <label for="guid">GUID:</label>
-        <select id="guid" v-model="editedDocument.guid" class="custom-select" @change="updateContent">
+        <select
+          id="guid"
+          v-model="editedDocument.guid"
+          class="custom-select"
+          @change="updateContent"
+        >
           <option v-for="guid in guids" :key="guid" :value="guid">
             {{ guid }}
           </option>
@@ -63,10 +64,12 @@ export default {
   },
 
   watch: {
-    'editedDocument.guid': {
+    "editedDocument.guid": {
       immediate: true,
       handler(newGuid) {
-        const documentWithGuid = this.documents.find(doc => doc.guid === newGuid);
+        const documentWithGuid = this.documents.find(
+          (doc) => doc.guid === newGuid
+        );
         if (documentWithGuid) {
           this.editedDocument.title = documentWithGuid.title;
           this.editedDocument.content = documentWithGuid.content;
@@ -94,11 +97,13 @@ export default {
       this.close();
     },
     submit() {
-      this.$emit("document-edited", this.editedDocument);
+      this.$emit("document-updated", { ...this.editedDocument });
       this.close();
     },
     async updateContent() {
-      const documentWithGuid = this.documents.find(doc => doc.guid === this.editedDocument.guid);
+      const documentWithGuid = this.documents.find(
+        (doc) => doc.guid === this.editedDocument.guid
+      );
       if (documentWithGuid) {
         this.editedDocument.content = documentWithGuid.content;
       }
@@ -150,7 +155,7 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 15px;
-  width: 96%;/* somehow this fixes the fields ¯\_(ツ)_/¯*/
+  width: 96%; /* somehow this fixes the fields ¯\_(ツ)_/¯*/
 }
 
 textarea {
@@ -173,11 +178,10 @@ textarea {
   margin-bottom: 15px;
   width: 100%;
   appearance: none;
-  background: url('../assets/caret-down-solid.svg') no-repeat;
+  background: url("../assets/caret-down-solid.svg") no-repeat;
   background-position: right 10px center;
   background-size: 0.65em auto;
 }
-
 
 button {
   background-color: var(--icon-color);
