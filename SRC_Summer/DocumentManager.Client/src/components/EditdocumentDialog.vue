@@ -28,8 +28,7 @@
         <label for="tags">Tags:</label>
         <input type="text" id="tags" v-model="editedDocument.tags" />
 
-        <label for="version">Version:</label>
-        <input type="text" id="version" v-model="editedDocument.version" />
+        <label for="version">Version: v.{{ editedDocument.version }}</label>
 
         <div class="edit-dialog-actions">
           <button type="button" @click="cancel">Cancel</button>
@@ -163,7 +162,6 @@ textarea {
   overflow: auto;
   resize: none;
 }
-
 .edit-dialog-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -184,6 +182,9 @@ textarea {
 }
 
 button {
+  padding: 0.5em 1em;
+  margin-right: 0.5em;
+  margin-top: 20px;
   background-color: var(--icon-color);
   border: none;
   color: white;

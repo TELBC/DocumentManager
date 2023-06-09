@@ -17,6 +17,7 @@ import DocumentComponent from "../components/DocumentComponent.vue";
           :document="d"
           :documents="folder.documents"
           @document-deleted="loadFolder"
+          @document-updated="loadFolder"
         ></DocumentComponent>
       </div>
     </div>
