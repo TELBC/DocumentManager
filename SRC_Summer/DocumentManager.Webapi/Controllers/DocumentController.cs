@@ -33,6 +33,7 @@ public class DocumentController : ControllerBase
     // -------------------------------------------------------
 
     // Reacts to GET /api/documents
+    [Authorize]
     [HttpGet]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
@@ -54,6 +55,7 @@ public class DocumentController : ControllerBase
     }
 
     // Reacts to /api/documents/10
+    [Authorize]
     [HttpGet("{guid:Guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -76,6 +78,7 @@ public class DocumentController : ControllerBase
     }
 
     //Reacts to /api/documents/1/tags/
+    [Authorize]
     [HttpGet("{guid:Guid}/tags")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -99,7 +102,7 @@ public class DocumentController : ControllerBase
     // -------------------------------------------------------
     // HTTP POST
     // -------------------------------------------------------
-    // [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
@@ -123,7 +126,7 @@ public class DocumentController : ControllerBase
     // -------------------------------------------------------
     // HTTP PUT
     // -------------------------------------------------------
-    // [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPut("{guid:Guid}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -153,7 +156,7 @@ public class DocumentController : ControllerBase
     // HTTP DELETE
     // -------------------------------------------------------
 
-    // [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{guid:Guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -1,5 +1,5 @@
 <script setup>
-import axios from "axios";
+import axios from "../axios";
 import LoadingSpinner from "../components/LoadingSpinner.vue";
 import DocumentComponent from "../components/DocumentComponent.vue";
 </script>

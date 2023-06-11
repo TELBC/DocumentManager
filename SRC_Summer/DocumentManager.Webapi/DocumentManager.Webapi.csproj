@@ -8,7 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="Docker.DotNet" Version="3.125.13" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.*" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 

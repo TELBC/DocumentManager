@@ -12,11 +12,17 @@
 				{
 					"name": "POST_Folder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODY1MDE3NTksImV4cCI6MTY4NjUxMjU1OSwiaWF0IjoxNjg2NTAxNzU5fQ.t_pbXwp918luawovozl_t1YwLGnckV6DxkkuQxLLGas"
+							}
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"loremipsum loremipsum\",\r\n    \"DocumentTitles\": [\"\"]\r\n}",
+							"raw": "{\r\n    \"name\": \"test Folder\",\r\n    \"DocumentTitles\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -30,24 +36,36 @@
 				{
 					"name": "PUT_Folder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODY1MDE3NTksImV4cCI6MTY4NjUxMjU1OSwiaWF0IjoxNjg2NTAxNzU5fQ.t_pbXwp918luawovozl_t1YwLGnckV6DxkkuQxLLGas"
+							}
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"guid\":\"4a62ce23-da59-4cfb-8a9d-8039e09655ae\",\r\n    \"name\": \"hello this is ap\",\r\n    \"DocumentTitles\": [\"a meme are cool\",\"Document 15\"]\r\n}",
+							"raw": "{\r\n    \"guid\":\"f97e341a-2d17-44fb-a3d5-d53809b7850b\",\r\n    \"name\": \"test Folder\",\r\n    \"DocumentTitles\": [\"Document 15\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "https://localhost:5001/api/folders/4a62ce23-da59-4cfb-8a9d-8039e09655ae"
+						"url": "https://localhost:5001/api/folders/f97e341a-2d17-44fb-a3d5-d53809b7850b"
 					},
 					"response": []
 				},
 				{
 					"name": "DELETE_Folder",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODY1MDE3NTksImV4cCI6MTY4NjUxMjU1OSwiaWF0IjoxNjg2NTAxNzU5fQ.t_pbXwp918luawovozl_t1YwLGnckV6DxkkuQxLLGas"
+							}
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -71,11 +89,17 @@
 				{
 					"name": "POST_Document",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODY1MDE3NTksImV4cCI6MTY4NjUxMjU1OSwiaWF0IjoxNjg2NTAxNzU5fQ.t_pbXwp918luawovozl_t1YwLGnckV6DxkkuQxLLGas"
+							}
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"a meme are cool\",\r\n    \"content\":\"here is a good meme i made lol\",\r\n    \"type\":\"md\",\r\n    \"tags\":[{\"tagId\":1},{\"tagId\":10}]\r\n}",
+							"raw": "{\r\n    \"title\":\"Lorem ipsum dolor sit amet\",\r\n    \"content\":\"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.   Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.   Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.   At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur\",\r\n    \"type\":\"md\",\r\n    \"tags\":[{\"tagId\":1},{\"tagId\":10}],\r\n    \"folderId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -89,24 +113,36 @@
 				{
 					"name": "PUT_Document",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODY1MDE3NTksImV4cCI6MTY4NjUxMjU1OSwiaWF0IjoxNjg2NTAxNzU5fQ.t_pbXwp918luawovozl_t1YwLGnckV6DxkkuQxLLGas"
+							}
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"guid\":\"24643f63-c2b1-41c0-b90e-24b3a644c8aa\",\r\n    \"title\": \"a meme are cool\",\r\n    \"content\": \"very bad meme\",\r\n    \"type\": \"md\",\r\n    \"tags\": [{\"tagId\": 1}]\r\n}",
+							"raw": "{\r\n    \"guid\":\"4ed393a1-be10-4ea1-820f-528a3e7ff9e0\",\r\n    \"title\": \"Lorem ipsum dolor sit amet\",\r\n    \"content\": \"very bad meme\",\r\n    \"type\": \"md1\",\r\n    \"tags\": [{\"tagId\": 1}],\r\n    \"version\":1,\r\n    \"folderId\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "https://localhost:5001/api/documents/24643f63-c2b1-41c0-b90e-24b3a644c8aa"
+						"url": "https://localhost:5001/api/documents/4ed393a1-be10-4ea1-820f-528a3e7ff9e0"
 					},
 					"response": []
 				},
 				{
 					"name": "DELETE_Document",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODY1MDE3NTksImV4cCI6MTY4NjUxMjU1OSwiaWF0IjoxNjg2NTAxNzU5fQ.t_pbXwp918luawovozl_t1YwLGnckV6DxkkuQxLLGas"
+							}
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": "https://localhost:5001/api/documents/f540c493-8a12-4e83-bf7b-cb3648efb145"
@@ -164,6 +200,24 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Admin\",\r\n    \"password\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:5001/api/users/login"
+			},
+			"response": []
 		}
 	]
 }

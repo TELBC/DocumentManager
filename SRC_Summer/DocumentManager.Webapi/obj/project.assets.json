@@ -62,7 +62,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.4": {
+      "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.16": {
         "type": "package",
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.10.0"
@@ -695,10 +695,10 @@
         "lib/netstandard2.1/Docker.DotNet.pdb"
       ]
     },
-    "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.4": {
-      "sha512": "joDS3+lD1i9qcdFLWP4D316t3bHpezmTNOzbMIf9ZcRPX4QTuiUutZcQn/kZplf3BiLHqwUChZXxPjCAMKaKAQ==",
+    "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.16": {
+      "sha512": "T4AkjPXOYDqDnfb8PRRHNbB2ozLg9J7CsRZ+jH1MfQGshkFosdwja9c4+QVbKm+1qeLPxul+3weSz+DEvFkA5w==",
       "type": "package",
-      "path": "microsoft.aspnetcore.authentication.jwtbearer/6.0.4",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/6.0.16",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -706,7 +706,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll",
         "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.xml",
-        "microsoft.aspnetcore.authentication.jwtbearer.6.0.4.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.jwtbearer.6.0.16.nupkg.sha512",
         "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
       ]
     },
@@ -1817,7 +1817,7 @@
     "net6.0": [
       "Docker.DotNet >= 3.125.13",
       "DocumentManager.Application >= 1.0.0",
-      "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.4",
+      "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.*",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -1869,7 +1869,7 @@
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
-            "version": "[6.0.4, )"
+            "version": "[6.*, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

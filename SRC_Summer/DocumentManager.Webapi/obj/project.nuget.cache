@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "z7u4byKIZBjz50LDkfMCA+N/bswzRPiN+2Vh6AR42+zUD7C6cMN2XLsd/sVJh11v2pM6vAevIy/rMeNqHJR6Wg==",
+  "dgSpecHash": "/1fr9oZuQD2t1V9uenwBdGNaj0jvuvrK+PD52mnlFHXJauM507OCV+LnPVobjzfz53GxxUggx/1rATOkMO3+5w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Trist\\RiderProjects\\POS\\SRC_Summer\\DocumentManager.Webapi\\DocumentManager.Webapi.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,7 @@
     "C:\\Users\\Trist\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\docker.dotnet\\3.125.13\\docker.dotnet.3.125.13.nupkg.sha512",
-    "C:\\Users\\Trist\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.4\\microsoft.aspnetcore.authentication.jwtbearer.6.0.4.nupkg.sha512",
+    "C:\\Users\\Trist\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.16\\microsoft.aspnetcore.authentication.jwtbearer.6.0.16.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.1\\microsoft.entityframeworkcore.7.0.1.nupkg.sha512",
     "C:\\Users\\Trist\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.1\\microsoft.entityframeworkcore.abstractions.7.0.1.nupkg.sha512",

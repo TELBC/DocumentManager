@@ -77,7 +77,7 @@ public class DocumentManagerContext : DbContext
 
     public void Initialize()
     {
-        var user = new User("Admin", "admin@example.com", "verySecure");
+        var user = new User("Admin", "admin@example.com", "admin");
         User.Add(user);
         var documentManager = new Model.DocumentManager(user);
         DocumentManager.Add(documentManager);

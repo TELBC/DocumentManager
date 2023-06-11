@@ -52,19 +52,19 @@ LogLevel documentManagerLevel = LogLevel.Critical;
 builder.Logging.AddFilter("DocumentManager", documentManagerLevel);
 builder.Logging.AddDebug();
 
-// byte[] secret = Convert.FromBase64String(builder.Configuration["Secret"]);
-// builder.Services
-//     .AddAuthentication(options => options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme)
-//     .AddJwtBearer(options =>
-//     {
-//         options.TokenValidationParameters = new TokenValidationParameters
-//         {
-//             ValidateIssuerSigningKey = true,
-//             IssuerSigningKey = new SymmetricSecurityKey(secret),
-//             ValidateAudience = false,
-//             ValidateIssuer = false
-//         };
-//     });
+byte[] secret = Convert.FromBase64String(builder.Configuration["Secret"]);
+builder.Services
+    .AddAuthentication(options => options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(secret),
+            ValidateAudience = false,
+            ValidateIssuer = false
+        };
+    });
 // ***************************************** APPLICATION ******************************************
 var app = builder.Build();
 app.UseHttpsRedirection();

@@ -1,5 +1,5 @@
 <script setup>
-import axios from "axios";
+import axios from "../axios";
 import ConfirmDialog from "./ConfirmDialog.vue";
 import EditDocumentDialog from "./EditdocumentDialog.vue";
 </script>
@@ -117,7 +117,7 @@ export default {
         ).data;
         this.showContent = !this.showContent;
       } catch (e) {
-        // alert("Server was unable to load document.");
+        alert("Server was unable to load document.");
       } finally {
         this.loading = false;
       }
@@ -135,7 +135,7 @@ export default {
           await axios.delete(`documents/${this.document.guid}`);
           this.$emit("document-deleted", this.document.guid);
         } catch (error) {
-          // alert("Error deleting the document"); added global error handling
+          alert("Error deleting the document"); //added global error handling
         }
       }
     },
@@ -220,7 +220,7 @@ export default {
         const response = await axios.get(`folders/${this.folderGuid}`);
         this.guids = response.data.documents.map((document) => document.guid);
       } catch (e) {
-        // alert("ERROR fetching guids");
+        alert("ERROR fetching guids");
       } finally {
         this.loading = false;
       }

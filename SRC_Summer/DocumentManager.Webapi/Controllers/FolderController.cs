@@ -6,6 +6,7 @@ using AutoMapper;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,7 @@ public class FolderController : ControllerBase
     // -------------------------------------------------------
 
     // Reacts to GET /api/folders
+    [Authorize]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Folder))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,6 +57,7 @@ public class FolderController : ControllerBase
     }
 
     // Reacts to /api/folder/10
+    [Authorize]
     [HttpGet("{guid:Guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Folder))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -82,6 +85,7 @@ public class FolderController : ControllerBase
     }
 
     // Reacts to /api/folder/10/1
+    [Authorize]
     [HttpGet("{folderGuid:Guid}/{docGuid:Guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Document))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -106,6 +110,7 @@ public class FolderController : ControllerBase
 
 
     // Reacts to /api/folder/10/1/tags
+    [Authorize]
     [HttpGet("{folderGuid:Guid}/{docGuid:Guid}/tags")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -130,6 +135,7 @@ public class FolderController : ControllerBase
     // -------------------------------------------------------
     // HTTP POST
     // -------------------------------------------------------
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Folder))]
@@ -160,6 +166,7 @@ public class FolderController : ControllerBase
     // -------------------------------------------------------
     // HTTP PUT
     // -------------------------------------------------------
+    [Authorize(Roles = "Admin")]
     [HttpPut("{guid:Guid}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -212,6 +219,7 @@ public class FolderController : ControllerBase
     // -------------------------------------------------------
     // HTTP DELETE
     // -------------------------------------------------------
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{guid:Guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

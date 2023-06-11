@@ -10,7 +10,7 @@
         "dependencies": {
           "Docker.DotNet": "3.125.13",
           "DocumentManager.Application": "1.0.0",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.4",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.16",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
@@ -61,14 +61,14 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.4": {
+      "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.16": {
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.10.0"
         },
         "runtime": {
           "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
-            "assemblyVersion": "6.0.4.0",
-            "fileVersion": "6.0.422.17204"
+            "assemblyVersion": "6.0.16.0",
+            "fileVersion": "6.0.1623.17406"
           }
         }
       },
@@ -411,12 +411,12 @@
       "path": "docker.dotnet/3.125.13",
       "hashPath": "docker.dotnet.3.125.13.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.4": {
+    "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.16": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-joDS3+lD1i9qcdFLWP4D316t3bHpezmTNOzbMIf9ZcRPX4QTuiUutZcQn/kZplf3BiLHqwUChZXxPjCAMKaKAQ==",
-      "path": "microsoft.aspnetcore.authentication.jwtbearer/6.0.4",
-      "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.6.0.4.nupkg.sha512"
+      "sha512": "sha512-T4AkjPXOYDqDnfb8PRRHNbB2ozLg9J7CsRZ+jH1MfQGshkFosdwja9c4+QVbKm+1qeLPxul+3weSz+DEvFkA5w==",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/6.0.16",
+      "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.6.0.16.nupkg.sha512"
     },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",

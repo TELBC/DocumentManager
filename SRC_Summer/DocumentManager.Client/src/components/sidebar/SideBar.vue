@@ -3,7 +3,7 @@ import { faHome, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import CreatedocumentDialog from "../CreatedocumentDialog.vue";
 import CreatefolderDialog from "../CreatefolderDialog.vue";
-import axios from "axios";
+import axios from "../../axios";
 </script>
 
 <template>
@@ -21,8 +21,13 @@ import axios from "axios";
         <i class="fa-solid fa-file-circle-plus fa-2x"></i>
       </div>
     </div>
-    <div class="logo">
-      <img src="@/assets/logo.png" />
+    <div class="bottom">
+      <div class="logout-icon" @click="logout">
+        <i class="fa-solid fa-right-from-bracket fa-2x"></i>
+      </div>
+      <div class="logo">
+        <img src="@/assets/logo.png" />
+      </div>
     </div>
   </div>
   <createdocument-dialog
@@ -61,6 +66,10 @@ export default {
     this.fetchFolders();
   },
   methods: {
+    logout() {
+      localStorage.removeItem("jwtToken");
+      location.reload();
+    },
     clearValidation() {
       this.validation = {};
     },
@@ -178,7 +187,6 @@ export default {
           },
           {}
         );
-        // alert("Error fetching tags"); //added global error handling
       }
     },
     async fetchFolders() {
@@ -186,15 +194,7 @@ export default {
         const response = await axios.get("/folders");
         this.folders = response.data;
       } catch (e) {
-        this.validation = Object.keys(e.response.data.errors).reduce(
-          (prev, key) => {
-            const newKey = key.charAt(0).toLowerCase() + key.slice(1);
-            prev[newKey] = e.response.data.errors[key][0];
-            return prev;
-          },
-          {}
-        );
-        // alert("Error fetching folders");
+        this.validation = "Folder is missing";
       }
     },
   },
@@ -223,6 +223,19 @@ export default {
   color: var(--icon-hover-color);
 }
 
+.logout-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  color: var(--icon-color);
+  font-size: 1.2em;
+  margin-top: auto;
+}
+
+.logout-icon:hover {
+  color: var(--icon-hover-color);
+}
+
 .create-icon {
   display: flex;
   flex-direction: column;
@@ -243,6 +256,7 @@ export default {
   flex-direction: column;
   gap: 0.5rem;
   background-color: var(--sidebar-background-color);
+  justify-content: space-between;
   padding: 0.5rem 0.5rem;
   height: 100vh;
 }
@@ -263,6 +277,13 @@ export default {
   width: 80px;
   margin-top: auto;
   padding-bottom: 1em;
+}
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  width: 80px;
+  margin-top: auto;
 }
 
 RouterLink {
