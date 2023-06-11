@@ -19,7 +19,24 @@ public record FolderDto(
     {
         var db = validationContext.GetRequiredService<DocumentManagerContext>();
         var folder = validationContext.ObjectInstance as FolderDto;
+
         if (folder == null)
+        {
             yield return new ValidationResult("Invalid object type", new[] { nameof(FolderDto) });
+        }
+        else
+        {
+            if (string.IsNullOrEmpty(folder.Name))
+            {
+                yield return new ValidationResult("Name cannot be empty or null", new[] { nameof(Name) });
+            }
+            var existingDocumentTitles = db.Document.Select(d => d.Title).ToHashSet();
+            var invalidDocuments = folder.DocumentTitles.Where(docTitle => !existingDocumentTitles.Contains(docTitle)).ToList();
+
+            if (invalidDocuments.Count > 0)
+            {
+                yield return new ValidationResult($"Document/s do not exist in the database: {string.Join(", ", invalidDocuments)}", new[] { nameof(DocumentTitles) });
+            }
+        }
     }
 }

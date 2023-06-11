@@ -8,14 +8,25 @@
       <h2>Create Folder</h2>
       <form @submit.prevent="submit">
         <label for="name">Name:</label>
-        <input type="text" id="name" v-model="createdfolder.name" />
+        <div>
+          <input type="text" id="name" v-model="createdfolder.name" @input="clearError"/>
+          <div v-if="validation.name" class="error">
+            {{ validation.name }}
+          </div>
+        </div>
 
         <label for="documenttitles">Documents:</label>
-        <input
-          type="text"
-          id="documenttitles"
-          v-model="createdfolder.DocumentTitles"
-        />
+        <div>
+          <input
+            type="text"
+            id="documenttitles"
+            v-model="createdfolder.DocumentTitles"
+            @input="clearError"
+          />
+          <div v-if="validation.documentTitles" class="error">
+            {{ validation.documentTitles }}
+          </div>
+        </div>
 
         <div class="create-dialog-actions">
           <button type="button" @click="cancel">Cancel</button>
@@ -28,6 +39,13 @@
 
 <script>
 export default {
+  props: {
+    validation: {
+      type: Object,
+      default: () => {},
+    },
+  },
+
   data() {
     return {
       show: false,
@@ -46,14 +64,19 @@ export default {
     closeOnOverlayClick(event) {
       if (event.target === event.currentTarget) {
         this.close();
+        this.clearError();
       }
     },
     cancel() {
       this.close();
+      this.clearError();
     },
     submit() {
-      this.$emit("folder-created", { ...this.createdfolder });
-      this.close();
+      this.$emit("folder-created", this.createdfolder);
+      this.clearError();
+    },
+    clearError() {
+      this.$emit("clear-validation");
     },
   },
 };
@@ -77,10 +100,14 @@ export default {
   background-color: white;
   border-radius: 10px;
   padding: 30px;
-  max-width: 550px;
+  width: 550px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
+}
+
+.error {
+  color: red;
 }
 
 h2 {

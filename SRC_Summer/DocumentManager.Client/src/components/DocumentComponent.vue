@@ -54,6 +54,8 @@ import EditDocumentDialog from "./EditdocumentDialog.vue";
     :folders="folders"
     :folder="getFolderNameByDocumentGuid(document.guid)"
     @document-updated="updateDocument"
+    @clear-validation="clearValidation"
+    :validation="validation"
   ></edit-document-dialog>
 </template>
 
@@ -77,6 +79,7 @@ export default {
       showContent: false,
       guids: [],
       folders: [],
+      validation: {},
     };
   },
   components: {
@@ -87,6 +90,9 @@ export default {
     this.fetchFolders();
   },
   methods: {
+    clearValidation() {
+      this.validation = {};
+    },
     getFolderNameByDocumentGuid(guid) {
       const folder = this.folders.find((folder) =>
         folder.documents.some((doc) => doc.guid === guid)
@@ -138,7 +144,9 @@ export default {
     },
     async updateDocument(updatedDocument) {
       try {
-        const tagIds = await this.fetchTags(updatedDocument.tags);
+        const tagIds = updatedDocument.tags
+          ? await this.fetchTags(updatedDocument.tags)
+          : [];
         const payload = {
           guid: updatedDocument.guid,
           title: updatedDocument.title,
@@ -147,24 +155,42 @@ export default {
           tags: tagIds,
           version: updatedDocument.version + 1,
         };
-        const documentTitles = updatedDocument.folder.documents.map(
+        await axios.put(`documents/${updatedDocument.guid}`, payload);
+        const folderResponse = await axios.get(
+          `folders/${updatedDocument.folder.guid}/`
+        );
+        const documentTitles = folderResponse.data.documents.map(
           (doc) => doc.title
         );
+        if (!documentTitles.includes(updatedDocument.title)) {
+          documentTitles.push(updatedDocument.title);
+        }
         const folderpayload = {
           guid: updatedDocument.folder.guid,
           name: updatedDocument.folder.name,
           DocumentTitles: documentTitles,
         };
-        documentTitles.push(updatedDocument.title);
-        await axios.put(`documents/${updatedDocument.guid}`, payload);
+
         await axios.put(
           `folders/${updatedDocument.folder.guid}`,
           folderpayload
         );
-        this.$emit("document-updated", payload);
+        this.$emit("document-updated", payload, true);
+        this.$refs.editDialog.close();
         this.fetchFolders();
-      } catch (error) {
-        alert("Error updating the document"); //added global error handling
+      } catch (e) {
+        if (e.response) {
+          this.validation = Object.keys(e.response.data.errors).reduce(
+            (prev, key) => {
+              const newKey = key.charAt(0).toLowerCase() + key.slice(1);
+              prev[newKey] = e.response.data.errors[key][0];
+              return prev;
+            },
+            {}
+          );
+        } else {
+          this.validation = "Error when editing document";
+        }
       }
     },
     async fetchTags(tags) {

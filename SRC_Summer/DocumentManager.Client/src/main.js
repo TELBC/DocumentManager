@@ -5,7 +5,6 @@ import router from "./router";
 import process from "node:process";
 import "./assets/main.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import "./errorhandler";
 import "./assets/main.css";
 import mitt from "mitt";
 

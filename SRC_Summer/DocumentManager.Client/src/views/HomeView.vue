@@ -51,7 +51,7 @@ export default {
         try {
           await axios.delete(`folders/${guid}`);
           this.folders = this.folders.filter((f) => f.guid !== guid);
-        } catch (error) {
+        } catch (e) {
           alert("Error deleting the folder"); //added global error handling
         }
       }
@@ -76,7 +76,7 @@ export default {
       this.loading = true;
       this.folders = (await axios.get("folders")).data;
     } catch (e) {
-      alert("Server was not reached");
+      alert("Server was not reached"); //added global error handling
     } finally {
       this.loading = false;
     }

@@ -20,13 +20,33 @@
         </select>
 
         <label for="title">Title:</label>
-        <input type="text" id="title" v-model="editedDocument.title" />
+        <div>
+          <input
+            type="text"
+            id="title"
+            v-model="editedDocument.title"
+            @input="clearError"
+          />
+          <div v-if="validation.title" class="error">
+            {{ validation.title }}
+          </div>
+        </div>
 
         <label for="content">Content:</label>
         <textarea id="content" v-model="editedDocument.content"></textarea>
 
         <label for="tags">Tags:</label>
-        <input type="text" id="tags" v-model="editedDocument.tags" />
+        <div>
+          <input
+            type="text"
+            id="tags"
+            v-model="editedDocument.tags"
+            @input="clearError"
+          />
+          <div v-if="validation.tags" class="error">
+            {{ validation.tags }}
+          </div>
+        </div>
 
         <p>
           <label for="version"
@@ -34,13 +54,15 @@
           >
         </p>
 
-        <label for="folder">Folder: {{ folder }}</label>
         <select
           id="folder"
           v-model="editedDocument.folder"
           class="custom-select"
         >
-          <option v-for="folder in folders" :key="folder" :value="folder"><!--for some reason the default vlaue doesnt show up, TODO-->
+          <option v-if="!folders.length" :value="defaultFolder">
+            {{ this.folder }}
+          </option>
+          <option v-for="folder in folders" :key="folder" :value="folder">
             {{ folder.name }}
           </option>
         </select>
@@ -75,6 +97,10 @@ export default {
     folder: {
       type: String,
       default: "",
+    },
+    validation: {
+      type: Object,
+      default: () => {},
     },
   },
   data() {
@@ -115,22 +141,28 @@ export default {
     closeOnOverlayClick(event) {
       if (event.target === event.currentTarget) {
         this.close();
+        this.clearError();
       }
     },
     cancel() {
       this.close();
+      this.clearError();
     },
     submit() {
-      this.$emit("document-updated", { ...this.editedDocument });
-      this.close();
+      this.$emit("document-updated", this.editedDocument);
+      this.clearError();
     },
     async updateContent() {
+      this.clearError();
       const documentWithGuid = this.documents.find(
         (doc) => doc.guid === this.editedDocument.guid
       );
       if (documentWithGuid) {
         this.editedDocument.content = documentWithGuid.content;
       }
+    },
+    clearError() {
+      this.$emit("clear-validation");
     },
   },
 };
@@ -154,10 +186,13 @@ export default {
   background-color: white;
   border-radius: 10px;
   padding: 30px;
-  max-width: 550px;
+  width: 550px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
+}
+.error {
+  color: red;
 }
 
 h2 {

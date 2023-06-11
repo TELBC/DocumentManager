@@ -8,16 +8,46 @@
       <h2>Create Document</h2>
       <form @submit.prevent="submit">
         <label for="title">Title:</label>
-        <input type="text" id="title" v-model="createdDocument.title" />
+        <div>
+          <input
+            type="text"
+            id="title"
+            v-model="createdDocument.title"
+            @input="clearError"
+          />
+          <div v-if="validation.title" class="error">
+            {{ validation.title }}
+          </div>
+        </div>
 
         <label for="content">Content:</label>
         <textarea id="content" v-model="createdDocument.content"></textarea>
 
         <label for="tags">Tags:</label>
-        <input type="text" id="tags" v-model="createdDocument.tags" />
+        <div>
+          <input
+            type="text"
+            id="tags"
+            v-model="createdDocument.tags"
+            @input="clearError"
+          />
+          <div v-if="validation.tags" class="error">
+            {{ validation.tags }}
+          </div>
+        </div>
 
         <label for="type">Type:</label>
-        <input type="text" id="type" v-model="createdDocument.type" />
+        <div>
+          <input
+            type="text"
+            id="type"
+            v-model="createdDocument.type"
+            @input="clearError"
+          />
+          <div v-if="validation.type" class="error">
+            {{ validation.type }}
+          </div>
+        </div>
 
         <label for="folder">Folder:</label>
         <select
@@ -29,6 +59,9 @@
             {{ folder.name }}
           </option>
         </select>
+        <div v-if="typeof validation === 'string'" class="error">
+          {{ validation }}
+        </div>
 
         <div class="create-dialog-actions">
           <button type="button" @click="cancel">Cancel</button>
@@ -45,6 +78,10 @@ export default {
     folders: {
       type: Array,
     },
+    validation: {
+      type: Object,
+      default: () => {},
+    },
   },
 
   data() {
@@ -53,7 +90,7 @@ export default {
       createdDocument: {},
     };
   },
-
+  emits: ["document-created", "clear-validation", "success"],
   methods: {
     open() {
       this.createdDocument = { ...this.document };
@@ -65,14 +102,19 @@ export default {
     closeOnOverlayClick(event) {
       if (event.target === event.currentTarget) {
         this.close();
+        this.clearError();
       }
     },
     cancel() {
       this.close();
+      this.clearError();
     },
     submit() {
-      this.$emit("document-created", { ...this.createdDocument });
-      this.close();
+      this.$emit("document-created", this.createdDocument);
+      this.clearError();
+    },
+    clearError() {
+      this.$emit("clear-validation");
     },
   },
 };
@@ -92,6 +134,10 @@ export default {
   background-size: 0.65em auto;
 }
 
+.error {
+  color: red;
+}
+
 .create-dialog-overlay {
   position: fixed;
   top: 0;
@@ -109,7 +155,7 @@ export default {
   background-color: white;
   border-radius: 10px;
   padding: 30px;
-  max-width: 550px;
+  width: 550px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;

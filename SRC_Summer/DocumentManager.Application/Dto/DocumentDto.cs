@@ -23,9 +23,36 @@ public record DocumentDto(
     {
         var db = validationContext.GetRequiredService<DocumentManagerContext>();
         var document = validationContext.ObjectInstance as DocumentDto;
+        
         if (document == null)
+        {
             yield return new ValidationResult("Invalid object type", new[] { nameof(DocumentDto) });
-        else if (db.Document.Any(a => a.Title == document.Title && a.Guid != document.Guid))
-            yield return new ValidationResult("Document already exists", new[] { nameof(Title) });
+        }
+        else
+        {
+            if (db.Document.Any(a => a.Title == document.Title && a.Guid != document.Guid))
+            {
+                yield return new ValidationResult("Document already exists", new[] { nameof(Title) });
+            }
+
+            if (string.IsNullOrEmpty(document.Title))
+            {
+                yield return new ValidationResult("Title cannot be empty", new[] { nameof(Title) });
+            }
+
+            if (string.IsNullOrEmpty(document.Type))
+            {
+                yield return new ValidationResult("Type cannot be empty", new[] { nameof(Type) });
+            }
+            
+            var tagIds = document.Tags.Select(t => t.TagId).ToList();
+            var existingTagIds = db.Tag.Where(t => tagIds.Contains(t.Id)).Select(t => t.Id).ToHashSet();
+            var invalidTags = tagIds.Where(tagId => !existingTagIds.Contains(tagId)).ToList();
+
+            if (invalidTags.Count > 0)
+            {
+                yield return new ValidationResult($"Tag/s do not exist in the database: {string.Join(", ", invalidTags)}", new[] { nameof(Tags) });
+            }
+        }
     }
 }

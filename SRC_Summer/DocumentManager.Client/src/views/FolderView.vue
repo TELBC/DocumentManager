@@ -41,7 +41,7 @@ export default {
       try {
         this.folder = (await axios.get(`folders/${this.folderGuid}`)).data;
       } catch (e) {
-        // alert("Server was unable to load folder."); added global error handling
+        alert("Server was unable to load folder."); //added global error handling
       } finally {
         this.loading = false;
       }

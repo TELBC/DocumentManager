@@ -28,11 +28,15 @@ import axios from "axios";
   <createdocument-dialog
     ref="createDocumentDialog"
     @document-created="createDocument"
+    @clear-validation="clearValidation"
     :folders="folders"
+    :validation="validation"
   ></createdocument-dialog>
   <CreatefolderDialog
     ref="createFolderDialog"
     @folder-created="createFolder"
+    @clear-validation="clearValidation"
+    :validation="validation"
   ></CreatefolderDialog>
 </template>
 
@@ -46,6 +50,7 @@ export default {
   data() {
     return {
       folders: [],
+      validation: {},
     };
   },
   components: {
@@ -56,6 +61,9 @@ export default {
     this.fetchFolders();
   },
   methods: {
+    clearValidation() {
+      this.validation = {};
+    },
     async openCreateFolderDialog() {
       this.$refs.createFolderDialog.open();
     },
@@ -70,10 +78,22 @@ export default {
           DocumentTitles: titles,
         };
         await axios.post("/folders", payload);
-        this.emitter.emit("created-folder-2", payload);
+        this.emitter.emit("created-folder-2", payload, true);
+        this.$refs.createFolderDialog.close();
         this.fetchFolders();
-      } catch (error) {
-        alert("Error creating folder"); //added global error handling
+      } catch (e) {
+        if (e.response) {
+          this.validation = Object.keys(e.response.data.errors).reduce(
+            (prev, key) => {
+              const newKey = key.charAt(0).toLowerCase() + key.slice(1);
+              prev[newKey] = e.response.data.errors[key][0];
+              return prev;
+            },
+            {}
+          );
+        } else {
+          this.validation = "Error when creating folder";
+        }
       }
     },
     fetchDocuments(DocumentTitles) {
@@ -84,7 +104,7 @@ export default {
         const documentTitlesArray = DocumentTitles.split(",");
         DocumentTitles = documentTitlesArray.map((title) => title.trim());
         return documentTitlesArray;
-      } catch (error) {
+      } catch (e) {
         alert("Error fetching document titles");
       }
     },
@@ -113,10 +133,22 @@ export default {
           `folders/${createdDocument.folder.guid}`,
           folderpayload
         );
-        this.emitter.emit("created-folder-2", payload);
+        this.emitter.emit("created-folder-2", payload, true);
+        this.$refs.createDocumentDialog.close();
         this.fetchFolders();
-      } catch (error) {
-        alert("Error creating document"); //added global error handling
+      } catch (e) {
+        if (e.response) {
+          this.validation = Object.keys(e.response.data.errors).reduce(
+            (prev, key) => {
+              const newKey = key.charAt(0).toLowerCase() + key.slice(1);
+              prev[newKey] = e.response.data.errors[key][0];
+              return prev;
+            },
+            {}
+          );
+        } else {
+          this.validation = "Folder is missing";
+        }
       }
     },
     async fetchTags(tags) {
@@ -137,16 +169,32 @@ export default {
           tagId: tagMap.get(tagName),
         }));
         return tagIds;
-      } catch (error) {
-        alert("Error fetching tags"); //added global error handling
+      } catch (e) {
+        this.validation = Object.keys(e.response.data.errors).reduce(
+          (prev, key) => {
+            const newKey = key.charAt(0).toLowerCase() + key.slice(1);
+            prev[newKey] = e.response.data.errors[key][0];
+            return prev;
+          },
+          {}
+        );
+        // alert("Error fetching tags"); //added global error handling
       }
     },
     async fetchFolders() {
       try {
         const response = await axios.get("/folders");
         this.folders = response.data;
-      } catch (error) {
-        alert("Error fetching folders");
+      } catch (e) {
+        this.validation = Object.keys(e.response.data.errors).reduce(
+          (prev, key) => {
+            const newKey = key.charAt(0).toLowerCase() + key.slice(1);
+            prev[newKey] = e.response.data.errors[key][0];
+            return prev;
+          },
+          {}
+        );
+        // alert("Error fetching folders");
       }
     },
   },
