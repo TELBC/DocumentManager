@@ -33,6 +33,57 @@ import ConfirmDialog from "../components/ConfirmDialog.vue";
   ></confirm-dialog>
 </template>
 
+<script>
+export default {
+  created() {
+    this.emitter.on("created-folder-2", this.loadFolders);
+  },
+  data() {
+    return {
+      folders: [],
+      loading: false,
+    };
+  },
+  methods: {
+    async confirmDelete(guid) {
+      const confirmed = await this.$refs.confirmDialog.open();
+      if (confirmed) {
+        try {
+          await axios.delete(`folders/${guid}`);
+          this.folders = this.folders.filter((f) => f.guid !== guid);
+        } catch (error) {
+          alert("Error deleting the folder"); //added global error handling
+        }
+      }
+    },
+    async loadFolders() {
+      this.loading = true;
+      try {
+        this.folders = (await axios.get(`folders`)).data;
+      } catch (e) {
+        alert("Server was unable to load folder."); //added global error handling
+      } finally {
+        this.loading = false;
+      }
+    },
+  },
+
+  async mounted() {
+    if (this.loading) {
+      return;
+    }
+    try {
+      this.loading = true;
+      this.folders = (await axios.get("folders")).data;
+    } catch (e) {
+      alert("Server was not reached");
+    } finally {
+      this.loading = false;
+    }
+  },
+};
+</script>
+
 <style scoped>
 .folderCardContainer {
   display: flex;
@@ -75,41 +126,3 @@ import ConfirmDialog from "../components/ConfirmDialog.vue";
   background-color: var(--delete-icon-hover-color);
 }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      folders: [],
-      loading: false,
-    };
-  },
-  methods: {
-    async confirmDelete(guid) {
-      const confirmed = await this.$refs.confirmDialog.open();
-      if (confirmed) {
-        try {
-          await axios.delete(`folders/${guid}`);
-          this.folders = this.folders.filter((f) => f.guid !== guid);
-        } catch (error) {
-          alert("Error deleting the folder");
-        }
-      }
-    },
-  },
-
-  async mounted() {
-    if (this.loading) {
-      return;
-    }
-    try {
-      this.loading = true;
-      this.folders = (await axios.get("folders")).data;
-    } catch (e) {
-      alert("Server was not reached");
-    } finally {
-      this.loading = false;
-    }
-  },
-};
-</script>

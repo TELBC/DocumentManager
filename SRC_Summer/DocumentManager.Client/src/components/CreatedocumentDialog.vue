@@ -1,51 +1,36 @@
 <template>
   <div
     v-if="show"
-    class="edit-dialog-overlay"
+    class="create-dialog-overlay"
     @click="closeOnOverlayClick($event)"
   >
-    <div class="edit-dialog">
-      <h2>Edit Document</h2>
+    <div class="create-dialog">
+      <h2>Create Document</h2>
       <form @submit.prevent="submit">
-        <label for="guid">GUID:</label>
-        <select
-          id="guid"
-          v-model="editedDocument.guid"
-          class="custom-select"
-          @change="updateContent"
-        >
-          <option v-for="guid in guids" :key="guid" :value="guid">
-            {{ guid }}
-          </option>
-        </select>
-
         <label for="title">Title:</label>
-        <input type="text" id="title" v-model="editedDocument.title" />
+        <input type="text" id="title" v-model="createdDocument.title" />
 
         <label for="content">Content:</label>
-        <textarea id="content" v-model="editedDocument.content"></textarea>
+        <textarea id="content" v-model="createdDocument.content"></textarea>
 
         <label for="tags">Tags:</label>
-        <input type="text" id="tags" v-model="editedDocument.tags" />
+        <input type="text" id="tags" v-model="createdDocument.tags" />
 
-        <p>
-          <label for="version"
-            >Version: <span>v.{{ editedDocument.version }}</span></label
-          >
-        </p>
+        <label for="type">Type:</label>
+        <input type="text" id="type" v-model="createdDocument.type" />
 
-        <label for="folder">Folder: {{ folder }}</label>
+        <label for="folder">Folder:</label>
         <select
           id="folder"
-          v-model="editedDocument.folder"
+          v-model="createdDocument.folder"
           class="custom-select"
         >
-          <option v-for="folder in folders" :key="folder" :value="folder"><!--for some reason the default vlaue doesnt show up, TODO-->
+          <option v-for="folder in folders" :key="folder" :value="folder">
             {{ folder.name }}
           </option>
         </select>
 
-        <div class="edit-dialog-actions">
+        <div class="create-dialog-actions">
           <button type="button" @click="cancel">Cancel</button>
           <button type="submit">Save</button>
         </div>
@@ -57,56 +42,21 @@
 <script>
 export default {
   props: {
-    document: {
-      type: Object,
-      required: true,
-    },
-    guids: {
-      type: Array,
-      required: true,
-    },
-    documents: {
-      type: Array,
-      required: true,
-    },
     folders: {
       type: Array,
     },
-    folder: {
-      type: String,
-      default: "",
-    },
   },
+
   data() {
     return {
       show: false,
-      editedDocument: {},
+      createdDocument: {},
     };
-  },
-  mounted() {
-    this.editedDocument.folder = this.document.folder;
-  },
-  watch: {
-    "editedDocument.guid": {
-      immediate: true,
-      handler(newGuid) {
-        const documentWithGuid = this.documents.find(
-          (doc) => doc.guid === newGuid
-        );
-        if (documentWithGuid) {
-          this.editedDocument.title = documentWithGuid.title;
-          this.editedDocument.content = documentWithGuid.content;
-          this.editedDocument.tags = documentWithGuid.tags;
-          this.editedDocument.version = documentWithGuid.version;
-          this.editedDocument.folder = documentWithGuid.folder;
-        }
-      },
-    },
   },
 
   methods: {
     open() {
-      this.editedDocument = { ...this.document };
+      this.createdDocument = { ...this.document };
       this.show = true;
     },
     close() {
@@ -121,23 +71,28 @@ export default {
       this.close();
     },
     submit() {
-      this.$emit("document-updated", { ...this.editedDocument });
+      this.$emit("document-created", { ...this.createdDocument });
       this.close();
-    },
-    async updateContent() {
-      const documentWithGuid = this.documents.find(
-        (doc) => doc.guid === this.editedDocument.guid
-      );
-      if (documentWithGuid) {
-        this.editedDocument.content = documentWithGuid.content;
-      }
     },
   },
 };
 </script>
 
 <style scoped>
-.edit-dialog-overlay {
+.custom-select {
+  font-size: 14px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 96%; /* somehow this fixes the fields ¯\_(ツ)_/¯*/
+  appearance: none;
+  background: url("../assets/caret-down-solid.svg") no-repeat;
+  background-position: right 10px center;
+  background-size: 0.65em auto;
+}
+
+.create-dialog-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -150,7 +105,7 @@ export default {
   z-index: 1000;
 }
 
-.edit-dialog {
+.create-dialog {
   background-color: white;
   border-radius: 10px;
   padding: 30px;
@@ -187,7 +142,7 @@ textarea {
   overflow: auto;
   resize: none;
 }
-.edit-dialog-actions {
+.create-dialog-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1em;
@@ -195,11 +150,11 @@ textarea {
 
 .custom-select {
   font-size: 14px;
-  padding: 5px 10px;
+  padding: 5px 30px 5px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 15px;
-  width: 100%; /* somehow this fixes the fields ¯\_(ツ)_/¯*/
+  width: 100%;
   appearance: none;
   background: url("../assets/caret-down-solid.svg") no-repeat;
   background-position: right 10px center;

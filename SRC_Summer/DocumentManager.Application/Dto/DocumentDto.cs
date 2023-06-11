@@ -10,11 +10,11 @@ namespace DocumentManager.Dto;
 
 public record DocumentDto(
     Guid Guid,
-    [StringLength(255, MinimumLength = 1, ErrorMessage = "The length of the title is invalid")]
+    [StringLength(80, MinimumLength = 1, ErrorMessage = "The length of the title is invalid")]
     string Title,
     List<DocumentTag> Tags,
     string Type,
-    [StringLength(65535, MinimumLength = 0, ErrorMessage = "The content length exceeds the limit")]
+    [StringLength(65535, ErrorMessage = "The content length exceeds the limit")]
     string Content,
     int Version
 ) : IValidatableObject

@@ -13,11 +13,12 @@ import SideBar from "./components/sidebar/SideBar.vue";
 
 <style scoped>
 #appContainer {
+  font-family: "Inconsolata";
   display: flex;
 }
 
 main {
-  font-family: 'Inconsolata';
+  font-family: "Inconsolata";
   padding-left: 13vh;
 }
 </style>

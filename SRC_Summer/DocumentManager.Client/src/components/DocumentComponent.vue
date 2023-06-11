@@ -49,8 +49,10 @@ import EditDocumentDialog from "./EditdocumentDialog.vue";
   <edit-document-dialog
     ref="editDialog"
     :document="document"
-    :documents="documents"
     :guids="guids"
+    :documents="documents"
+    :folders="folders"
+    :folder="getFolderNameByDocumentGuid(document.guid)"
     @document-updated="updateDocument"
   ></edit-document-dialog>
 </template>
@@ -74,13 +76,30 @@ export default {
       hover: false,
       showContent: false,
       guids: [],
+      folders: [],
     };
   },
   components: {
     ConfirmDialog,
     EditDocumentDialog,
   },
+  created() {
+    this.fetchFolders();
+  },
   methods: {
+    getFolderNameByDocumentGuid(guid) {
+      const folder = this.folders.find((folder) =>
+        folder.documents.some((doc) => doc.guid === guid)
+      );
+      return folder ? folder.name : "";
+    },
+    async fetchFolders() {
+      try {
+        this.folders = (await axios.get("/folders")).data;
+      } catch (error) {
+        alert("Error fetching folders");
+      }
+    },
     async loadContent(documentGuid) {
       if (this.loading) {
         return;
@@ -92,7 +111,7 @@ export default {
         ).data;
         this.showContent = !this.showContent;
       } catch (e) {
-        alert("Server was unable to load document.");
+        // alert("Server was unable to load document.");
       } finally {
         this.loading = false;
       }
@@ -110,7 +129,7 @@ export default {
           await axios.delete(`documents/${this.document.guid}`);
           this.$emit("document-deleted", this.document.guid);
         } catch (error) {
-          alert("Error deleting the document");
+          // alert("Error deleting the document"); added global error handling
         }
       }
     },
@@ -120,7 +139,6 @@ export default {
     async updateDocument(updatedDocument) {
       try {
         const tagIds = await this.fetchTags(updatedDocument.tags);
-        console.log(tagIds);
         const payload = {
           guid: updatedDocument.guid,
           title: updatedDocument.title,
@@ -129,11 +147,24 @@ export default {
           tags: tagIds,
           version: updatedDocument.version + 1,
         };
-        console.log(payload);
+        const documentTitles = updatedDocument.folder.documents.map(
+          (doc) => doc.title
+        );
+        const folderpayload = {
+          guid: updatedDocument.folder.guid,
+          name: updatedDocument.folder.name,
+          DocumentTitles: documentTitles,
+        };
+        documentTitles.push(updatedDocument.title);
         await axios.put(`documents/${updatedDocument.guid}`, payload);
+        await axios.put(
+          `folders/${updatedDocument.folder.guid}`,
+          folderpayload
+        );
         this.$emit("document-updated", payload);
+        this.fetchFolders();
       } catch (error) {
-        alert("Error updating the document");
+        alert("Error updating the document"); //added global error handling
       }
     },
     async fetchTags(tags) {
@@ -152,7 +183,7 @@ export default {
         }));
         return tagIds;
       } catch (error) {
-        console.error("Error fetching tags:", error);
+        alert("Error fetching tags:", error);
       }
     },
     async fetchGuids() {
@@ -163,7 +194,7 @@ export default {
         const response = await axios.get(`folders/${this.folderGuid}`);
         this.guids = response.data.documents.map((document) => document.guid);
       } catch (e) {
-        alert("ERROR fetching guids");
+        // alert("ERROR fetching guids");
       } finally {
         this.loading = false;
       }

@@ -10,7 +10,7 @@ namespace DocumentManager.Dto;
 
 public record FolderDto(
     Guid Guid,
-    [StringLength(255, MinimumLength = 10, ErrorMessage = "The length of the name is invalid")]
+    [StringLength(80, MinimumLength = 1, ErrorMessage = "The length of the name is invalid")]
     string Name,
     List<string> DocumentTitles
 ) : IValidatableObject
@@ -18,7 +18,8 @@ public record FolderDto(
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         var db = validationContext.GetRequiredService<DocumentManagerContext>();
-        if (db.Folder.Any(a => a.Name == Name))
-            yield return new ValidationResult("Folder already exists", new[] { nameof(Name) });
+        var folder = validationContext.ObjectInstance as FolderDto;
+        if (folder == null)
+            yield return new ValidationResult("Invalid object type", new[] { nameof(FolderDto) });
     }
 }
