@@ -55,3 +55,4 @@ C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\DocumentManager.Webapi.staticwebassets.runtime.json
 C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\POSTMAN\DocumentManager.postman_collection.json
+C:\Users\Trist\RiderProjects\POS\SRC_Summer\DocumentManager.Webapi\bin\Debug\net6.0\appsettings.Production.json

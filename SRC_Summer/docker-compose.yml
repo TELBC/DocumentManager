@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   documentmanager-postgres:
-    image: postgres:latest
+    image: spgdocumentmanagertelbc.azurecr.io/postgres:latest
     environment:
       POSTGRES_DB: DocumentManager
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -11,8 +11,9 @@ services:
       - "5432:5432"
     networks:
       - documentmanager-network
-    
+  
   documentmanager-app:
+    image: spgdocumentmanagertelbc.azurecr.io/documentmanager-app:latest
     build:
       dockerfile: Dockerfile
     ports:
@@ -21,7 +22,7 @@ services:
       - documentmanager-network
     depends_on:
       - documentmanager-postgres
-        
+
 networks:
   documentmanager-network:
     driver: bridge

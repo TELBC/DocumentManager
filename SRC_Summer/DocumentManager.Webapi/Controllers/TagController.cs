@@ -5,6 +5,7 @@ using AutoMapper;
 using DocumentManager.Dto;
 using DocumentManager.Infrastructure;
 using DocumentManager.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ public class TagController : ControllerBase
     // -------------------------------------------------------
 
     // Reacts to GET /api/tags
+    [Authorize]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -50,6 +52,7 @@ public class TagController : ControllerBase
     }
 
     // Reacts to /api/tags/1
+    [Authorize]
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,7 +76,7 @@ public class TagController : ControllerBase
     // HTTP POST
     // -------------------------------------------------------
 
-    // [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Tag))]
@@ -100,7 +103,7 @@ public class TagController : ControllerBase
     // HTTP PUT
     // -------------------------------------------------------
 
-    // [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id:int}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -130,7 +133,7 @@ public class TagController : ControllerBase
     // HTTP DELETE
     // -------------------------------------------------------
 
-    // [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

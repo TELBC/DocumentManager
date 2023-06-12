@@ -3,6 +3,7 @@ import { faHome, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import CreatedocumentDialog from "../CreatedocumentDialog.vue";
 import CreatefolderDialog from "../CreatefolderDialog.vue";
+import CreateTagDialog from "../CreatetagDialog.vue";
 import axios from "../../axios";
 </script>
 
@@ -19,6 +20,9 @@ import axios from "../../axios";
       </div>
       <div class="create-icon" @click="openCreateDocumentDialog">
         <i class="fa-solid fa-file-circle-plus fa-2x"></i>
+      </div>
+      <div class="create-tag-icon" @click="openCreateTagDialog">
+        <i class="fa-solid fa-tags fa-2x"></i>
       </div>
     </div>
     <div class="bottom">
@@ -43,19 +47,24 @@ import axios from "../../axios";
     @clear-validation="clearValidation"
     :validation="validation"
   ></CreatefolderDialog>
+  <CreateTagDialog
+    ref="createTagDialog"
+    @tag-created="createTag"
+    @clear-validation="clearValidation"
+    :validation="validation"
+  ></CreateTagDialog>
 </template>
 
 <script>
-const sidebarItems = [
-  { name: "Home", icon: faHome, link: "/" },
-  { name: "About", icon: faInfoCircle, link: "/about" },
-];
-
 export default {
   data() {
     return {
       folders: [],
       validation: {},
+      sidebarItems: [
+        { name: "Home", icon: faHome, link: "/" },
+        { name: "About", icon: faInfoCircle, link: "/about" },
+      ],
     };
   },
   components: {
@@ -78,6 +87,9 @@ export default {
     },
     async openCreateDocumentDialog() {
       this.$refs.createDocumentDialog.open();
+    },
+    async openCreateTagDialog() {
+      this.$refs.createTagDialog.open();
     },
     async createFolder(createdFolder) {
       try {
@@ -160,6 +172,34 @@ export default {
         }
       }
     },
+    async createTag(createdTag) {
+      try {
+        const payload = {
+          name: createdTag.name,
+          category: createdTag.category,
+        };
+        console.log(createdTag);
+        await axios.post("/tags", payload);
+        this.$refs.createTagDialog.close();
+      } catch (e) {
+        if (e.response) {
+          this.validation = Object.keys(e.response.data.errors).reduce(
+            (prev, key) => {
+              const newKey = key.charAt(0).toLowerCase() + key.slice(1);
+              prev[newKey] = e.response.data.errors[key][0];
+              return prev;
+            },
+            {}
+          );
+          if (Object.keys(this.validation).length === 0) {
+            this.validation = { default: "Error when creating tag" };
+          }
+        } else {
+          this.validation = { default: "Error when creating tag" };
+        }
+      }
+    },
+
     async fetchTags(tags) {
       try {
         if (!tags) {
@@ -211,12 +251,23 @@ export default {
   padding-bottom: 1em;
 }
 
+.create-tag-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  color: var(--icon-color);
+  font-size: 1.2em;
+}
+
 .create-folder-icon {
   display: flex;
   flex-direction: column;
   gap: 1em;
   color: var(--icon-color);
   font-size: 1.2em;
+}
+.create-tag-icon:hover {
+  color: var(--icon-hover-color);
 }
 
 .create-folder-icon:hover {

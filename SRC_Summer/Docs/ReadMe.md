@@ -28,8 +28,11 @@
 - The Folder contains documents
 - The DocumentManager has a user "owner" that can influence the folders(and therefor documents) and other users(friends) interaction with those documents
 
+##### Sidenote:
+```https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal?tabs=azure-cli```
+```https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tutorial-deploy-app```
+
 ### Domain Model (UML):
 
 
 ![](DomainModel.png)
-
