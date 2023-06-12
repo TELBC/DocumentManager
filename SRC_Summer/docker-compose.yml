@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  documentmanager-postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: DocumentManager
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pwd}
+    ports:
+      - "5432:5432"
+    networks:
+      - documentmanager-network
+    
+  documentmanager-app:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - documentmanager-network
+    depends_on:
+      - documentmanager-postgres
+        
+networks:
+  documentmanager-network:
+    driver: bridge

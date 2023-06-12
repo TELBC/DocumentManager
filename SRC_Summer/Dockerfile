@@ -2,20 +2,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
-# TODO: Adapt the directories!
-COPY DocumentManager.Application DocumentManager.Application
-COPY DocumentManager.Webapi      DocumentManager.Webapi
+COPY . ./
+RUN dotnet restore POS.sln
 
-# Compile the app
-RUN dotnet restore "DocumentManager.Webapi"
-RUN dotnet build   "DocumentManager.Webapi" -c Release -o /app/build
-RUN dotnet publish "DocumentManager.Webapi" -c Release -o /app/publish /p:UseAppHost=false
+WORKDIR /src/DocumentManager.Webapi
+RUN dotnet publish -c Release -o out
 
-# App container. Only needs runtime (smaller image)
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
-EXPOSE 80
-EXPOSE 443
-WORKDIR /app
-
-COPY --from=build /app/publish .
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /src
+COPY --from=build /src/DocumentManager.Webapi/out .
 ENTRYPOINT ["dotnet", "DocumentManager.Webapi.dll"]

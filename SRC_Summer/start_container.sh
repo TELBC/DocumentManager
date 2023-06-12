@@ -1,8 +1,9 @@
+# is never used
 # **************************************************************************************************
 # Environment variables. Adapt these values.
 FRONTEND="$(pwd)/DocumentManager.Client"             # to build the spa with npm run build
 SSL_CERT_FILE="documentmanager.pfx"                  # generated with dotnet dev-certs in this script
-DOCKER_IMAGE=documentmanager_webapp
+DOCKER_IMAGE=documentmanager_app
 SQL_IMAGE=documentmanager_postgres
 # Use INTERNAL port for the communication inside the docker network (1433 not 11433)
 CONN_STR="Server=10.0.38.3,5432;Initial Catalog=DocumentManager;User Id=postgres;Password=pwd;TrustServerCertificate=true"
