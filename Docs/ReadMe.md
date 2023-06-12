@@ -1,7 +1,24 @@
 ## POS Project DocumentManager
 ### Group members:
 - Tristan Losada Benini, LOS20421@spengergasse.at
-- Ruben Osmanovic, OSM21985@spengergasse.at
+- (in Collaboration with Ruben Osmanovic, OSM21985@spengergasse.at)
+
+### To setup:
+- ```docker-compose build --no-cache``` (will take some time)
+- ```docker-compose up -d```
+
+### To Access:
+- ```https://localhost/```
+- Username: ```Admin```
+- Password: ```admin```
+
+### App Usage:
+- First Login to be able to access the application
+- Create an empty folder by clicking the folder-plus icon in the Sidebar
+- Create a Document and choose your created folder
+- You can edit the document by clicking on the folder icon in the home view, accessing the documents inside of the folder
+- when editing a document make sure to choose the desired folder, if it is not selected you will not be able to save
+--------------------------------------------
 
 ### Description:
 - A Document(.txt/.md files) manager with Users
@@ -16,13 +33,3 @@
 
 ![](DomainModel.png)
 
-
-
-### To setup:
-- netstat -ao (check if port 5432 is used somehwere else)
-- taskkill /PID PID /T /F (purge all exisiting tasks to then run container)
-- docker run -d --name postgres -e POSTGRES_PASSWORD=pwd -p 5432:5432 postgres:latest
-
-### To test:
-- run in Project folder:
-  - dotnet test --verbosity (q/m/n/d)
