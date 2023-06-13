@@ -4,8 +4,11 @@
 - (in Collaboration with Ruben Osmanovic, OSM21985@spengergasse.at)
 
 ### To setup:
-- ```docker-compose build --no-cache``` (will take some time)
-- ```docker-compose up -d```
+```
+cd SRC_Summer
+docker-compose build --no-cache
+docker-compose up -d
+```
 
 ### To Access:
 - ```https://localhost/```
