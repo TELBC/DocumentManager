@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   documentmanager-postgres:
-    image: spgdocumentmanagertelbc.azurecr.io/postgres:latest
+    image: postgres:latest
     environment:
       POSTGRES_DB: DocumentManager
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -13,7 +13,6 @@ services:
       - documentmanager-network
   
   documentmanager-app:
-    image: spgdocumentmanagertelbc.azurecr.io/documentmanager-app:latest
     build:
       dockerfile: Dockerfile
     ports:
